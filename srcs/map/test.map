@@ -2,8 +2,9 @@ name: test
 author: Ray Ling
 snakelength: 5
 version: 1.0
-snake: 2
 size: 50x25
+food: 3
+maxfoodvalue: 5
 map:
 ..................................................
 ..................................................

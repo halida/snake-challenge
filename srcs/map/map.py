@@ -44,7 +44,10 @@ class Map:
             if len(size)!=2: raise Exception('map size parse fail')
             self.meta['width'] = int(size[0])
             self.meta['height'] = int(size[1])
-        elif ret[0] in ['author','version','name','snake','snakelength']:
+        elif ret[0] == 'food':
+            self.meta['food'] = int(ret[1])
+            self.beangen.maxbean = self.meta['food']
+        elif ret[0] in ['author','version','name','snakelength','maxfoodvalue']:
             self.meta[ret[0]] = ret[1]
         return pt+1
         
@@ -76,21 +79,41 @@ class MapWallGen:
 class MapBeanGen(BeanGen):
     def __init__(self, map):
         self.map = map
+        self.maxbean = 1
         
     def can(self, ctx):
-        return ctx.round % 4 == 0 and ctx.status == 'running'
+        return ctx.status == 'running' and (self.canEgg(ctx) or self.canGem(ctx))
+        #return ctx.round % 4 == 0 and ctx.status == 'running'
     def gen(self, ctx):
-        beans = []
-        for b in self.map.beans:
-            if not ctx.check_hit(b):
-                beans.append(b)
+        gems,eggs = [],[]
+        needgem, needegg = self.maxbean - len(ctx.gems), self.maxbean - len(ctx.eggs)
         
-        if len(beans) > 1:
-            egg = random.choice(beans)
-            beans.remove(egg)        
-            gem = random.choice(beans)
-            return [[egg],[gem]]
-        else:
-            return [[],[]]
+        while needgem>0:
+            gem = self.randomGen(ctx, gems)
+            gems.append(gem)
+            needgem -= 1
+        
+        while needegg>0:
+            egg = self.randomGen(ctx, gems + eggs)
+            eggs.append(egg)
+            needegg -= 1
+        
+        return [eggs,gems]
+    
+    def canEgg(self, ctx):
+        return len(ctx.eggs)<self.maxbean
+    def canGem(self, ctx):
+        return len(ctx.gems)<self.maxbean
+    def randomGen(self, ctx, ban):
+        beanx = range(0, self.map.meta['width'])
+        random.shuffle(beanx)
+        for x in beanx:
+            beany = range(0, self.map.meta['height'])
+            random.shuffle(beany)
+            for y in beany:
+                if not ctx.check_hit([x,y]) and not [x,y] in ban:
+                    return [x,y]
+            
+        
         
         

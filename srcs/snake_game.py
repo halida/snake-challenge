@@ -132,7 +132,7 @@ class Game():
         map = Map.load('srcs/map/test.map')        
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
-        self.beangen = SimpleBeanGen()
+        self.beangen = map.beangen
         self.restart()
 
     def restart(self):

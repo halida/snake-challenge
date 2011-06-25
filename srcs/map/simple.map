@@ -1,16 +1,16 @@
-name: Sample            # map name
-author: Ray Ling        # map author
-version: 1.0            # map version
-size: 50x25             # map size
-snakelength: 2          # initial snake length
-food: 3                 # food number (gem/egg)
-maxfoodvalue: 5         # max food value (food value will be random value of maxfoodvalue)
+name: Sample
+author: Ray Ling
+version: 1.0
+size: 50x25
+snakelength: 2
+food: 3
+maxfoodvalue: 5
 map:
 ..................................................
 ................................................S.
 ..WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW..
 ..W............................................W..
-..W............................................W..
+..W..........................................X.W..
 ..W............................................W..
 ..W...WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW...W..
 ..W...W....................................W...W..
@@ -18,7 +18,7 @@ map:
 ..W...W....................................W...W..
 ..W...W....W...WWWWW...WWWWW...WWWWW.......W...W..
 ..W...W....W...W...W...W...W...W...W.......W...W..
-......W....W...W...W...W...W...W...W...........W..
+......W....W.X.W.X.W.X.W.X.W.X.W.X.W...........W..
 ..W...W....W...W...W...W...W...W...W.......W...W..
 ..W...W....WWWWW...WWWWW...WWWWW...WWWW....W...W..
 ..W...W....................................W...W..
@@ -26,7 +26,7 @@ map:
 ..W...W....................................W...W..
 ..W...WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW...W..
 ..W............................................W..
-..W............................................W..
+..W..........................................X.W..
 ..W............................................W..
 ..WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW..
 ................................................S.
