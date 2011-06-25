@@ -13,11 +13,11 @@ class MapBuilder
   create_grid: () ->
     i = 0
     while(i < @height)
-      row = $("<div id='row_#{i}'></div>")
+      row = $("<div>")
       @e.append(row)
       j = 0
       while(j < @width)
-        box = $("<div id='box_#{i}_#{j}' class='box'>")
+        box = $("<div class='box'>")
         row.append(box)
         new Box(box,j,i)
         j += 1

@@ -17,11 +17,11 @@
       i = 0;
       _results = [];
       while (i < this.height) {
-        row = $("<div id='row_" + i + "'></div>");
+        row = $("<div>");
         this.e.append(row);
         j = 0;
         while (j < this.width) {
-          box = $("<div id='box_" + i + "_" + j + "' class='box'>");
+          box = $("<div class='box'>");
           row.append(box);
           new Box(box, j, i);
           j += 1;
