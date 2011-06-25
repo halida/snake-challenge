@@ -6,22 +6,22 @@ development:
   reconnect: false
   database: 'snake_challenge_dev'
   pool: 5
-  username: 'monster'
-  password: '123123'
-  host: "192.168.1.219"
+  #username: 'monster'
+  #password: '123123'
+  #host: "192.168.1.219"
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
+test: &test
   adapter: mysql2
   encoding: utf8
   reconnect: false
   database: 'snake_challenge_test'
   pool: 5
-  username: 'monster'
-  password: '123123'
-  host: "192.168.1.219"
+  #username: 'monster'
+  #password: '123123'
+  #host: "192.168.1.219"
 
 production:
   adapter: mysql2
@@ -33,3 +33,6 @@ production:
   password: '123123'
   socket: '/tmp/mysql.sock'
 
+
+cucumber:
+  <<: *test
