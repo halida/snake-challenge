@@ -71,8 +71,12 @@ class Map:
                 elif v == 'S':
                     self.snakes.append([x,y])
                 elif v in self.nydustoken:
-                    self.nydus[nydustoken.index(v)] = [x,y]
-                    
+                    idx = nydustoken.index(v)
+                    if idx in self.nydus.keys():
+                        self.nydus[2*idx+1] = [x,y]
+                    else:
+                        self.nydus[2*idx] = [x,y]
+        
         self.nydus = list(self.nydus)
         return pt + self.meta['height']
         
