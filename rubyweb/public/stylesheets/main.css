@@ -38,6 +38,7 @@ table {
 body {
     background: #172137 url(/images/bg.gif);
     font-family: Arial, Helvetica, sans-serif;
+    text-align:center;
 }
 /*header*/
 #header {
@@ -57,6 +58,7 @@ body {
     background: url(/images/main_bg.png);
     padding-top:44px;
     width: 100%;
+    text-align:left;
 }
 #content {
     margin: 0 auto;
