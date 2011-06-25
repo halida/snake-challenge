@@ -30,7 +30,9 @@ class Map:
             pt = self.parse(data, pt)
     
     def parse(self, data, pt):
-        ret = data[pt].strip().split(':')
+        ret = self.ommitComment(data[pt].strip())
+        if ret == '': return pt+1
+        ret = ret.split(':')
         if len(ret)!=2: raise Exception('map parse fail')
         
         if ret[0] == 'map':
@@ -66,6 +68,12 @@ class Map:
                 elif v == 'S':
                     self.snakes.append([x,y])
         return pt + self.meta['height']
+        
+    def ommitComment(self, str):
+        sharp = str.find('#')
+        if sharp >0:
+            return str[:sharp]
+        return str
 
 class MapWallGen:
     def __init__(self, map):

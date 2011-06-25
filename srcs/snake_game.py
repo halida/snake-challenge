@@ -129,7 +129,7 @@ class Game():
         self.enable_wall = enable_wall
         self.enable_no_resp_die = enable_no_resp_die
         
-        map = Map.load('srcs/map/test.map')        
+        map = Map.load('srcs/map/sample.map')        
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
         self.beangen = map.beangen
