@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  round: 1
+  json: MyText
+
+two:
+  title: MyString
+  round: 1
+  json: MyText

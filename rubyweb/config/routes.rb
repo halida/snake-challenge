@@ -1,5 +1,7 @@
 Rubyweb::Application.routes.draw do
-  root :to => "rooms#index"
+  resources :replays
+
+  root :to => "home#index"
   resources :room, :controller => :rooms do
     member do
       get :info

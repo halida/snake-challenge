@@ -4,8 +4,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ruby VS Python Official Site</title>
-    <%= stylesheet_link_tag "style","main", :cache => "cached_main" %>
+    <%= stylesheet_link_tag "main", :cache => "cached_main" %>
+    <%= yield :styles %>
     <%= javascript_include_tag "jquery","application", :cache => "cached_application" %>
+    <%= csrf_meta_tag %>
   </head>
   <body>
     <div id="header">

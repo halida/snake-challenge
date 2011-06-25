@@ -10,6 +10,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    color:#0A667D;
+    font-size:12px;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -53,13 +55,11 @@ body {
 /*main*/
 #main {
     background: url(/images/main_bg.png);
-    height: 965px;
     padding-top:44px;
     width: 100%;
 }
 #content {
     margin: 0 auto;
-    height:707px;
     width: 1104px;
 }
 
@@ -172,6 +172,11 @@ h1{
     margin:33px 0px 0px 20px;
     float: left;
 }
+
+#game_replay { border-bottom:thick solid #07243A; border-bottom-width: 1px; }
+#game_replay ul { margin:10px; list-style:square inside; }
+#game_replay ul li { line-height:140%; }
+#game_replay ul li.more { text-align:right; list-style:none; }
 
 #schedule, #schedule td {
     border: 1px solid;
