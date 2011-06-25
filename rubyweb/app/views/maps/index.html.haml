@@ -2,6 +2,8 @@
   .left_content
     .mini_title
       %h1 Snake Custom Maps
+      = link_to("Create New Map",new_map_path)
     %ul#maps
       - @maps.each do |map|
         %li= link_to(map.title,map)
+    
