@@ -1,0 +1,12 @@
+*.orig
+*.pyc
+*_ui.py
+*~
+*.qm
+*.log
+*.txt
+*.cfg
+*.bak
+*.out
+logs/*
+
