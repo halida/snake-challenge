@@ -1,0 +1,7 @@
+#place
+  .left_content
+    .mini_title
+      %h1 Snake Custom Maps
+    %ul#maps
+      - @maps.each do |map|
+        %li= link_to(map.title,map)

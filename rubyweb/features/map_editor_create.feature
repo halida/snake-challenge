@@ -12,3 +12,6 @@ Feature: Can Create A New Map
     And I fill in "Title" with "A Brave New Map"
     Then I press "Create Map"
     Then I should see "Error creating the map"
+  Scenario: See it in the index page
+    And I am on the maps page
+    Then I should see "A Brave New Map" within "ul#maps"

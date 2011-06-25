@@ -337,6 +337,10 @@ h1{
 #flash_notice {
     background: #FFF;
 }
+
+ul#maps {
+    color: #FFF;
+}
 /*clear*/
 .clear {
     clear: both;
