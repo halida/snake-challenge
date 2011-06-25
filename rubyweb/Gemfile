@@ -16,3 +16,4 @@ gem 'colorize', '0.5.8'
 gem 'devise', '1.4.0'
 gem 'zmq'
 
+gem "juggernaut", '~>2.0.0'  # chat

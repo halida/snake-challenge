@@ -46,6 +46,8 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     json (1.5.3)
+    juggernaut (2.0.3)
+      redis
     kaminari (0.12.4)
       rails (>= 3.0.0)
     mail (2.2.19)
@@ -119,6 +121,7 @@ DEPENDENCIES
   colorize (= 0.5.8)
   devise (= 1.4.0)
   jquery-rails (= 1.0.11)
+  juggernaut (~> 2.0.0)
   kaminari (= 0.12.4)
   memcache-client (= 1.8.5)
   mini_magick (= 3.3)
