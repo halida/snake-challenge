@@ -34,7 +34,7 @@ def image2map(file, size=None):
     return map
     
 def mapconfigs():
-    cfgs = ['author','version','name','snake','snakelength','size']
+    cfgs = ['author','version','name','snakelength','size','food','maxfoodvalue']
     meta = {}
     for cfg in cfgs:
         sys.stdout.write(cfg + ": ")

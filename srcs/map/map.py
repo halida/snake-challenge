@@ -7,7 +7,9 @@ import random
 from game import *
 
 class Map:
-    walltoken = ['.','W','X','S']
+    walltoken = ['.','W','S']
+    # nydus tokens
+    nydustoken = ['A','B','C','D','E']
 
     def __init__(self):
         self.beangen = MapBeanGen(self)
@@ -55,18 +57,23 @@ class Map:
         
     def parseMap(self, data, pt):
         self.walls = []
-        self.beans = []
+        #self.beans = []
         self.snakes = []
+        self.nydus = {}
         
         for y in range(self.meta['height']):
             for x in range(self.meta['width']):
                 v = data[pt+y][x]
                 if v == 'W':
                     self.walls.append([x,y])
-                elif v == 'X':
-                    self.beans.append([x,y])
+                #elif v == 'X':
+                #    self.beans.append([x,y])
                 elif v == 'S':
                     self.snakes.append([x,y])
+                elif v in self.nydustoken:
+                    self.nydus[nydustoken.index(v)] = [x,y]
+                    
+        self.nydus = list(self.nydus)
         return pt + self.meta['height']
         
     def ommitComment(self, str):
