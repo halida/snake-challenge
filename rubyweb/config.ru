@@ -1,11 +1,4 @@
-require 'rubygems'
-require 'sinatra'
+# This file is used by Rack-based servers to start the application.
 
-set :run, false
-set :environment, :production
-
-disable :reload
-
-load 'server.rb'
-
-run Sinatra::Application
+require ::File.expand_path('../config/environment',  __FILE__)
+run Rubyweb::Application

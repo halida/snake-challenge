@@ -1,143 +1,239 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ruby on Rails: Welcome aboard</title>
+    <style type="text/css" media="screen">
+      body {
+        margin: 0;
+        margin-bottom: 25px;
+        padding: 0;
+        background-color: #f0f0f0;
+        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+        font-size: 13px;
+        color: #333;
+      }
 
-<html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Ruby VS Python Official Site</title>
-        <link type="text/css" href="/css/main.css" rel="stylesheet" />
-    </head>
-    <body>
+      h1 {
+        font-size: 28px;
+        color: #000;
+      }
 
+      a  {color: #03c}
+      a:hover {
+        background-color: #03c;
+        color: white;
+        text-decoration: none;
+      }
+
+
+      #page {
+        background-color: #f0f0f0;
+        width: 750px;
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #content {
+        float: left;
+        background-color: white;
+        border: 3px solid #aaa;
+        border-top: none;
+        padding: 25px;
+        width: 500px;
+      }
+
+      #sidebar {
+        float: right;
+        width: 175px;
+      }
+
+      #footer {
+        clear: both;
+      }
+
+
+      #header, #about, #getting-started {
+        padding-left: 75px;
+        padding-right: 30px;
+      }
+
+
+      #header {
+        background-image: url("images/rails.png");
+        background-repeat: no-repeat;
+        background-position: top left;
+        height: 64px;
+      }
+      #header h1, #header h2 {margin: 0}
+      #header h2 {
+        color: #888;
+        font-weight: normal;
+        font-size: 16px;
+      }
+
+
+      #about h3 {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      #about-content {
+        background-color: #ffd;
+        border: 1px solid #fc0;
+        margin-left: -55px;
+        margin-right: -10px;
+      }
+      #about-content table {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 11px;
+        border-collapse: collapse;
+      }
+      #about-content td {
+        padding: 10px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+      #about-content td.name  {color: #555}
+      #about-content td.value {color: #000}
+
+      #about-content ul {
+        padding: 0;
+        list-style-type: none;
+      }
+
+      #about-content.failure {
+        background-color: #fcc;
+        border: 1px solid #f00;
+      }
+      #about-content.failure p {
+        margin: 0;
+        padding: 10px;
+      }
+
+
+      #getting-started {
+        border-top: 1px solid #ccc;
+        margin-top: 25px;
+        padding-top: 15px;
+      }
+      #getting-started h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+      #getting-started h2 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: normal;
+        color: #333;
+        margin-bottom: 25px;
+      }
+      #getting-started ol {
+        margin-left: 0;
+        padding-left: 0;
+      }
+      #getting-started li {
+        font-size: 18px;
+        color: #888;
+        margin-bottom: 25px;
+      }
+      #getting-started li h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 18px;
+        color: #333;
+      }
+      #getting-started li p {
+        color: #555;
+        font-size: 13px;
+      }
+
+
+      #sidebar ul {
+        margin-left: 0;
+        padding-left: 0;
+      }
+      #sidebar ul h3 {
+        margin-top: 25px;
+        font-size: 16px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      #sidebar li {
+        list-style-type: none;
+      }
+      #sidebar ul.links li {
+        margin-bottom: 5px;
+      }
+
+    </style>
+    <script type="text/javascript">
+      function about() {
+        info = document.getElementById('about-content');
+        if (window.XMLHttpRequest)
+          { xhr = new XMLHttpRequest(); }
+        else
+          { xhr = new ActiveXObject("Microsoft.XMLHTTP"); }
+        xhr.open("GET","rails/info/properties",false);
+        xhr.send("");
+        info.innerHTML = xhr.responseText;
+        info.style.display = 'block'
+      }
+    </script>
+  </head>
+  <body>
+    <div id="page">
+      <div id="sidebar">
+        <ul id="sidebar-items">
+          <li>
+            <h3>Browse the documentation</h3>
+            <ul class="links">
+              <li><a href="http://api.rubyonrails.org/">Rails API</a></li>
+              <li><a href="http://stdlib.rubyonrails.org/">Ruby standard library</a></li>
+              <li><a href="http://corelib.rubyonrails.org/">Ruby core</a></li>
+              <li><a href="http://guides.rubyonrails.org/">Rails Guides</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div id="content">
         <div id="header">
-            <img id="logo" src="/images/logo.png" />
+          <h1>Welcome aboard</h1>
+          <h2>You&rsquo;re riding Ruby on Rails!</h2>
         </div>
 
-        <div id="main">
-            <div id="content">
-                <div id="place">
-                    <div class="left_content">
-                        <div class="mini_title">
-                            <h1>June 24th - June 26th Sprint of Snake Challenge @GuruDigger<br/><br/>
-                            2F, Building 16, Lane 30, North shanxi road, Shanghai, China</h1>
-                        </div>
-                        <div class="challenge_info">
-                            <p class="info">
-                                PythonVSRuby (Or RubyVSPython) is an organization who will concentrate on better technical commnucation between Pythoners and Rubyiests.<br/><br/>
-                                Every year we will organize a contest to see which side has the smartest engineer. It will take place annually around the end of March or the beginning of April.<br/><br/>
-                                For the sake of making ourselves keep innovating, we will incubate a project as the contest platform every year and will stay with the project for a year.<br/><br/>
-                            </p>
-                            <h1>Upcoming Event</h1>
-                            <p class="info">
-                                PythonVSRuby 2011 Episode II - Sprint of Snake Challenge<br/>
-                                Source Code - <a href="https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home" target="_blank">https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home</a><br/>
-                                Time: June 24th - June 26th<br/><br/>
-
-                                We want to select 12 Geeks joining this sprint. We call them runners. If you are interested in being a runner, please contact me on <a href="mailto:mike@gurudigger.com" target="_blank">mike@GuruDigger.com</a>.
-                                If we think you are qualified, we will pay you the flight , hotel and everything else for joining the event.<br/><br/>
-
-                                If you want to join our brainstorming for this event, please click <a href="http://gurudigger.com/idea/detail?iid=31474">here</a>.<br/>
-                                ( You need GuruDigger account to visit the brainstorming page, please contact <a href="mailto:mike@gurudigger.com" target="_blank">mike@GuruDigger.com</a> for any GD account issues.)<br/><br/>
-                            </p>
-
-                            <h1>Agenda</h1><br/>
-                            <table width="100%" id="schedule">
-                                <tr>
-                                    <td>June 24th, Friday</td>
-                                    <td>June 25th, Saturday</td>
-                                    <td>June 26th, Sunday</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>8:30 am, Breakfirst Start</td>
-                                    <td>8:30 am, Breakfirst Start</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>9:00 am -12:00 pm,<br>
-                                    Brainstorming + Todo List + Task Assign   /O*/I*</td>
-                                    <td>
-                                        From Wake up -12:00 pm,<br>
-                                    Coding /RO*</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>12 :00 pm, Lunch Start /O*</td>
-                                    <td>12:00 pm, Lunch Start /O*</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>12:00 pm - Midnight,<br>
-                                    Coding  /RO*</td>
-                                    <td>12:00 pm - 5:00 pm, <br>
-                                    Coding /RO*</td>
-                                </tr>
-                                <tr>
-                                    <td>9: 00 pm - Later,<br>
-                                    Warm Up  /O*</td>
-                                    <td>6:00 pm,<br> Dinner Start /O*</td>
-                                    <td>5pm,<br>BBQ + Happy Time Start /O*</td>
-                                </tr>
-                            </table><br/>
-
-                            /O *=Open<br/>
-                            That means everybody could come, if you are not a runner, you have to pass our small quiz otherwise you have to make a donation for PythonVSRuby.org. Same as last time. ;)<br/><br/>
-
-                            /I*= Internet<br/>
-                            This time if you could not come to Shanghai, you could join us via internet.<br/><br/>
-
-                            /RO* = Runners Only<br/>
-                            For the sake of getting a good coding environment, we don't accept anybody who is not a runner come to visit us when we are coding.<br/><br/>
-                        </div>
-                    </div>
-
-                    <div class="right_nav">
-                        <div class="title_bar_r"><h1>Play Online</h1></div>
-                        <div id="room_icon">
-                            <a href="/room/0/"><img id="room_01" src="/images/room_01.png"/></a>
-                            <a href="/room/1/"><img id="room_02" src="/images/room_02.png"/></a>
-                            <a href="/room/2/"><img id="room_03" src="/images/room_03.png"/></a>
-                            <a href="/room/3/"><img id="room_04" src="/images/room_04.png"/></a>
-                        </div>
-                        <div class="title_bar_r"><h1>Sponsors</h1></div>
-                        <div id="sponsor_icon">
-                            <a href="http://gurudigger.com" target="_blank"><img id="sponsor" src="/images/gurudigger.png"/></a>
-                            <a href="http://douban.com" target="_blank"><img id="sponsor" src="/images/douban.png"/></a>
-			<a href="http://snda.com" target="_blank"><img id="sponsor" src="/images/snda.png"/ style="margin-top:25px;"></a>
-			<a href="http://banner.alimama.com/" target="_blank"><img id="sponsor" src="/images/taobao.png"/ style="margin-top:25px;"></a>
-                        </div>
-                        <div id="follow"> <a href="http://twitter.com/rubyvspython" target="_blank"><img id="twitter" src="/images/follow_us.png"/></a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="clear"></div>
-
-                <div id="member_icon">
-                    <table>
-                        <tr>
-                            <td><a href="http://blog.linjunhalida.com/" title="linjunhalida" target="_blank"><img src="/images/memeber_icon_linjunhalida.gif"/></a></td>
-                            <td><a href="http://quake.javaeye.com/" title="quakewang" target="_blank"><img src="/images/memeber_icon_quake.gif"/></a></td>
-                            <td><a href="#" title="dorian"><img src="/images/memeber_icon_dorian.gif" target="_blank"/></a></td>
-                        </tr>
-                    </table>
-                    <div class="clear"></div>
-                </div>
-            </div>
+        <div id="about">
+          <h3><a href="rails/info/properties" onclick="about(); return false">About your application&rsquo;s environment</a></h3>
+          <div id="about-content" style="display: none"></div>
         </div>
 
-        <div id="footer"></div>
+        <div id="getting-started">
+          <h1>Getting started</h1>
+          <h2>Here&rsquo;s how to get rolling:</h2>
 
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-22394366-1']);
-            _gaq.push(['_trackPageview']);
+          <ol>
+            <li>
+              <h2>Use <code>rails generate</code> to create your models and controllers</h2>
+              <p>To see all available options, run it without parameters.</p>
+            </li>
 
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-    </body>
+            <li>
+              <h2>Set up a default route and remove or rename this file</h2>
+              <p>Routes are set up in config/routes.rb.</p>
+            </li>
+
+            <li>
+              <h2>Create your database</h2>
+              <p>Run <code>rake db:migrate</code> to create your database. If you're not using SQLite (the default), edit <code>config/database.yml</code> with your username and password.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div id="footer">&nbsp;</div>
+    </div>
+  </body>
 </html>
