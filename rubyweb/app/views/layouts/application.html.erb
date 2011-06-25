@@ -1,16 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Rubyweb</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
-</head>
-<body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-<%= yield %>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Ruby VS Python Official Site</title>
+    <%= stylesheet_link_tag "style","main", :cache => "cached_main" %>
+    <%= javascript_include_tag "jquery","application", :cache => "cached_application" %>
+  </head>
+  <body>
+    <div id="header">
+      <a href="/" title="Go home"><%= image_tag("logo.png") %></a>
+    </div>
 
-</body>
-</html>
+    <div id="main">
+      <div id="content">
+        <%= yield %>
+
+        <div class="clear"></div>
+
+        <div id="member_icon">
+          <table>
+            <tr>
+              <td><a href="http://blog.linjunhalida.com/" title="linjunhalida" target="_blank"><img src="/images/memeber_icon_linjunhalida.gif"/></a></td>
+              <td><a href="http://quake.javaeye.com/" title="quakewang" target="_blank"><img src="/images/memeber_icon_quake.gif"/></a></td>
+              <td><a href="#" title="dorian"><img src="/images/memeber_icon_dorian.gif" target="_blank"/></a></td>
+            </tr>
+          </table>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-22394366-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+</script>
+    </body>
+  </html>
+

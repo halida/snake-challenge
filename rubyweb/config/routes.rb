@@ -1,4 +1,14 @@
 Rubyweb::Application.routes.draw do
+  root :to => "rooms#index"
+  resources :room, :controller => :rooms do
+    member do
+      get :info
+      get :map
+      post :add
+      post :turn
+    end
+  end
+
   devise_for :users
 
   # The priority is based upon order of creation:
