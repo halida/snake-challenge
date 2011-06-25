@@ -9,6 +9,12 @@ Chat.add_message = function(name, body){
   $("#chat .items").append(item);
 }
 
+function send_message(){
+  var message = $("#chat textarea").val();
+  $("#chat textarea").val('');
+  $.post("/chat/message", {message: message, channel: info.room_id});
+}
+
 $(document).ready(function(){
   var info = $.get("/chat/info");
 
@@ -17,10 +23,14 @@ $(document).ready(function(){
     Chat.add_message(info.username, data);
   });
 
-  $("#chat .new input").click(function(e){
-    var message = $("#chat textarea").val();
-    $("#chat textarea").val('');
-    $.post("/chat/message", {message: message, channel: info.room_id});
+  $("#chat .new input")
+  .click(function(e){
+    send_message();
+  })
+  .keydown(function(e){
+    if (e.ctrlKey && e.which=="0x0d") {
+      send_message();
+    }
   });
 
 });
