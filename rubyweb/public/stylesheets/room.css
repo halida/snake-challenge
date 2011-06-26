@@ -133,3 +133,7 @@
 	margin: 0 auto;
 	width: 11px;
 }
+
+.clear {
+  clear: both;
+}

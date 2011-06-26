@@ -1,9 +1,9 @@
-#builder .box {
+#map_builder .grid .box {
   border: 1px solid #aaaaaa;
   height: 18px;
   width: 18px;
   display: inline-block; }
-#builder .box:hover {
+#map_builder .grid .box:hover {
   border: 1px solid red; }
-#builder .box.wall {
+#map_builder .grid .box.wall {
   background: #aaaaaa; }
