@@ -8,7 +8,7 @@ class MapsController < ApplicationController
   end
 
   def show
-    @map = Map.find params[:id]
+    map
   end
   
   def create
@@ -20,5 +20,22 @@ class MapsController < ApplicationController
       flash[:error] = "Error creating the map"
       render "new"
     end
+  end
+
+  def update
+    map
+    data = JSON.parse params[:map_builder_data]
+    p data
+    
+    if map.update_attributes data
+      flash[:notice] = "Map was updated"
+    else
+      flash[:error] = "Map was not updated"
+    end
+    redirect_to map
+  end
+
+  def map
+    @map ||= Map.find params[:id]
   end
 end

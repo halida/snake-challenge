@@ -9,7 +9,9 @@ class MapBuilder
     @grid = e.find(".grid")
     @width = w
     @height = h
+    @setup_form()
     @create_grid()
+    @load_data()
   walls: () ->
     walls = []
     for row in @rows
@@ -18,7 +20,22 @@ class MapBuilder
           walls.push(box.position())
     walls
   to_json: () ->
-    {walls: @walls()}
+    {
+      walls: @walls()
+      width: @width
+      height: @height
+    }
+  at: (x,y) ->
+    @rows[y][x]
+  load_data: () ->
+    @data = $.parseJSON @e.find(".data").text()
+    return unless @data
+    for [x,y] in @data.walls
+      @at(x,y).be_wall()
+  setup_form: () ->
+    @form = @e.find("form")
+    @form.find(":submit").click () =>
+      @form.find("#map_builder_data").val(JSON.stringify @to_json())
   create_grid: () ->
     @rows = []
     i = 0
@@ -42,7 +59,9 @@ class Box
     @x = x
     @y = y
     @box.bind "click", () =>
-      @box.toggleClass("wall")
+      @be_wall()
+  be_wall: () ->
+    @box.toggleClass("wall")
   position: () ->
     [@x,@y]
   is_wall: () ->
