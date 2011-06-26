@@ -41,6 +41,3 @@ module Rubyweb
     config.filter_parameters += [:password]
   end
 end
-
-# ActiveRecord model.to_json 排除掉 model 名称
-ActiveRecord::Base.include_root_in_json = false
