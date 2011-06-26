@@ -7,10 +7,10 @@ class RoomsController < ApplicationController
   end
 
   def add
-    zmq_sub_set
-    add_result = zmq_req_send('add', {:name => params[:name], 
-                                      :type => params[:type]})
-    render :text => "[#{add_result}, #{zmq_sub_recv}]"
+    add_result = zmq_req_send('add', 
+                              {:name => params[:name], 
+                                :type => params[:type]})
+    render :text => add_result
   end
 
   def show
@@ -28,15 +28,9 @@ class RoomsController < ApplicationController
   end
 
   def turn
-    zmq_sub_set
-    turn_result = zmq_req_send('turn', {:id => params[:id], :direction => params[:direction].to_i, :round => params[:round].to_i})
-    if turn_result == '{"status": "ok"}'
-      info = zmq_sub_recv
-    else
-      info = zmq_req_send 'info'
-    end
+    turn_result = zmq_req_send('turn', {:id => params[:snake_id], :direction => params[:direction].to_i, :round => params[:round].to_i})
     
-    render :text => "[#{turn_result}, #{info}]"
+    render :text => turn_result
   end
 
   private

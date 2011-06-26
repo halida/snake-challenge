@@ -321,6 +321,14 @@ h1{
     margin: 0 auto;
     width: 11px;
 }
+
+#user-control{
+    background: #fff;
+    margin-bottom:11px;
+    width: 306px;
+}
+
+
 /*footer*/
 #footer {
     background:url(/images/footer.png) no-repeat ;

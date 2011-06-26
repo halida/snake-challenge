@@ -6,10 +6,10 @@ unittest:
 
 # run the game server
 game:
-	python srcs/zmq_game_server.py 4webai
+	python srcs/zmq_game_server.py 4web
 # run the web server
 web:
-	cd rubyweb; ruby server.rb
+	cd rubyweb; rails server
 # run a test ai
 ai:
 	python srcs/ai_simple.py zero 0

@@ -112,3 +112,31 @@ $(function(){
     pull_info();
   }
 })
+
+
+var snake_id=[];
+var seq=-1;
+function addUser(){
+    $.post('./add', {name: 'fucker',
+		     type: 'python'},
+	   function(data){
+	       msg(data);
+	       data = $.parseJSON(data);
+	       seq = data.seq;
+	       snake_id = data.id;
+	       $('#user-control-panel').show();
+	   });
+}
+function turn(direction){
+    if (seq <0) return;
+    $.post('./turn', {snake_id:snake_id,
+		      direction: direction,
+		      round: -1
+		     },
+	   function(data){
+	       msg(data);
+	   });
+}
+function msg(m){
+    $('#msg').text(m);
+}
