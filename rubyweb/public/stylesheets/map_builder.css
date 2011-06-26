@@ -1,0 +1,9 @@
+#builder .box {
+  border: 1px solid #aaaaaa;
+  height: 18px;
+  width: 18px;
+  display: inline-block; }
+#builder .box:hover {
+  border: 1px solid red; }
+#builder .box.wall {
+  background: #aaaaaa; }
