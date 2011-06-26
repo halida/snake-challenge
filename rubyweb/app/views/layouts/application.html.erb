@@ -8,6 +8,7 @@
     <%= yield :styles %>
     <%= javascript_include_tag "jquery","application", :cache => "cached_application" %>
     <%= csrf_meta_tag %>
+    <%= yield :javascripts %>
   </head>
   <body>
     <div id="header">

@@ -8,10 +8,11 @@
   display: -moz-box;
   -moz-box-orient: vertical;
   -moz-box-align: stretch;
+  width: 750px;
 }
 
 #chat .items {
-  min-height: 400px;
+  height: 200px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -28,7 +29,6 @@
 }
 #chat .item {
   position: relative;
-  border-bottom: 1px solid #cdcdcc;
   -moz-box-shadow: 0 1px 1px #fcfcfc;
   -webkit-box-shadow: 0 1px 1px #fcfcfc;
   box-shadow: 0 1px 1px #fcfcfc;
@@ -43,14 +43,8 @@
   text-align: left;
 }
 
-#chat .item:last-child {
-  border-bottom: 0;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
 #chat .new {
+  width: 100%;
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
   box-flex: 0;
