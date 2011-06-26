@@ -4,6 +4,11 @@ class CreateMaps < ActiveRecord::Migration
       t.integer :user_id
       t.string :title
       t.text :walls
+
+      t.integer :height, :null => false, :default => 20
+      t.integer :width, :null => false, :default => 20
+      
+      t.timestamps
     end
   end
 
