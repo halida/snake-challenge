@@ -9,13 +9,34 @@ exists = (e) ->
 $ () ->
   window.builder = new MapBuilder("#map_builder") if exists("#map_builder")
   if exists("ul#maps")
-    window.previews = $("ul#maps li").map (e) ->
+    window.previews = $("ul#maps li").map (i,e) ->
       new MapPreview(e)
+    window.pr = window.previews[0]
 
 class MapPreview
   constructor: (e) ->
     @e = $(e)
     @data = json @e.find(".data")
+    @preview = @e.find(".preview")
+    @draw_grid()
+    @draw_walls()
+  at: (x,y) ->
+    (row = @boxes[y]) && row[x]
+  draw_walls: () ->
+    for [x,y] in @data.walls
+      @at(x,y)?.be_wall()
+  draw_grid: () ->
+    h = @data.height
+    w = @data.width
+    @grid = $("<div class='grid'>")
+    @boxes = for i in [0...h]
+      row = $("<div class='row'>")
+      @grid.append row
+      for j in [0...w]
+        div = $("<div class='box'>")
+        row.append div
+        new Box(div,i,j)
+    @preview.append @grid
 
 class MapBuilder
   constructor: (e) ->

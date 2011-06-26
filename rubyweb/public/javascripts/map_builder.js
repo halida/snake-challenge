@@ -13,16 +13,60 @@
       window.builder = new MapBuilder("#map_builder");
     }
     if (exists("ul#maps")) {
-      return window.previews = $("ul#maps li").map(function(e) {
+      window.previews = $("ul#maps li").map(function(i, e) {
         return new MapPreview(e);
       });
+      return window.pr = window.previews[0];
     }
   });
   MapPreview = (function() {
     function MapPreview(e) {
       this.e = $(e);
       this.data = json(this.e.find(".data"));
+      this.preview = this.e.find(".preview");
+      this.draw_grid();
+      this.draw_walls();
     }
+    MapPreview.prototype.at = function(x, y) {
+      var row;
+      return (row = this.boxes[y]) && row[x];
+    };
+    MapPreview.prototype.draw_walls = function() {
+      var x, y, _i, _len, _ref, _ref2, _ref3, _results;
+      _ref = this.data.walls;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        _ref2 = _ref[_i], x = _ref2[0], y = _ref2[1];
+        _results.push((_ref3 = this.at(x, y)) != null ? _ref3.be_wall() : void 0);
+      }
+      return _results;
+    };
+    MapPreview.prototype.draw_grid = function() {
+      var div, h, i, j, row, w;
+      h = this.data.height;
+      w = this.data.width;
+      this.grid = $("<div class='grid'>");
+      this.boxes = (function() {
+        var _results;
+        _results = [];
+        for (i = 0; 0 <= h ? i < h : i > h; 0 <= h ? i++ : i--) {
+          row = $("<div class='row'>");
+          this.grid.append(row);
+          _results.push((function() {
+            var _results2;
+            _results2 = [];
+            for (j = 0; 0 <= w ? j < w : j > w; 0 <= w ? j++ : j--) {
+              div = $("<div class='box'>");
+              row.append(div);
+              _results2.push(new Box(div, i, j));
+            }
+            return _results2;
+          })());
+        }
+        return _results;
+      }).call(this);
+      return this.preview.append(this.grid);
+    };
     return MapPreview;
   })();
   MapBuilder = (function() {
