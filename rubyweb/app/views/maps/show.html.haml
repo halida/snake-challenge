@@ -4,7 +4,7 @@
       %h1 Map Editor: #{@map.title}
       %h1 created by Anonymous
     #map_builder
-      .grid
+      .map
       .data= @map.to_json
       = form_for(@map) do |f|
         = text_area_tag :map_builder_data

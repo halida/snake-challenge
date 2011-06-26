@@ -28,6 +28,11 @@
       return (row = this.boxes[y]) && row[x];
     };
     Map.prototype.draw = function(data) {
+      var grid;
+      grid = this.e.find(".grid");
+      if (grid.size() > 0) {
+        grid.remove();
+      }
       this.draw_grid(data.width, data.height);
       return this.draw_walls(data.walls);
     };
@@ -41,21 +46,21 @@
       return _results;
     };
     Map.prototype.draw_grid = function(w, h) {
-      var div, i, j, row;
+      var div, row, x, y;
       this.grid = $("<div class='grid'>");
       this.boxes = (function() {
         var _results;
         _results = [];
-        for (i = 0; 0 <= h ? i < h : i > h; 0 <= h ? i++ : i--) {
+        for (y = 0; 0 <= h ? y < h : y > h; 0 <= h ? y++ : y--) {
           row = $("<div class='row'>");
           this.grid.append(row);
           _results.push((function() {
             var _results2;
             _results2 = [];
-            for (j = 0; 0 <= w ? j < w : j > w; 0 <= w ? j++ : j--) {
+            for (x = 0; 0 <= w ? x < w : x > w; 0 <= w ? x++ : x--) {
               div = $("<div class='box'>");
               row.append(div);
-              _results2.push(new Box(div, i, j));
+              _results2.push(new Box(div, x, y));
             }
             return _results2;
           })());
@@ -87,14 +92,14 @@
       this._width = e.find("#map_width").change(__bind(function() {
         return this.adjust_dimension();
       }, this));
-      this.load_data();
-      this.create_grid();
-      this.draw_walls();
+      this.data = json(this.e.find(".data"));
+      this.map = new Map(this.e.find(".map"));
+      this.map.draw(this.data);
     }
     MapBuilder.prototype.walls = function() {
       var box, row, walls, _i, _j, _len, _len2, _ref;
       walls = [];
-      _ref = this.rows;
+      _ref = this.map.boxes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         row = _ref[_i];
         for (_j = 0, _len2 = row.length; _j < _len2; _j++) {
@@ -109,70 +114,18 @@
     MapBuilder.prototype.to_json = function() {
       return {
         walls: this.walls(),
-        width: this.width,
-        height: this.height
+        width: this._width.val(),
+        height: this._height.val()
       };
     };
-    MapBuilder.prototype.redraw = function() {
-      this.grid.remove();
-      this.grid = $("<div class='grid'>");
-      this.e.prepend(this.grid);
-      this.create_grid();
-      return this.draw_walls();
-    };
     MapBuilder.prototype.adjust_dimension = function() {
-      this.height = this._height.val();
-      this.width = this._width.val();
-      return this.redraw();
-    };
-    MapBuilder.prototype.at = function(x, y) {
-      return this.rows[y][x];
-    };
-    MapBuilder.prototype.load_data = function() {
-      this.data = json(this.e.find(".data"));
-      if (!this.data) {
-        return;
-      }
-      this.width = this.data.width;
-      return this.height = this.data.height;
-    };
-    MapBuilder.prototype.draw_walls = function() {
-      var x, y, _i, _len, _ref, _ref2, _ref3, _results;
-      _ref = this.data.walls;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        _ref2 = _ref[_i], x = _ref2[0], y = _ref2[1];
-        _results.push((_ref3 = this.at(x, y)) != null ? _ref3.be_wall() : void 0);
-      }
-      return _results;
+      return this.map.draw(this.to_json());
     };
     MapBuilder.prototype.setup_form = function() {
       this.form = this.e.find("form");
       return this.form.find(":submit").click(__bind(function() {
         return this.form.find("#map_builder_data").val(JSON.stringify(this.to_json()));
       }, this));
-    };
-    MapBuilder.prototype.create_grid = function() {
-      var box, boxes, div, i, j, row, _results;
-      this.rows = [];
-      i = 0;
-      _results = [];
-      while (i < this.height) {
-        row = $("<div>");
-        this.grid.append(row);
-        boxes = [];
-        this.rows.push(boxes);
-        j = 0;
-        while (j < this.width) {
-          div = $("<div class='box'>");
-          row.append(div);
-          box = new Box(div, j, i);
-          boxes.push(box);
-          j += 1;
-        }
-        _results.push(i += 1);
-      }
-      return _results;
     };
     return MapBuilder;
   })();
