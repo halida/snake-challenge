@@ -1,17 +1,19 @@
 $ = jQuery
 
 $ () ->
-  window.builder = new MapBuilder("#map_builder",15,15)
+  window.builder = new MapBuilder("#map_builder")
 
 class MapBuilder
   constructor: (e,w,h) ->
     @e = e = $(e)
     @grid = e.find(".grid")
-    @width = w
-    @height = h
+
     @setup_form()
-    @create_grid()
+
+    # load & draw map
     @load_data()
+    @create_grid()
+    @draw_walls()
   walls: () ->
     walls = []
     for row in @rows
@@ -30,8 +32,11 @@ class MapBuilder
   load_data: () ->
     @data = $.parseJSON @e.find(".data").text()
     return unless @data
+    @width = @data.width
+    @height = @data.height
+  draw_walls: () ->
     for [x,y] in @data.walls
-      @at(x,y).be_wall()
+      @at(x,y)?.be_wall()
   setup_form: () ->
     @form = @e.find("form")
     @form.find(":submit").click () =>

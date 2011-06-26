@@ -25,6 +25,7 @@ class MapsController < ApplicationController
   def update
     map
     data = JSON.parse params[:map_builder_data]
+    data = data.merge(params[:map].slice("width","height"))
     p data
     
     if map.update_attributes data

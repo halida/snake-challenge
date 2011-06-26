@@ -11,5 +11,11 @@
       .data= @map.to_json
       = form_for(@map) do |f|
         = text_area_tag :map_builder_data
+        %p
+          = f.label :height
+          = f.text_field :height
+          %br
+          = f.label :width
+          = f.text_field :width
         = f.submit
       

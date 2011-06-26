@@ -3,17 +3,16 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   $(function() {
-    return window.builder = new MapBuilder("#map_builder", 15, 15);
+    return window.builder = new MapBuilder("#map_builder");
   });
   MapBuilder = (function() {
     function MapBuilder(e, w, h) {
       this.e = e = $(e);
       this.grid = e.find(".grid");
-      this.width = w;
-      this.height = h;
       this.setup_form();
-      this.create_grid();
       this.load_data();
+      this.create_grid();
+      this.draw_walls();
     }
     MapBuilder.prototype.walls = function() {
       var box, row, walls, _i, _j, _len, _len2, _ref;
@@ -41,16 +40,20 @@
       return this.rows[y][x];
     };
     MapBuilder.prototype.load_data = function() {
-      var x, y, _i, _len, _ref, _ref2, _results;
       this.data = $.parseJSON(this.e.find(".data").text());
       if (!this.data) {
         return;
       }
+      this.width = this.data.width;
+      return this.height = this.data.height;
+    };
+    MapBuilder.prototype.draw_walls = function() {
+      var x, y, _i, _len, _ref, _ref2, _ref3, _results;
       _ref = this.data.walls;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         _ref2 = _ref[_i], x = _ref2[0], y = _ref2[1];
-        _results.push(this.at(x, y).be_wall());
+        _results.push((_ref3 = this.at(x, y)) != null ? _ref3.be_wall() : void 0);
       }
       return _results;
     };
