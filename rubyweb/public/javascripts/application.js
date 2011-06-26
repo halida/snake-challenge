@@ -122,6 +122,7 @@ function addUser(){
 	       data = $.parseJSON(data);
 	       seq = data.seq;
 	       snake_id = data.id;
+	       $('#user-control-panel').show();
 	   });
 }
 function turn(direction){

@@ -6,7 +6,7 @@ unittest:
 
 # run the game server
 game:
-	python srcs/zmq_game_server.py 4webai
+	python srcs/zmq_game_server.py 4web
 # run the web server
 web:
 	cd rubyweb; rails server

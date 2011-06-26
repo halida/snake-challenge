@@ -35,9 +35,10 @@ class Server():
             g.pre = now
             return True
         
-    def run(self, loop=False, max_waits=10.0):
+    def run(self, loop=False, max_waits=10.0, enable_no_resp_die=True):
         self.max_waits = max_waits
-        self.games = [Game() for i in range(ROOMS)]
+        self.games = [Game(enable_no_resp_die=enable_no_resp_die)
+                      for i in range(ROOMS)]
         self.controller = game_controller.RoomController(self.games)
         if loop:
             for g in self.games:
@@ -108,7 +109,7 @@ usage = """\
     type == 4web:
         server for snakechallenge.org, when game over, server start new round.
     type == 4webai:
-        because it is slow on internet, set wait time to 10.0 seconds
+        because it is slow on internet, set wait time to 10.0 seconds        
 """
 
 def main():
@@ -120,7 +121,7 @@ def main():
         s.run()
     elif cmd == '4web':
         s = Server()
-        s.run(loop=True, max_waits=1.0)
+        s.run(loop=True, max_waits=1.0, enable_no_resp_die=False)
     elif cmd == '4webai':
         s = Server()
         s.run(loop=True, max_waits=10.0)
