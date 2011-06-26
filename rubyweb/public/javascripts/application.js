@@ -106,9 +106,11 @@ function pull_info() {
 }
 
 $(function(){
+  if($("#canvas")[0]) {
     $.ajaxSetup({cache: false});
     setup_walls_data();
     pull_info();
+  }
 })
 
 

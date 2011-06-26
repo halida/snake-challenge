@@ -1,0 +1,9 @@
+<h1>Listing Replays</h1>
+
+<ul>
+<% @replays.each do |replay| %>
+  <li><a href="<%= replay_path(replay.id) %>"><%= replay.title %></a>
+<% end %>
+</ul>
+<%= paginate @replays %>
+

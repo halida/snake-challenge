@@ -82,6 +82,17 @@
       <a href="/room/2/"><img id="room_03" src="/images/room_03.png"/></a>
       <a href="/room/3/"><img id="room_04" src="/images/room_04.png"/></a>
     </div>
+    <% if !@replays.blank? %>
+      <div class="title_bar_r"><h1>Game Replay</h1></div>
+      <div id="game_replay">
+        <ul>
+          <% @replays.each do |item| %>
+            <li><a href="<%= replay_path(item.id) %>"><%= item.title %></a></li>
+          <% end %>
+          <li class="more"><a href="<%= replays_path %>">More...</a></li>
+        </ul>
+      </div>
+    <% end %>
     <div class="title_bar_r"><h1>Sponsors</h1></div>
     <div id="sponsor_icon">
       <a href="http://gurudigger.com" target="_blank"><img id="sponsor" src="/images/gurudigger.png"/></a>

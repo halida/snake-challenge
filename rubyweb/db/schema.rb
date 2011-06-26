@@ -10,7 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110625052210) do
+ActiveRecord::Schema.define(:version => 20110626025151) do
+
+  create_table "maps", :force => true do |t|
+    t.integer "user_id"
+    t.string  "title"
+    t.text    "walls"
+  end
+
+  create_table "replays", :force => true do |t|
+    t.string   "title",                     :null => false
+    t.integer  "round",      :default => 0, :null => false
+    t.text     "json",                      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "map"
+  end
 
   create_table "rooms", :force => true do |t|
     t.string   "name",       :null => false

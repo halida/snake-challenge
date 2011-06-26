@@ -1,5 +1,7 @@
 Rubyweb::Application.routes.draw do
-  root :to => "rooms#index"
+  resources :replays
+
+  root :to => "home#index"
   resources :room, :controller => :rooms do
     member do
       get :info
@@ -8,6 +10,12 @@ Rubyweb::Application.routes.draw do
       post :turn
     end
   end
+
+  resources :maps
+
+  match '/chat/message' => 'chat#message'
+  match '/chat/info' => 'chat#info'
+  match '/chat' => 'chat#index'
 
   devise_for :users
 
