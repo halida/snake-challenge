@@ -60,6 +60,7 @@ body {
     width: 100%;
     text-align:left;
 }
+#user_bar { width:1104px; margin:0 auto 10px auto; text-align:right; }
 #content {
     margin: 0 auto;
     width: 1104px;

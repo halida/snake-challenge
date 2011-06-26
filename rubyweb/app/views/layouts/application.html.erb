@@ -17,6 +17,14 @@
     </div>
 
     <div id="main">
+      <div id="user_bar">
+        <% if current_user.blank? %>
+          <a href="/users/sign_up">Register</a>
+          <a href="/users/sign_in">Login</a>
+        <% else %>
+          Hello, <%= current_user.name %> <a href="/users/sign_out">Sign out</a>
+        <% end %>
+      </div>
       <div id="content">
         <% if flash[:error] %>
           <div id="flash_error">

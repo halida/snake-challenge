@@ -41,6 +41,7 @@ Devise.setup do |config|
   # modifying a user and when used to authenticate or find a user. Default is :email.
   config.strip_whitespace_keys = [ :email ]
 
+  config.scoped_views = true
   # Tell if authentication through request.params is enabled. True by default.
   # config.params_authenticatable = true
 
