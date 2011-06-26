@@ -5,9 +5,11 @@ class ChatController < ApplicationController
   end
 
   def info
+    params[:id] ||= 0
+
     respond_to do |format|
       format.js {
-        render {room_id: params[:id], username: "guest"}
+        render :json => {room_id: params[:id], username: "guest"}
       }
     end
   end
