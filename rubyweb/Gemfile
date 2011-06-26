@@ -14,6 +14,7 @@ gem 'zmq', "2.1.3"
 gem 'json', '1.5.3'
 
 gem 'haml'
+gem 'sass'
 
 group :test, :development do
   gem "rspec"
