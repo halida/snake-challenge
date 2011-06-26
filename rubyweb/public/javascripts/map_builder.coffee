@@ -1,11 +1,12 @@
 $ = jQuery
 
 $ () ->
-  window.builder = new MapBuilder("#builder",15,15)
+  window.builder = new MapBuilder("#map_builder",15,15)
 
 class MapBuilder
   constructor: (e,w,h) ->
     @e = e = $(e)
+    @grid = e.find(".grid")
     @width = w
     @height = h
     @create_grid()
@@ -23,7 +24,7 @@ class MapBuilder
     i = 0
     while(i < @height)
       row = $("<div>")
-      @e.append(row)
+      @grid.append(row)
       boxes = []
       @rows.push(boxes)
       j = 0

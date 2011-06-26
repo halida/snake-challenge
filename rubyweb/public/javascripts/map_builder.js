@@ -3,11 +3,12 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   $(function() {
-    return window.builder = new MapBuilder("#builder", 15, 15);
+    return window.builder = new MapBuilder("#map_builder", 15, 15);
   });
   MapBuilder = (function() {
     function MapBuilder(e, w, h) {
       this.e = e = $(e);
+      this.grid = e.find(".grid");
       this.width = w;
       this.height = h;
       this.create_grid();
@@ -39,7 +40,7 @@
       _results = [];
       while (i < this.height) {
         row = $("<div>");
-        this.e.append(row);
+        this.grid.append(row);
         boxes = [];
         this.rows.push(boxes);
         j = 0;
