@@ -9,6 +9,10 @@ class MapBuilder
     @grid = e.find(".grid")
 
     @setup_form()
+    @_height = e.find("#map_height").change () =>
+      @adjust_dimension()
+    @_width = e.find("#map_width").change () =>
+      @adjust_dimension()
 
     # load & draw map
     @load_data()
@@ -27,6 +31,16 @@ class MapBuilder
       width: @width
       height: @height
     }
+  redraw: () ->
+    @grid.remove()
+    @grid = $("<div class='grid'>")
+    @e.prepend(@grid)
+    @create_grid()
+    @draw_walls()
+  adjust_dimension: () ->
+    @height = @_height.val()
+    @width = @_width.val()
+    @redraw()
   at: (x,y) ->
     @rows[y][x]
   load_data: () ->

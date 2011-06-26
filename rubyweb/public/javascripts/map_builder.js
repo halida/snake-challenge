@@ -10,6 +10,12 @@
       this.e = e = $(e);
       this.grid = e.find(".grid");
       this.setup_form();
+      this._height = e.find("#map_height").change(__bind(function() {
+        return this.adjust_dimension();
+      }, this));
+      this._width = e.find("#map_width").change(__bind(function() {
+        return this.adjust_dimension();
+      }, this));
       this.load_data();
       this.create_grid();
       this.draw_walls();
@@ -35,6 +41,18 @@
         width: this.width,
         height: this.height
       };
+    };
+    MapBuilder.prototype.redraw = function() {
+      this.grid.remove();
+      this.grid = $("<div class='grid'>");
+      this.e.prepend(this.grid);
+      this.create_grid();
+      return this.draw_walls();
+    };
+    MapBuilder.prototype.adjust_dimension = function() {
+      this.height = this._height.val();
+      this.width = this._width.val();
+      return this.redraw();
     };
     MapBuilder.prototype.at = function(x, y) {
       return this.rows[y][x];
