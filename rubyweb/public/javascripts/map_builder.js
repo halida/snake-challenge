@@ -1,5 +1,5 @@
 (function() {
-  var $, Box, MapBuilder, MapPreview, exists, json;
+  var $, Box, Map, MapBuilder, MapPreview, exists, json;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   json = function(e) {
@@ -19,32 +19,29 @@
       return window.pr = window.previews[0];
     }
   });
-  MapPreview = (function() {
-    function MapPreview(e) {
+  Map = (function() {
+    function Map(e) {
       this.e = $(e);
-      this.data = json(this.e.find(".data"));
-      this.preview = this.e.find(".preview");
-      this.draw_grid();
-      this.draw_walls();
     }
-    MapPreview.prototype.at = function(x, y) {
+    Map.prototype.at = function(x, y) {
       var row;
       return (row = this.boxes[y]) && row[x];
     };
-    MapPreview.prototype.draw_walls = function() {
-      var x, y, _i, _len, _ref, _ref2, _ref3, _results;
-      _ref = this.data.walls;
+    Map.prototype.draw = function(data) {
+      this.draw_grid(data.width, data.height);
+      return this.draw_walls(data.walls);
+    };
+    Map.prototype.draw_walls = function(walls) {
+      var x, y, _i, _len, _ref, _ref2, _results;
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        _ref2 = _ref[_i], x = _ref2[0], y = _ref2[1];
-        _results.push((_ref3 = this.at(x, y)) != null ? _ref3.be_wall() : void 0);
+      for (_i = 0, _len = walls.length; _i < _len; _i++) {
+        _ref = walls[_i], x = _ref[0], y = _ref[1];
+        _results.push((_ref2 = this.at(x, y)) != null ? _ref2.be_wall() : void 0);
       }
       return _results;
     };
-    MapPreview.prototype.draw_grid = function() {
-      var div, h, i, j, row, w;
-      h = this.data.height;
-      w = this.data.width;
+    Map.prototype.draw_grid = function(w, h) {
+      var div, i, j, row;
       this.grid = $("<div class='grid'>");
       this.boxes = (function() {
         var _results;
@@ -65,8 +62,18 @@
         }
         return _results;
       }).call(this);
-      return this.preview.append(this.grid);
+      return this.e.append(this.grid);
     };
+    return Map;
+  })();
+  MapPreview = (function() {
+    function MapPreview(e) {
+      this.e = $(e);
+      this.data = json(this.e.find(".data"));
+      this.preview = this.e.find(".preview");
+      this.map = new Map(this.preview);
+      this.map.draw(this.data);
+    }
     return MapPreview;
   })();
   MapBuilder = (function() {

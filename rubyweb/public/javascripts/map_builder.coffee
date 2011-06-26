@@ -13,21 +13,18 @@ $ () ->
       new MapPreview(e)
     window.pr = window.previews[0]
 
-class MapPreview
+class Map
   constructor: (e) ->
     @e = $(e)
-    @data = json @e.find(".data")
-    @preview = @e.find(".preview")
-    @draw_grid()
-    @draw_walls()
   at: (x,y) ->
     (row = @boxes[y]) && row[x]
-  draw_walls: () ->
-    for [x,y] in @data.walls
+  draw: (data) ->
+    @draw_grid(data.width,data.height)
+    @draw_walls(data.walls)
+  draw_walls: (walls) ->
+    for [x,y] in walls
       @at(x,y)?.be_wall()
-  draw_grid: () ->
-    h = @data.height
-    w = @data.width
+  draw_grid: (w,h) ->
     @grid = $("<div class='grid'>")
     @boxes = for i in [0...h]
       row = $("<div class='row'>")
@@ -36,7 +33,15 @@ class MapPreview
         div = $("<div class='box'>")
         row.append div
         new Box(div,i,j)
-    @preview.append @grid
+    @e.append @grid
+
+class MapPreview
+  constructor: (e) ->
+    @e = $(e)
+    @data = json @e.find(".data")
+    @preview = @e.find(".preview")
+    @map = new Map(@preview)
+    @map.draw(@data)
 
 class MapBuilder
   constructor: (e) ->

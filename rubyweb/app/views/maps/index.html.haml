@@ -7,6 +7,5 @@
       - @maps.each do |map|
         %li
           .title= link_to(map.title,map)
+          .data= map.to_json
           .preview
-            .data= map.to_json
-    
