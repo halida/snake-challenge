@@ -1,6 +1,11 @@
 <% content_for :styles do %>
   <%= stylesheet_link_tag "room", :cache => "cached_room" %>
 <% end %>
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    var replay = <%= raw @replay.to_json %>;
+  </script>
+<% end %>
 <div id="left">
   <div class="title_bar">
     <%= image_tag("step.gif", :style => "vertical-align:middle;") %>
