@@ -9,7 +9,7 @@ game:
 	python srcs/zmq_game_server.py 4webai
 # run the web server
 web:
-	cd rubyweb; ruby server.rb
+	cd rubyweb; rails server
 # run a test ai
 ai:
 	python srcs/ai_simple.py zero 0

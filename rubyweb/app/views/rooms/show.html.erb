@@ -13,6 +13,30 @@
 </div>
 
 <div id="right">
+  <div id="user-control">
+    <div class="title_bar">
+      <%= image_tag("living_room.gif") %>
+    </div>
+    <div id="add-user">
+      <%= button_to "add user", "javascript:addUser();"%>
+    </div>
+
+    <div id="user-control-panel">
+      <table>
+	<tr><td></td><td><%= button_to "up", "javascript:turn(1);"%></td><td></td>
+	<tr>
+	  <td><%= button_to "left", "javascript:turn(0);"%></td>
+	  <td><%= button_to "down", "javascript:turn(3);"%></td>
+	  <td><%= button_to "right", "javascript:turn(2);"%></td>
+	</tr>
+      </table>
+    </div>
+
+    <div id="msg"></div>
+
+  </div>      
+  <div class="clear"></div>
+
   <div id="living_room">
     <div class="title_bar">
       <%= image_tag("living_room.gif") %>
