@@ -1,10 +1,24 @@
 $ = jQuery
 
+json = (e) ->
+  $.parseJSON $(e).text()
+
+exists = (e) ->
+  $(e).size() > 0
+
 $ () ->
-  window.builder = new MapBuilder("#map_builder")
+  window.builder = new MapBuilder("#map_builder") if exists("#map_builder")
+  if exists("ul#maps")
+    window.previews = $("ul#maps li").map (e) ->
+      new MapPreview(e)
+
+class MapPreview
+  constructor: (e) ->
+    @e = $(e)
+    @data = json @e.find(".data")
 
 class MapBuilder
-  constructor: (e,w,h) ->
+  constructor: (e) ->
     @e = e = $(e)
     @grid = e.find(".grid")
 
@@ -26,11 +40,10 @@ class MapBuilder
           walls.push(box.position())
     walls
   to_json: () ->
-    {
-      walls: @walls()
-      width: @width
-      height: @height
-    }
+    walls: @walls()
+    width: @width
+    height: @height
+
   redraw: () ->
     @grid.remove()
     @grid = $("<div class='grid'>")
@@ -44,7 +57,7 @@ class MapBuilder
   at: (x,y) ->
     @rows[y][x]
   load_data: () ->
-    @data = $.parseJSON @e.find(".data").text()
+    @data = json @e.find(".data")
     return unless @data
     @width = @data.width
     @height = @data.height

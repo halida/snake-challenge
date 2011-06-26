@@ -1,12 +1,32 @@
 (function() {
-  var $, Box, MapBuilder;
+  var $, Box, MapBuilder, MapPreview, exists, json;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
+  json = function(e) {
+    return $.parseJSON($(e).text());
+  };
+  exists = function(e) {
+    return $(e).size() > 0;
+  };
   $(function() {
-    return window.builder = new MapBuilder("#map_builder");
+    if (exists("#map_builder")) {
+      window.builder = new MapBuilder("#map_builder");
+    }
+    if (exists("ul#maps")) {
+      return window.previews = $("ul#maps li").map(function(e) {
+        return new MapPreview(e);
+      });
+    }
   });
+  MapPreview = (function() {
+    function MapPreview(e) {
+      this.e = $(e);
+      this.data = json(this.e.find(".data"));
+    }
+    return MapPreview;
+  })();
   MapBuilder = (function() {
-    function MapBuilder(e, w, h) {
+    function MapBuilder(e) {
       this.e = e = $(e);
       this.grid = e.find(".grid");
       this.setup_form();
@@ -58,7 +78,7 @@
       return this.rows[y][x];
     };
     MapBuilder.prototype.load_data = function() {
-      this.data = $.parseJSON(this.e.find(".data").text());
+      this.data = json(this.e.find(".data"));
       if (!this.data) {
         return;
       }
