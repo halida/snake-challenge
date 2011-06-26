@@ -11,6 +11,7 @@
 }
 
 #chat .items {
+  min-height: 400px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -67,8 +68,7 @@
   background: -moz-linear-gradient(top, #e6e6e7, #fafafa);
   background: linear-gradient(top, #e6e6e7, #fafafa);
 }
-#chat .new textarea {
-  min-height: 60px;
+#chat .new input.message {
   padding: 10px;
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
@@ -82,7 +82,7 @@
   font-family: Helvetica, Arial, "MS Trebuchet", sans-serif;
 }
 
-#chat .new textarea:focus { outline: none; }
+#chat .new input.message:focus { outline: none; }
 
 #chat .new input[value="Send"] {
   margin: 5px;
