@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20110626025151) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "walls"
-    t.integer  "height"
-    t.integer  "width"
+    t.integer  "height",     :default => 20, :null => false
+    t.integer  "width",      :default => 20, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

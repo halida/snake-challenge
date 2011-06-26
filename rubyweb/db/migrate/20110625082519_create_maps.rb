@@ -5,8 +5,8 @@ class CreateMaps < ActiveRecord::Migration
       t.string :title
       t.text :walls
 
-      t.integer :height
-      t.integer :width
+      t.integer :height, :null => false, :default => 20
+      t.integer :width, :null => false, :default => 20
       
       t.timestamps
     end
