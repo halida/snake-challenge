@@ -12,10 +12,15 @@
 
 ActiveRecord::Schema.define(:version => 20110626025151) do
 
+
   create_table "maps", :force => true do |t|
-    t.integer "user_id"
-    t.string  "title"
-    t.text    "walls"
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "walls"
+    t.integer  "height"
+    t.integer  "width"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "replays", :force => true do |t|
