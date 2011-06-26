@@ -328,6 +328,19 @@ h1{
     margin:10px auto 0px auto;
     width:217px;
 }
+
+#flash_error {
+    background: #FFF;
+    color: red;
+}
+
+#flash_notice {
+    background: #FFF;
+}
+
+ul#maps {
+    color: #FFF;
+}
 /*clear*/
 .clear {
     clear: both;

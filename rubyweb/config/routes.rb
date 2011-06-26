@@ -11,6 +11,8 @@ Rubyweb::Application.routes.draw do
     end
   end
 
+  resources :maps
+
   devise_for :users
 
   # The priority is based upon order of creation:

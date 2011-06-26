@@ -12,10 +12,23 @@
   <body>
     <div id="header">
       <a href="/" title="Go home"><%= image_tag("logo.png") %></a>
+      
     </div>
 
     <div id="main">
       <div id="content">
+        <% if flash[:error] %>
+          <div id="flash_error">
+            <%= flash[:error] %>
+          </div>
+        <% end %>
+
+        <% if flash[:notice] %>
+          <div id="flash_notice">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+        
         <%= yield %>
 
         <div class="clear"></div>
