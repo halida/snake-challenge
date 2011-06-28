@@ -10,6 +10,9 @@ game:
 # run the web server
 web:
 	cd rubyweb; rails server
+# run websocket server
+websocket:
+	cd srcs; python websocket_server.py
 # run a test ai
 ai:
 	python srcs/ai_simple.py zero 0

@@ -4,12 +4,17 @@ snake-challenge项目说明
 
 游戏介绍
 ------------------------------------
-就是传统的贪吃蛇游戏, 只是有以下特性:
+贪吃蛇游戏, 有以下特性:
 
 - 蛇有2种(python/ruby), 豆子也有2种(egg/gem), 吃自己对应的豆子+1长度, 否则-1长度.
 - 回合制进行, 服务器等待每条蛇发出命令(或者超时)才进行下一轮.
 - 当只有1条蛇剩下, 或者到达600轮的时候游戏结束.
 - 蛇死掉后就变成尸体了, 和墙的效果一样.
+
+sprint之后的:
+
+- 有传送门
+- 食物的长度可变.
 
 架构
 ------------------------------------
@@ -184,27 +189,33 @@ pygame用来本机显示游戏场景.
 
    sudo apt-get install python-pygame
 
-ruby
+ruby web server
 ````````````````````````````````````
-需要安装ruby1.9 ::
+需要安装rails!!
 
-    sudo apt-get install ruby1.9.1-full 
-    sudo gem install json
-    sudo gem install sinatra
-    sudo gem install zmq
+太复杂了, 具体见 http://server.linjunhalida.com/blog/article/rails_ubuntu_%E5%AE%89%E8%A3%85/
 
-测试一下
+rails目录是rubyweb.
+
+终于可以跑了
 ------------------------------------
 开启多个终端, 每个终端分别执行 ::
 
     # 游戏引擎
     make game 
-    # 用pygame来做的游戏场景显示
-    make show
     # 加入第一个测试AI
     make ai
     # 加入第二个测试AI
     make ai
 
-然后你就可以看到2条蛇在追逐豆子了...
+    # 用pygame来做本地游戏场景显示
+    make show
+
+    # 用web服务器来显示
+    # 开启web服务器
+    make web
+    # 开启websocket服务器
+    make websocket
+
+然后你就可以看到2条蛇在追逐豆子了... 安装好累呀...
 

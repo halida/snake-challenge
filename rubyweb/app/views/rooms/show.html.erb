@@ -24,6 +24,7 @@
     <div id="add-user">
       <%= button_to "add user", "javascript:addUser();"%>
     </div>
+    <div id="data"></div>
 
     <div id="user-control-panel" style="display:none;">
       <table>
@@ -87,5 +88,5 @@
 </div>
 
 <script type="text/javascript">
-  run_application();
+  run_application(<%=params[:id]%>);
 </script>

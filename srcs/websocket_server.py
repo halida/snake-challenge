@@ -34,6 +34,7 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
                 # 拆分掉room头信息
                 i = data.index(' ')
                 room = int(data[:i].split(':')[1])
+                print "on sub info: ", data
                 # 发送给所有注册到这个room的连接
                 cls.send_info(room, data[i:])
             except zmq.ZMQError:

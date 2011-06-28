@@ -11,12 +11,13 @@ var finished = false;
 var canvas;
 var ctx;
 
-function run_application(){
+function run_application(room){
   canvas = $("#canvas")[0];
   ctx = canvas.getContext("2d");
 
   ws = new WebSocket("ws://localhost:9999/info");
   ws.onmessage = function (e) {
+      $('#data').html(data);
       var data = $.parseJSON(e.data);
       pull_info(data); 
   };  
@@ -99,7 +100,7 @@ function setup_walls_data() {
     });
 }
 
-function pull_info(data) {
+function pull_info(info) {
     if(finished) {
 	if(info.status != 'finished') {
 	    setup_walls_data();
@@ -115,7 +116,7 @@ $(function(){
   if($("#canvas")[0]) {
     $.ajaxSetup({cache: false});
     setup_walls_data();
-    pull_info();
+    //pull_info();
   }
 })
 
