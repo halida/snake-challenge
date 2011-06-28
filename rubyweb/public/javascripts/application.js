@@ -14,6 +14,19 @@ var ctx;
 function run_application(){
   canvas = $("#canvas")[0];
   ctx = canvas.getContext("2d");
+
+  ws = new WebSocket("ws://localhost:9999/info");
+  ws.onmessage = function (e) {
+      var data = $.parseJSON(e.data);
+      pull_info(data); 
+  };  
+  ws.onclose = function(){
+      alert('connection closed, refresh please..')
+  };
+  ws.onopen = function(){
+      ws.send(room);
+  };
+
 }
 
 function update(info) {
@@ -86,23 +99,16 @@ function setup_walls_data() {
     });
 }
 
-function pull_info() {
-    $.getJSON('info', function(info) {
-        //wait 0.6 second to pull info again
-        setTimeout(function() {
-            pull_info();
-        }, 600);
-        
-        if(finished) {
-            if(info.status != 'finished') {
-                setup_walls_data();
-                finished = false;
-            }
-        }else{
-            update(info);
-            finished = info.status == 'finished';
-        }
-    });
+function pull_info(data) {
+    if(finished) {
+	if(info.status != 'finished') {
+	    setup_walls_data();
+	    finished = false;
+	}
+    }else{
+	update(info);
+	finished = info.status == 'finished';
+    }
 }
 
 $(function(){
