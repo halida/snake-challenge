@@ -11,21 +11,36 @@ var finished = false;
 var canvas;
 var ctx;
 
-function run_application(room){
+var room = -1;
+
+function run_application(r){
+  room = r;
   canvas = $("#canvas")[0];
   ctx = canvas.getContext("2d");
 
   ws = new WebSocket("ws://localhost:9999/info");
   ws.onmessage = function (e) {
-      $('#data').html(data);
+      msg(data);
       var data = $.parseJSON(e.data);
-      pull_info(data); 
+
+      switch (data.op)
+	  {
+	  case 'info': 
+	      pull_info(data);
+	      break;
+	  case 'add':
+	      seq = data.seq;
+	      snake_id = data.id;
+	      $('#user-control-panel').show();
+	      break;
+	  }
   };  
+
   ws.onclose = function(){
       alert('connection closed, refresh please..')
   };
   ws.onopen = function(){
-      ws.send(room);
+      ws.send('room:' + room);
   };
 
 }
@@ -116,33 +131,25 @@ $(function(){
   if($("#canvas")[0]) {
     $.ajaxSetup({cache: false});
     setup_walls_data();
-    //pull_info();
   }
 })
 
 
 var snake_id=[];
 var seq=-1;
-function addUser(){
-    $.post('./add', {name: 'fucker',
-		     type: 'python'},
-	   function(data){
-	       msg(data);
-	       data = $.parseJSON(data);
-	       seq = data.seq;
-	       snake_id = data.id;
-	       $('#user-control-panel').show();
-	   });
+function addUser(name, type){
+    ws.send(JSON.stringify({op: 'add', room: room, name: name, type: type}));
 }
 function turn(direction){
     if (seq <0) return;
-    $.post('./turn', {snake_id:snake_id,
-		      direction: direction,
-		      round: -1
-		     },
-	   function(data){
-	       msg(data);
-	   });
+    ws.send(JSON.stringify({
+		op: 'turn',
+                id: snake_id,
+		snake_id:snake_id,
+                room: room,
+		direction: direction,
+		round: -1
+		}));
 }
 function msg(m){
     $('#msg').text(m);

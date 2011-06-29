@@ -34,7 +34,7 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
                 # 拆分掉room头信息
                 i = data.index(' ')
                 room = int(data[:i].split(':')[1])
-                print "on sub info: ", data
+                # print "on sub info: ", data
                 # 发送给所有注册到这个room的连接
                 cls.send_info(room, data[i:])
             except zmq.ZMQError:
@@ -50,8 +50,17 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
         self.connects.append(self)
         
     def on_message(self, message):
-        # 连进来的连接一开始要设置room
-        self.room = int(message)
+        print message
+        if message.startswith('room:'):
+            self.room = int(message[5:])
+        else:
+            self.process_cmd(message)
+
+    def process_cmd(self, message):
+        oper.send_unicode(message)
+        result = oper.recv()
+        print result
+        self.write_message(result)
 
     def on_close(self):
         self.connects.remove(self)
