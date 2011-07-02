@@ -123,17 +123,22 @@ class Game():
     def __init__(self, size=(50, 25),
                  enable_bean=True,
                  enable_wall=True,
-                 enable_no_resp_die=True):
+                 enable_no_resp_die=True,
+                 map=None):
         self.size = self.w, self.h = size
         self.enable_bean = enable_bean
         self.enable_wall = enable_wall
         self.enable_no_resp_die = enable_no_resp_die
-        
-        map = Map.load('srcs/map/sample.map')        
+
+        if not map:
+            map = Map.load('srcs/map/lost_temple.map')
+        self.setMap(map)
+        self.restart()
+
+    def setMap(self, map):
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
         self.beangen = map.beangen
-        self.restart()
 
     def restart(self):
         '''

@@ -149,10 +149,10 @@ def run_ai(ai, controller):
             logging.info("add ai: %d" % ai.seq)
             
         else:
-            if info['status'] == 'finished':
-                # 游戏结束的话, ai复位..
+            if info['status'] == 'finished' or len(info['snakes']) <= ai.seq:
+                # 游戏结束的话, 或者发现没有蛇的信息, ai复位..
                 ai.status = NEED_ADDING
-                logging.info("finished..") 
+                logging.info("finished..")
             else:
                 # 如果自己死掉了, 那就不发出操作
                 if not info['snakes'][ai.seq]['alive']:
