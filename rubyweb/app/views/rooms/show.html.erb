@@ -20,20 +20,23 @@
   <% if current_user %>
   <div id="user-control">
     <div class="title_bar">
-      <%= image_tag("living_room.gif") %>
     </div>
     <div id="add-user">
-      <%= button_to "add user", "javascript:addUser('#{current_user.name}', 'ruby');"%>
+      <input type="submit" onclick="javascript:addUser('#{current_user.name}', $('#snake-type').val());" value="add user"/>
+      <select id="snake-type">
+	<option>python</option>
+	<option>ruby</option>
+      </select>
     </div>
     <div id="data"></div>
 
     <div id="user-control-panel" style="display:none;">
       <table>
-	<tr><td></td><td><%= button_to "up", "javascript:turn(1);"%></td><td></td>
+	<tr><td></td><td><%= button_to "^", "javascript:turn(1);"%></td><td></td>
 	<tr>
-	  <td><%= button_to "left", "javascript:turn(0);"%></td>
-	  <td><%= button_to "down", "javascript:turn(3);"%></td>
-	  <td><%= button_to "right", "javascript:turn(2);"%></td>
+	  <td><%= button_to "<", "javascript:turn(0);"%></td>
+	  <td><%= button_to "V", "javascript:turn(3);"%></td>
+	  <td><%= button_to ">", "javascript:turn(2);"%></td>
 	</tr>
       </table>
     </div>
