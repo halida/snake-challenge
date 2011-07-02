@@ -152,5 +152,37 @@ function turn(direction){
 		}));
 }
 function msg(m){
-    $('#msg').text(m);
+    $('#debug-msg').text(m);
 }
+
+//-----------------------------------------------------
+//chats
+var chat_ws = [];
+
+function append(msg){
+    $('#msgs').prepend(msg);
+    $('#msgs').prepend('<br/>');    
+}
+
+function chat_init(name, room){
+
+    chat_ws = new WebSocket("ws://localhost:9999/chatroom");  
+
+    chat_ws.onopen = function() {  
+	chat_ws.send(JSON.stringify({name:name, room:room}));
+    };  
+    chat_ws.onmessage = function (e) {
+	append(e.data); 
+    };  
+    chat_ws.onclose = function() { append('closed')};  
+
+    $('#send-msg').show(200);
+    $('#msg').focus();
+}
+
+function send(){
+    var msg = $('#msg').val();
+    chat_ws.send(JSON.stringify({msg:msg}));
+    $('#msg').val('');
+}
+

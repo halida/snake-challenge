@@ -7,12 +7,32 @@
     <span id="round_counter" style="font-weight: bold;font-size:18px;">0</span>
   </div>
 
-  <canvas id="canvas" width="750" height="375" />
+  <canvas id="canvas" width="750" height="375"></canvas>
 
   <div id="canvas_images" style="display:none;">
     <%= image_tag("icons/egg.gif", :id => "icon_egg") %>
     <%= image_tag("icons/gem.gif", :id => "icon_gem") %>
   </div>
+
+  <div class="clear"></div>
+
+
+<div id="chat">
+  <form id="send-msg" action="javascript:send();" style="display:none;">
+    <input type="text" id="msg"/>
+    <input type="submit" value="send"/>
+  </form>
+
+  <div id="msgs"></div>
+
+  <script type="text/javascript">
+    chat_init("<%=current_user ? current_user.name : request.remote_ip %>", <%=params[:id]%>);
+  </script>
+
+</div>
+
+
+
 </div>
 
 <div id="right">
@@ -41,7 +61,7 @@
       </table>
     </div>
 
-    <div id="msg"></div>
+    <div id="debug-msg"></div>
 
   </div>      
   <div class="clear"></div>
@@ -88,9 +108,6 @@
 
 <div class="clear"></div>
 
-<div id="chat">
-  <%= render "chat/index" %>
-</div>
 
 <script type="text/javascript">
   run_application(<%=params[:id]%>);

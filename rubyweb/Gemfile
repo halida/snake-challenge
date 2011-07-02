@@ -17,7 +17,6 @@ gem "activeadmin", "0.2.2"
 
 gem 'haml'
 gem 'sass'
-gem "juggernaut", '~>2.0.0'  # chat
 
 group :test, :development do
   gem "rspec"

@@ -1,7 +1,9 @@
 /*left*/
 #left {
-	background: #fff;
 	float:left;
+}
+canvas{
+    background: white;
 }
 .title_bar {
 	background: #0f9fbc url(/images/title_bar_bg.gif) no-repeat right;
@@ -136,4 +138,11 @@
 
 .clear {
   clear: both;
+}
+/*chat*/
+#chat{
+}
+#chat #msgs{
+    color: #eeeeee;
+    min-height: 100px;
 }

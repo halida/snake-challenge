@@ -17,10 +17,6 @@ Rubyweb::Application.routes.draw do
 
   resources :maps
 
-  match '/chat/message' => 'chat#message'
-  match '/chat/info' => 'chat#info'
-  match '/chat' => 'chat#index'
-
   devise_for :users
 
 end
