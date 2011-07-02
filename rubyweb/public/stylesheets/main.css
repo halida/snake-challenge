@@ -344,7 +344,8 @@ h1{
 }
 
 #flash_notice {
-    background: #FFF;
+    background: yellow;
+    min-height: 30px;
 }
 
 ul#maps {

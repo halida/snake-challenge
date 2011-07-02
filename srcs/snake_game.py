@@ -131,7 +131,7 @@ class Game():
         self.enable_no_resp_die = enable_no_resp_die
 
         if not map:
-            map = Map.load('srcs/map/lost_temple.map')
+            map = Map.load('srcs/map/sample.map')
         self.setMap(map)
         self.restart()
 

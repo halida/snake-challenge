@@ -135,7 +135,7 @@ def run_ai(ai, controller):
         if ai.status == NEED_ADDING:
             # 游戏结束的时候就不上场了.
             if info['status'] == 'finished':
-                logging.info('finished, waiting for adding..')
+                logging.debug('finished, waiting for adding..')
                 continue
 
             # add ai
@@ -146,17 +146,17 @@ def run_ai(ai, controller):
             # 告诉ai地图
             m = c.map()
             ai.setmap(m)
-            logging.info("add ai: %d" % ai.seq)
+            logging.debug("add ai: %d" % ai.seq)
             
         else:
             if info['status'] == 'finished' or len(info['snakes']) <= ai.seq:
                 # 游戏结束的话, 或者发现没有蛇的信息, ai复位..
                 ai.status = NEED_ADDING
-                logging.info("finished..")
+                logging.debug("finished..")
             else:
                 # 如果自己死掉了, 那就不发出操作
                 if not info['snakes'][ai.seq]['alive']:
-                    logging.info('oops, died.')
+                    logging.debug('oops, died.')
                     continue
 
                 # 发出操作
@@ -164,8 +164,8 @@ def run_ai(ai, controller):
                 result = c.turn(ai.id, d, info['round'])
                 # 操作失败显示下
                 if result['status'] != 'ok':
-                    logging.info(result['status'])
-                logging.info("turn: %d in round: %d", d, info['round'])
+                    logging.debug(result['status'])
+                logging.debug("turn: %d in round: %d", d, info['round'])
 
 
 def main():
