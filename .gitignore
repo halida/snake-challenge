@@ -9,5 +9,5 @@
 *.bak
 *.out
 logs/*
-rubyweb1
-
+rubyweb/Gemfile.lock
+rubyweb/db/schema.rb
