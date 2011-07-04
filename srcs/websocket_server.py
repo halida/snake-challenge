@@ -31,6 +31,11 @@ oper.connect('ipc:///tmp/game_oper.ipc')
 class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
     connects = []
     def open(self):
+        self.name = '???'
+        self.room = -1
+        # 显示现在已经在的人
+        self.write_message('current in: ' + ', '.join([u"%s in room %d" % (c.name, c.room)
+                                                       for c in self.connects]))
         self.connects.append(self)
         
     def on_message(self, message):
@@ -46,7 +51,11 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
     def broadcast(self, room, msg):
         for c in self.connects:
             if c.room == room:
-                c.write_message(msg)
+                try:
+                    c.write_message(msg)
+                except:
+                    # 防止出现错误
+                    self.connects.remove(c)
             
     def on_close(self):
         self.connects.remove(self)
