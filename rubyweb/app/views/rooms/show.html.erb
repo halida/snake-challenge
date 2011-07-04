@@ -42,7 +42,7 @@
     <div class="title_bar">
     </div>
     <div id="add-user">
-      <input type="submit" onclick="javascript:addUser('#{current_user.name}', $('#snake-type').val());" value="add user"/>
+      <input type="submit" onclick="javascript:addUser('<%=current_user.name%>', $('#snake-type').val());" value="add user"/>
       <select id="snake-type">
 	<option>python</option>
 	<option>ruby</option>
