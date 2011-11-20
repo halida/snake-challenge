@@ -1,0 +1,140 @@
+#place
+  .left_content
+    .mini_title
+      %h1
+        June 24th - June 26th Sprint of Snake Challenge @GuruDigger
+        %br/
+        %br/
+        2F, Building 16, Lane 30, North shanxi road, Shanghai, China
+    .challenge_info
+      %p.info
+        PythonVSRuby (Or RubyVSPython) is an organization who will concentrate on better technical commnucation between Pythoners and Rubyiests.
+        %br/
+        %br/
+        Every year we will organize a contest to see which side has the smartest engineer. It will take place annually around the end of March or the beginning of April.
+        %br/
+        %br/
+        For the sake of making ourselves keep innovating, we will incubate a project as the contest platform every year and will stay with the project for a year.
+        %br/
+        %br/
+      %h1 Upcoming Event
+      %p.info
+        PythonVSRuby 2011 Episode II - Sprint of Snake Challenge
+        %br/
+        Source Code -
+        %a{:href => "https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home", :target => "_blank"} https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home
+        %br/
+        Time: June 24th - June 26th
+        %br/
+        %br/
+        We want to select 12 Geeks joining this sprint. We call them runners. If you are interested in being a runner, please contact me on
+        = succeed "." do
+          %a{:href => "mailto:mike@gurudigger.com", :target => "_blank"} mike@GuruDigger.com
+        If we think you are qualified, we will pay you the flight , hotel and everything else for joining the event.
+        %br/
+        %br/
+        If you want to join our brainstorming for this event, please click
+        = succeed "." do
+          %a{:href => "http://gurudigger.com/idea/detail?iid=31474"} here
+        %br/
+        ( You need GuruDigger account to visit the brainstorming page, please contact
+        %a{:href => "mailto:mike@gurudigger.com", :target => "_blank"} mike@GuruDigger.com
+        for any GD account issues.)
+        %br/
+        %br/
+      %h1 Agenda
+      %br/
+      %table#schedule{:width => "100%"}
+        %tr
+          %td June 24th, Friday
+          %td June 25th, Saturday
+          %td June 26th, Sunday
+        %tr
+          %td
+          %td 8:30 am, Breakfirst Start
+          %td 8:30 am, Breakfirst Start
+        %tr
+          %td
+          %td
+            9:00 am -12:00 pm,
+            %br
+              Brainstorming + Todo List + Task Assign   /O*/I*
+          %td
+            From Wake up -12:00 pm,
+            %br
+              Coding /RO*
+        %tr
+          %td
+          %td 12 :00 pm, Lunch Start /O*
+          %td 12:00 pm, Lunch Start /O*
+        %tr
+          %td
+          %td
+            12:00 pm - Midnight,
+            %br
+              Coding  /RO*
+          %td
+            12:00 pm - 5:00 pm,
+            %br
+              Coding /RO*
+        %tr
+          %td
+            9: 00 pm - Later,
+            %br
+              Warm Up  /O*
+          %td
+            6:00 pm,
+            %br Dinner Start /O*
+          %td
+            5pm,
+            %br BBQ + Happy Time Start /O*
+      %br/
+      \/O *=Open
+      %br/
+      That means everybody could come, if you are not a runner, you have to pass our small quiz otherwise you have to make a donation for PythonVSRuby.org. Same as last time. ;)
+      %br/
+      %br/
+      \/I*= Internet
+      %br/
+      This time if you could not come to Shanghai, you could join us via internet.
+      %br/
+      %br/
+      \/RO* = Runners Only
+      %br/
+      For the sake of getting a good coding environment, we don't accept anybody who is not a runner come to visit us when we are coding.
+      %br/
+      %br/
+  .right_nav
+    .title_bar_r
+      %h1 Play Online
+    #room_icon
+      %a{:href => "/room/0/"}= image_tag("room_01.png", id: "room_01")
+      %a{:href => "/room/1/"}= image_tag("room_02.png", id: "room_02")
+      %a{:href => "/room/2/"}= image_tag("room_03.png", id: "room_03")
+      %a{:href => "/room/3/"}= image_tag("room_04.png", id: "room_04")
+
+    - if !@replays.blank?
+      .title_bar_r
+        %h1 Game Replay
+      #game_replay
+        %ul
+          - @replays.each do |item|
+            %li
+              %a{:href => replay_path(item.id)}= item.title
+          %li.more
+            %a{:href => replays_path} More...
+    .title_bar_r
+      %h1 Sponsors
+
+    #sponsor_icon
+      %a{:href => "http://gurudigger.com", :target => "_blank"}
+        %img#sponsor{:src => image_path("gurudigger.png")}/
+      %a{:href => "http://douban.com", :target => "_blank"}
+        %img#sponsor{:src => image_path("douban.png")}/
+      %a{:href => "http://snda.com", :target => "_blank"}
+        %img#sponsor{:src => image_path("snda.png"), style:"margin-top:25px;"}/
+      %a{:href => "http://banner.alimama.com/", :target => "_blank"} 
+        %img#sponsor{:src => image_path("taobao.png"), style:"margin-top:25px;"}/
+    #follow
+      %a{:href => "http://twitter.com/rubyvspython", :target => "_blank"}
+        %img#twitter{:src => image_path("follow_us.png")}/
