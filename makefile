@@ -9,7 +9,7 @@ game:
 	python srcs/zmq_game_server.py 4web
 # run the web server
 web:
-	cd rubyweb; rails server
+	cd rubyweb; bundle exec rails server -p 2000
 # run websocket server
 websocket:
 	cd srcs; python websocket_server.py

@@ -12,6 +12,7 @@ group :assets do
   gem 'therubyracer'
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier', '>= 1.0.3'
+  gem 'haml'
 end
 
 gem 'jquery-rails'
