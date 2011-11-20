@@ -1,0 +1,52 @@
+!!! Strict
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title Ruby VS Python Official Site
+    = stylesheet_link_tag "main", "map_builder", :cache => "cached_main"
+    = yield :styles
+    = javascript_include_tag "jquery", "json", "application", "map_builder", :cache => "cached_application"
+    = csrf_meta_tag
+    = yield :javascripts
+
+  %body
+    #header
+      %a{:href => "/", :title => "Go home"}= image_tag("logo.png")
+    #main
+      #user_bar
+        - if current_user.blank?
+          %a{:href => "/users/sign_up"} Register
+          %a{:href => "/users/sign_in"} Login
+        - else
+          Hello, #{current_user.name}
+          %a{:href => "/users/sign_out"} Sign out
+
+      #content
+        - if flash[:error]
+          #flash_error
+            = flash[:error]
+        - if flash[:notice]
+          #flash_notice
+            = flash[:notice]
+        = yield
+        .clear
+
+        #member_icon
+          %table
+            %tr
+              %td= link_to image_tag("memeber_icon_linjunhalida.gif"), "http://blog.linjunhalida.com/", :title=> "linjunhalida", :target=>"_blank"
+              %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
+              %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian", :target=>"_blank"
+          .clear
+
+    footer
+    :javascript
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-22394366-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();

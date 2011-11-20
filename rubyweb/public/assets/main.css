@@ -36,13 +36,13 @@ table {
 }
 /*html*/
 body {
-    background: #172137 url(/images/bg.gif);
+    background: #172137 url(/assets/bg.gif);
     font-family: Arial, Helvetica, sans-serif;
     text-align:center;
 }
 /*header*/
 #header {
-    background: url(/images/header_bg.png) repeat-x center;
+    background: url(/assets/header_bg.png) repeat-x center;
     height:156px;
     width:100%;
 }
@@ -55,7 +55,7 @@ body {
 }
 /*main*/
 #main {
-    background: url(/images/main_bg.png);
+    background: url(/assets/main_bg.png);
     padding-top:44px;
     width: 100%;
     text-align:left;
@@ -230,7 +230,7 @@ h1{
     font-weight: bold;
 }
 #ratting div {
-    background: url(/images/skeleton.gif) no-repeat right;
+    background: url(/assets/skeleton.gif) no-repeat right;
     float: right;
     margin-right: 10px;
     padding-right: 20px;

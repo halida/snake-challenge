@@ -6,7 +6,7 @@ canvas{
     background: white;
 }
 .title_bar {
-	background: #0f9fbc url(/images/title_bar_bg.gif) no-repeat right;
+	background: #0f9fbc url(/assets/title_bar_bg.gif) no-repeat right;
 	height:44px;
 	width:100%;
 }
@@ -44,16 +44,16 @@ canvas{
 	font-weight: bold;
 }
 #score_board .python div {
-	background: url(/images/p.gif) no-repeat right;
+	background: url(/assets/p.gif) no-repeat right;
 }
 #score_board .ruby div {
-	background: url(/images/r.gif) no-repeat right;
+	background: url(/assets/r.gif) no-repeat right;
 }
 #score_board .grey {
 	background: #e9e9e9;
 }
 #score_board .grey div {
-	background: url(/images/skeleton.gif) no-repeat right;
+	background: url(/assets/skeleton.gif) no-repeat right;
 }
 #score_board .grey font {
 	color: #848484;

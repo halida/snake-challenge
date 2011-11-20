@@ -1,0 +1,71 @@
+- content_for :styles do
+  = stylesheet_link_tag "room", :cache => "cached_room"
+
+#left
+  .title_bar
+    = image_tag("step.gif", :style => "vertical-align:middle;")
+    %span#round_counter{:style => "font-weight: bold;font-size:18px;"} 0
+  %canvas#canvas{:height => "375", :width => "750"}
+  #canvas_images{:style => "display:none;"}
+    = image_tag("icons/egg.gif", :id => "icon_egg")
+    = image_tag("icons/gem.gif", :id => "icon_gem")
+  .clear
+  #chat
+    %form#send-msg{:action => "javascript:send();", :style => "display:none;"}
+      %input#msg{:type => "text"}/
+      %input{:type => "submit", :value => "send"}/
+    #msgs
+    :javascript
+      chat_init("#{current_user ? current_user.name : request.remote_ip}", #{params[:id]});
+
+#right
+  - if current_user
+    #user-control
+      .title_bar
+      #add-user
+        %input{:onclick => "javascript:addUser('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
+        %select#snake-type
+          %option python
+          %option ruby
+
+  #data
+  #user-control-panel{:style => "display:none;"}
+    %table
+      %tr
+        %td
+        %td= button_to "^", "javascript:turn(1);"
+        %td
+        %tr
+          %td= button_to "<", "javascript:turn(0);"
+          %td= button_to "V", "javascript:turn(3);"
+          %td= button_to ">", "javascript:turn(2);"
+  #debug-msg
+  .clear
+
+  #living_room
+    .title_bar
+      = image_tag("living_room.gif")
+    %ul#score_board
+  #tips
+    .title_bar
+      = image_tag("tips.gif")
+    #pythons_team
+      = image_tag("pythons_team_title.gif")
+      .color.color_1
+      .color.color_2
+    #rubys_team
+      = image_tag("rubys_team_title.gif")
+      .color.color_1
+      .color.color_2
+    .clear
+    #team_food
+      = image_tag("rubys_food.gif")
+      = image_tag("pythons_food.gif")
+    #team_category
+      = image_tag("category_python.gif")
+      = image_tag("category_ruby.gif")
+      = image_tag("category_dead.gif")
+
+.clear
+:javascript
+  run_application(#{params[:id]});

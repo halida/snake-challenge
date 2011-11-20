@@ -91,7 +91,7 @@ function draw_snake(snake, color_index) {
     ctx.fillRect(head[0] * scale + 4, head[1] * scale + 4, scale - 8, scale - 8);
 
     //add to score board
-    score_board_html += '<li class="' + (snake.alive ? snake.type : 'grey' ) + '"><img src="/images/icons/' + snake.type + color_index + '.gif" /><h2>' + snake.name + '</h2><div class="step"><font>' + snake.body.length + '</font></div></li>';
+    score_board_html += '<li class="' + (snake.alive ? snake.type : 'grey' ) + '"><img src="/assets/icons/' + snake.type + color_index + '.gif" /><h2>' + snake.name + '</h2><div class="step"><font>' + snake.body.length + '</font></div></li>';
 }
 
 function draw_egg(egg) {
