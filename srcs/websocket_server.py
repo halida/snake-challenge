@@ -5,14 +5,14 @@ module: server
 """
 import sys, os, time, logging, json
 
+import zmq
+from zmq.eventloop import ioloop, zmqstream
+# hack
+ioloop.install()
+
 import tornado
 import tornado.web, tornado.websocket
 
-import zmq
-from zmq.eventloop import ioloop, zmqstream
-
-# hack
-tornado.ioloop = ioloop
 
 context = zmq.Context()
 
@@ -32,10 +32,14 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
     connects = []
     def open(self):
         self.name = '???'
-        self.room = -1
+        self.room = "root"
         # 显示现在已经在的人
-        self.write_message('current in: ' + ', '.join([u"%s in room %d" % (c.name, c.room)
-                                                       for c in self.connects]))
+        if len(self.connects) > 0:
+            current_ins = ', '.join([u"%s in room %d" % (c.name, c.room)
+                                     for c in self.connects])
+        else:
+            current_ins = 'none'
+        self.write_message('current in: \n' + current_ins)
         self.connects.append(self)
         
     def on_message(self, message):
@@ -50,12 +54,15 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
 
     def broadcast(self, room, msg):
         for c in self.connects:
-            if c.room == room:
-                try:
-                    c.write_message(msg)
-                except:
-                    # 防止出现错误
-                    self.connects.remove(c)
+            if c.room != room:
+                continue
+            
+            try:
+                c.write_message(msg)
+            except:
+                raise
+                # 防止出现错误
+                self.connects.remove(c)
             
     def on_close(self):
         self.connects.remove(self)
@@ -79,6 +86,7 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
 
     @classmethod
     def send_info(cls, room, info):
+        print "room:", room, 'connects:', len(cls.connects)
         for c in cls.connects:
             if c.room == room:
                 c.write_message(info)
@@ -105,10 +113,8 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
         except:
             pass
 
-
-stream = zmqstream.ZMQStream(suber, tornado.ioloop.IOLoop.instance())
+stream = zmqstream.ZMQStream(suber)
 stream.on_recv(InfoWebSocket.check_info)
-        
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -126,10 +132,7 @@ application = tornado.web.Application([
 def main():
     application.listen(9999)
     try:
-        io_loop = tornado.ioloop.IOLoop.instance()
-
-        InfoWebSocket.io_loop = io_loop
-        io_loop.start()
+        ioloop.IOLoop.instance().start()
     except KeyboardInterrupt:
         print "bye!"
 

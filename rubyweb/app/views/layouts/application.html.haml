@@ -5,7 +5,7 @@
     %title Ruby VS Python Official Site
     = stylesheet_link_tag "main", "map_builder", :cache => "cached_main"
     = yield :styles
-    = javascript_include_tag "jquery", "json", "application", "map_builder", :cache => "cached_application"
+    = javascript_include_tag "jquery", "json", "application", "map_builder", "chatroom", :cache => "cached_application"
     = csrf_meta_tag
     = yield :javascripts
 

@@ -155,14 +155,14 @@ web方式
 
 python部分
 
-  - zeromq 2.0.10
-  - pyzmq
+  - zeromq 2.1.10
+  - pyzmq 2.1.10
   - python-pygame
+  - tornado 2.0
 
 ruby部分
   - json
   - zmq
-  - sinatra
 
 
 zeromq安装
@@ -179,7 +179,7 @@ pyzmq
 ````````````````````````````````````
 需要指定2.0.10版本
 
-    sudo easy_install pyzmq==2.0.10
+    sudo easy_install pyzmq==2.0.10.1
 
 pygame
 ````````````````````````````````````

@@ -11,12 +11,12 @@
     = image_tag("icons/gem.gif", :id => "icon_gem")
   .clear
   #chat
-    %form#send-msg{:action => "javascript:send();", :style => "display:none;"}
+    %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
       %input#msg{:type => "text"}/
       %input{:type => "submit", :value => "send"}/
     #msgs
     :javascript
-      chat_init("#{current_user ? current_user.name : request.remote_ip}", #{params[:id]});
+      chat_init("ws://"+window.location.hostname+":9999/chatroom", "#{current_user ? current_user.name : request.remote_ip}", "room-#{params[:id]}");
 
 #right
   - if current_user
@@ -68,4 +68,4 @@
 
 .clear
 :javascript
-  run_application(#{params[:id]});
+  run_application("ws://"+window.location.hostname+":9999/info", #{params[:id]});
