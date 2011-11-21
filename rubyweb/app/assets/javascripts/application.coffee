@@ -6,11 +6,16 @@ colors =
   ruby: [ [ "#eb88a9", "#b30c43", "#f81919" ], [ "#f45e5e", "#83103e", "#e07711" ], [ "#eb88a9", "#8151a6", "#59edef" ], [ "#f45e5e", "#f8952a", "#ffea00" ] ]
   dead: [ "#8c8c8c", "#8c8c8c", "#8c8c8c" ]
 
+ws = undefined
+
 score_board_html = ""
 finished = false
 canvas = undefined
 ctx = undefined
 room = -1
+
+user_snake_id=[]
+user_seq= -1
 
 window.run_application = (server, r) ->
   room = r
@@ -23,9 +28,9 @@ window.run_application = (server, r) ->
     switch data.op
       when "info"
         pull_info data
-      when "add"
-        seq = data.seq
-        snake_id = data.id
+      when "add" #add user success
+        user_seq = data.seq
+        user_snake_id = data.id
         $("#user-control-panel").show()
 
   ws.onerror = (error) ->
@@ -96,7 +101,7 @@ setup_walls_data = ->
   $.getJSON "map", (map) ->
     walls = map.walls
 
-addUser = (name, type) ->
+window.add_user = (name, type) ->
   ws.send JSON.stringify(
     op: "add"
     room: room
@@ -104,12 +109,12 @@ addUser = (name, type) ->
     type: type
   )
 
-turn = (direction) ->
-  return  if seq < 0
+window.turn = (direction) ->
+  return if user_seq < 0
   ws.send JSON.stringify(
     op: "turn"
-    id: snake_id
-    snake_id: snake_id
+    id: user_snake_id
+    snake_id: user_snake_id
     room: room
     direction: direction
     round: -1

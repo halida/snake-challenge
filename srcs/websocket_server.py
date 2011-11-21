@@ -86,7 +86,6 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
 
     @classmethod
     def send_info(cls, room, info):
-        print "room:", room, 'connects:', len(cls.connects)
         for c in cls.connects:
             if c.room == room:
                 c.write_message(info)

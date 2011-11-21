@@ -23,7 +23,7 @@
     #user-control
       .title_bar
       #add-user
-        %input{:onclick => "javascript:addUser('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
+        %input{:onclick => "javascript:add_user('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
         %select#snake-type
           %option python
           %option ruby
