@@ -8,4 +8,9 @@
 *.cfg
 *.bak
 *.out
-logs/*
+
+# rubyweb
+
+rubyweb/public/assets/*.css
+
+

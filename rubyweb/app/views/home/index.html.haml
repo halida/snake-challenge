@@ -108,10 +108,8 @@
     .title_bar_r
       %h1 Play Online
     #room_icon
-      %a{:href => "/room/0/"}= image_tag("room_01.png", id: "room_01")
-      %a{:href => "/room/1/"}= image_tag("room_02.png", id: "room_02")
-      %a{:href => "/room/2/"}= image_tag("room_03.png", id: "room_03")
-      %a{:href => "/room/3/"}= image_tag("room_04.png", id: "room_04")
+      - for i in 1..4
+        %a{:href => "/room/#{i-1}/"}= image_tag("room_0#{i}.png", id: "room_0#{i}")
 
     - if !@replays.blank?
       .title_bar_r

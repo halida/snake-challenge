@@ -1,0 +1,28 @@
+.grid
+  .row
+    line-height: 5px
+  .box
+    background: white
+    display: inline-block
+    height: 5px
+    width: 5px
+    &.wall
+      background: #aaaaaa
+
+#maps li
+  margin-bottom: 1em
+  .data
+    display: none
+
+#map_builder
+  .data, #map_builder_data
+    display: none
+  .grid .box
+    border: 1px solid #aaaaaa
+    height: 18px
+    width: 18px
+    display: inline-block
+    &:hover
+      border: 1px solid red
+    &.wall
+      background: #aaaaaa
