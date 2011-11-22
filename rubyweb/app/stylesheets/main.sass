@@ -1,3 +1,5 @@
+@import "base"
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
   margin: 0
   padding: 0
@@ -209,11 +211,11 @@ h1
 #right
   float: right
 
-#living_room
-  background: #fff
-  height: 265px
-  margin-bottom: 11px
+.right-block
   width: 306px
+  margin-bottom: 11px
+  background: #fff
+  display: table
 
 #ratting
   li
@@ -242,63 +244,13 @@ h1
   .no_border
     border: none
 
-#tips
-  background: #fff
-  height: 166px
-  .title_bar
-    margin-bottom: 10px
-
 .color
   height: 14px
   width: 47px
 
-#pythons_team
-  border-right: 1px solid #d9e0e6
-  float: left
-  height: 34px
-  padding: 0 20px
-  width: 103px
-  img
-    display: block
-    margin: 0 auto 10px auto
-  .color_1
-    background: #a5c9e7
-    float: left
-  .color_2
-    background: #88db99
-    float: right
-
-#rubys_team
-  float: left
-  height: 34px
-  padding: 0 20px
-  width: 103px
-  img
-    display: block
-    margin: 0 auto 10px auto
-  .color_1
-    background: #eb88a9
-    float: left
-  .color_2
-    background: #f45e5e
-    float: right
-
-#team_food
-  border-bottom: 1px solid #d9e0e6
-  border-top: 1px solid #d9e0e6
-  height: 24px
-  margin-top: 10px
-  padding: 10px 0px 0px 20px
-  img
-    padding-right: 10px
-
-#team_category
-  padding: 10px 0px 0px 20px
-  img
-    padding-right: 10px
 
 #member_icon
-  margin: 10px auto 0px auto
+  margin: 10px auto 10px auto
   width: 60px
   img
     padding-right: 10px
@@ -306,29 +258,24 @@ h1
     margin: 0 auto
     width: 11px
 
-#user-control
-  background: #fff
-  margin-bottom: 11px
-  width: 306px
-
-/*footer
-
-#footer
-  background: url(/images/footer.png) no-repeat
-  height: 30px
+footer
   margin: 10px auto 0px auto
   width: 217px
 
-#flash
+.flash
   position: fixed
   top: 0px
+  width: 100%
+  padding: 10px
+  border-bottom: thick solid #0A3D5B
+  border-width: 2px
+  +opacity(0.9)
 
-  #flash_error
-    background: #FFF
-    color: red
-  #flash_notice
-    background: yellow
-    min-height: 30px
+#flash_error
+  background: #FFF
+  color: red
+#flash_notice
+  background: yellow
 
 ul#maps
   color: #FFF

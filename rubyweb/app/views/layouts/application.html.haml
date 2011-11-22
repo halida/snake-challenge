@@ -10,14 +10,15 @@
     = csrf_meta_tag
     = yield :javascripts
 
-
   %body
-    #flash
-      - if flash[:error]
-        #flash_error= flash[:error]
-      - if flash[:notice]
-        #flash_notice= flash[:notice]
-          
+    - if flash[:error]
+      #flash_error.flash= flash[:error]
+      :coffeescript
+        setTimeout((-> $('.flash').fadeOut(500)), 3000)
+    - if flash[:notice]
+      #flash_notice.flash= flash[:notice]
+      :coffeescript
+        setTimeout((-> $('.flash').fadeOut(500)), 3000)
 
     #header
       %a{:href => "/", :title => "Go home"}= image_tag("logo.png")
@@ -34,15 +35,16 @@
         = yield
         .clear
 
-        #member_icon
-          %table
-            %tr
-              %td= link_to image_tag("memeber_icon_linjunhalida.gif"), "http://blog.linjunhalida.com/", :title=> "linjunhalida", :target=>"_blank"
-              %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
-              %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian", :target=>"_blank"
-          .clear
+    %footer
+      #member_icon
+        %table
+          %tr
+            %td= link_to image_tag("memeber_icon_linjunhalida.gif"), "http://blog.linjunhalida.com/", :title=> "linjunhalida", :target=>"_blank"
+            %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
+            %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian", :target=>"_blank"
+      #footer-desc= image_tag("footer.png")
+        
 
-    footer
     :javascript
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-22394366-1']);

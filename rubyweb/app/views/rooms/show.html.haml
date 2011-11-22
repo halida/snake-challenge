@@ -1,5 +1,6 @@
 - content_for :styles do
   = stylesheet_link_tag "room", :cache => "cached_room"
+  = javascript_include_tag "room"
 
 #left
   .title_bar
@@ -20,7 +21,7 @@
 
 #right
   - if current_user
-    #user-control
+    #user-control.right-block
       .title_bar
       #add-user
         %input{:onclick => "javascript:add_user('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
@@ -28,7 +29,6 @@
           %option python
           %option ruby
 
-  #data
   #user-control-panel{:style => "display:none;"}
     %table
       %tr
@@ -39,25 +39,24 @@
           %td= button_to "<", "javascript:turn(0);"
           %td= button_to "V", "javascript:turn(3);"
           %td= button_to ">", "javascript:turn(2);"
-  #debug-msg
-  .clear
 
-  #living_room
+  #living_room.right-block
     .title_bar
       = image_tag("living_room.gif")
     %ul#score_board
-  #tips
+
+  #tips.right-block
     .title_bar
       = image_tag("tips.gif")
-    #pythons_team
-      = image_tag("pythons_team_title.gif")
-      .color.color_1
-      .color.color_2
-    #rubys_team
-      = image_tag("rubys_team_title.gif")
-      .color.color_1
-      .color.color_2
-    .clear
+    #teams
+      #pythons_team
+        = image_tag("pythons_team_title.gif")
+        .color.color_1
+        .color.color_2
+      #rubys_team
+        = image_tag("rubys_team_title.gif")
+        .color.color_1
+        .color.color_2
     #team_food
       = image_tag("rubys_food.gif")
       = image_tag("pythons_food.gif")
@@ -66,6 +65,5 @@
       = image_tag("category_ruby.gif")
       = image_tag("category_dead.gif")
 
-.clear
 :javascript
   run_application("ws://"+window.location.hostname+":9999/info", #{params[:id]});

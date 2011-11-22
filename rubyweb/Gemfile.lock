@@ -43,6 +43,9 @@ GEM
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
     chunky_png (1.2.5)
+    coffee-filter (0.1.1)
+      coffee-script (>= 2.2.0)
+      haml (>= 3.0.18)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0)
@@ -161,6 +164,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin (= 0.3)
+  coffee-filter
   coffee-rails (~> 3.1.0)
   compass (>= 0.11.5)
   haml
