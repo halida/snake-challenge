@@ -35,7 +35,7 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
         self.room = "root"
         # 显示现在已经在的人
         if len(self.connects) > 0:
-            current_ins = ', '.join([u"%s in room %d" % (c.name, c.room)
+            current_ins = ', '.join([u"%s in : %s" % (c.name, c.room)
                                      for c in self.connects])
         else:
             current_ins = 'none'
