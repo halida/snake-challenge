@@ -29,16 +29,11 @@
           %option python
           %option ruby
 
-  #user-control-panel{:style => "display:none;"}
-    %table
-      %tr
-        %td
-        %td= button_to "^", "javascript:turn(1);"
-        %td
-        %tr
-          %td= button_to "<", "javascript:turn(0);"
-          %td= button_to "V", "javascript:turn(3);"
-          %td= button_to ">", "javascript:turn(2);"
+      #user-control-panel
+        %input{type: "submit", onclick: "javascript:turn(1);", class: "turn", id: "turn-up", value: "^"}/
+        %input{type: "submit", onclick: "javascript:turn(0);", class: "turn", id: "turn-left", value: "<"}/
+        %input{type: "submit", onclick: "javascript:turn(3);", class: "turn", id: "turn-down", value: "V"}/
+        %input{type: "submit", onclick: "javascript:turn(2);", class: "turn", id: "turn-right", value: ">"}/
 
   #living_room.right-block
     .title_bar

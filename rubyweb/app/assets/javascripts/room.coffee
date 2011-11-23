@@ -45,6 +45,7 @@ window.run_application = (server, r) ->
 
 
 update_room = (info) ->
+
   if walls.length <= 0
     setup_walls_data()
 
@@ -56,6 +57,12 @@ update_room = (info) ->
     update info
     finished = info.status is "finished"
 
+  if user_seq >= 0
+    snake = info.snakes[user_seq]
+    if snake.alive
+      $("#user-control-panel").show()
+    else
+      $("#user-control-panel").hide()
 
 update = (info) ->
   canvas.width = canvas.width
@@ -74,6 +81,7 @@ update = (info) ->
   $.each info.gems, ->
     draw_gem this
 
+
 choose_snake_color = (snake)->
   v = 0
   for k in snake.name
@@ -82,7 +90,9 @@ choose_snake_color = (snake)->
     v %= 13626
   colors[snake.type][v % colors[snake.type].length]
 
+
 draw_snake = (snake, color_index) ->
+
   color_set = (if snake.alive then choose_snake_color(snake) else colors.dead)
   ctx.fillStyle = color_set[0]
   $.each snake.body, ->
@@ -99,16 +109,20 @@ draw_snake = (snake, color_index) ->
     + "<div class=\"name\">" + snake.name + "</div>" \
     + "<div class=\"step\"><font>" + snake.body.length + "</font></div></li>"
 
+
 draw_egg = (egg) ->
   ctx.drawImage document.getElementById("icon_egg"), egg[0] * scale, egg[1] * scale
 
+
 draw_gem = (gem) ->
   ctx.drawImage document.getElementById("icon_gem"), gem[0] * scale, gem[1] * scale
+
 
 draw_walls = ->
   ctx.fillStyle = colors.wall
   $.each walls, ->
     ctx.fillRect this[0] * scale, this[1] * scale, scale, scale
+
 
 setup_walls_data = ->
   $.getJSON "map", (map) ->
