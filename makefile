@@ -16,6 +16,9 @@ websocket:
 # run a test ai
 ai:
 	python srcs/ai_simple.py zero 0
+# run lots of test ai
+ais:
+	python srcs/ai_simple.py zero 0 5
 
 # pygame show local game
 pygame:

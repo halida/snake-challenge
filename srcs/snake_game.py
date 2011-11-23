@@ -262,7 +262,7 @@ class Game():
         # 并且只有一个人剩余
         # 或者时间到
         alives = sum([s.alive for s in self.snakes])
-        if alives <= 1 or self.round > 600:
+        if alives <= 1 or self.round > 3000:
             self.status = FINISHED
             self.check_score()
             return
@@ -306,6 +306,7 @@ class Game():
         else:
             if len(self.eggs) > 10: return
             self.eggs.append(pos)
+
     def check_hit(self, p):
         """检查p和什么碰撞了, 返回具体碰撞的对象"""
         if p in self.walls:

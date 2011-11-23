@@ -22,7 +22,7 @@ class Server():
     """
     def on_logic(self, g, ok):
         """判断定期更新的时间是否到了"""
-        min_waits = 0.5
+        min_waits = 0.2
         max_waits = self.max_waits
         if not hasattr(g, 'pre'):
             g.pre = time.time()

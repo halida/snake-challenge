@@ -101,7 +101,17 @@ def main():
         C = ZeroController
     else:
         print usage
-    run_ai(AI(), C(room))
+
+    if len(sys.argv) > 3:
+        def run():
+            run_ai(AI(), C(room))
+        import multiprocessing
+        ps = [multiprocessing.Process(target=run, args=())
+              for i in range(int(sys.argv[3]))]
+        for p in ps: p.start()
+        for p in ps: p.join()
+    else:
+        run_ai(AI(), C(room))
     
 if __name__=="__main__":
     main()
