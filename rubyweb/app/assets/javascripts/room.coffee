@@ -21,13 +21,14 @@ window.run_application = (server, r) ->
   room = r
   canvas = $("#canvas")[0]
   ctx = canvas.getContext("2d")
+
   ws = new WebSocket(server)
   ws.onmessage = (e) ->
     data = $.parseJSON(e.data)
 
     switch data.op
       when "info"
-        pull_info data
+        update_room data
       when "add" #add user success
         user_seq = data.seq
         user_snake_id = data.id
@@ -43,7 +44,7 @@ window.run_application = (server, r) ->
     ws.send "room:" + room
 
 
-pull_info = (info) ->
+update_room = (info) ->
   if walls.length <= 0
     setup_walls_data()
 
@@ -73,8 +74,16 @@ update = (info) ->
   $.each info.gems, ->
     draw_gem this
 
+choose_snake_color = (snake)->
+  v = 0
+  for k in snake.name
+    v += k.charCodeAt()
+    v *= 13
+    v %= 13626
+  colors[snake.type][v % colors[snake.type].length]
+
 draw_snake = (snake, color_index) ->
-  color_set = (if snake.alive then colors[snake.type][color_index] else colors.dead)
+  color_set = (if snake.alive then choose_snake_color(snake) else colors.dead)
   ctx.fillStyle = color_set[0]
   $.each snake.body, ->
     ctx.fillRect this[0] * scale, this[1] * scale, scale, scale

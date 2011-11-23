@@ -6,10 +6,11 @@ a simple ai demo
 """
 from ailib import *
 
+import random
 
 class AI():
     def __init__(self):
-        self.name = 'simple ai'
+        self.name = 'simple ai %d' % random.randint(1, 1000)
         types = ['python', 'ruby']
         self.type = types[random.randint(0, 1)]
         self.count = 0
