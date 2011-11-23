@@ -93,7 +93,11 @@ draw_snake = (snake, color_index) ->
   ctx.fillRect head[0] * scale, head[1] * scale, scale, scale
   ctx.fillStyle = color_set[2]
   ctx.fillRect head[0] * scale + 4, head[1] * scale + 4, scale - 8, scale - 8
-  score_board_html += "<li class=\"" + (if snake.alive then snake.type else "grey") + "\"><img src=\"/assets/icons/" + snake.type + color_index + ".gif\" /><h2>" + snake.name + "</h2><div class=\"step\"><font>" + snake.body.length + "</font></div></li>"
+  score_board_html += "<li class=\"" + (if snake.alive then snake.type else "dead")+"\">"\
+    + "<div class=\"head\" style=\"background: "+color_set[1]+"\">" \
+    + "<div class=\"head-inner\" style=\"background: "+color_set[2]+"\"></div></div>" \
+    + "<div class=\"name\">" + snake.name + "</div>" \
+    + "<div class=\"step\"><font>" + snake.body.length + "</font></div></li>"
 
 draw_egg = (egg) ->
   ctx.drawImage document.getElementById("icon_egg"), egg[0] * scale, egg[1] * scale

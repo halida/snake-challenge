@@ -18,43 +18,53 @@ canvas
 
 #score_board
   li
-    border-bottom: 1px solid #999
-    height: 25px
-    padding: 17px 0px 0px 10px
-  img, h2
     float: left
-  img
-    margin-right: 10px
-  h2
-    color: #6b6969
-    font-weight: bold
-  div
+    height: 25px
+    width: 100%
+    border-bottom: 1px solid #999
+    padding-top: 12px
+    .head
+      margin-left: 12px
+      display: inline-block
+      width: 15px
+      height: 15px
+      border-width: 4px 
+      .head-inner
+        width: 7px
+        height: 7px
+        display: inline-block
+        margin: 4px
+    .name
+      margin-left: 12px
+      display: inline-block
+      color: #6b6969
+      font-weight: bold
+  .step
     float: right
     margin-right: 10px
     padding-right: 20px
     font
       color: #333
       font-weight: bold
-  .python div
+  .python .step
     background: url(/assets/p.gif) no-repeat right
-  .ruby div
+  .ruby .step
     background: url(/assets/r.gif) no-repeat right
-  .grey
+  .dead .step
+    background: url(/assets/skeleton.gif) no-repeat right
+  .dead
     background: #e9e9e9
-    div
-      background: url(/assets/skeleton.gif) no-repeat right
     font
       color: #848484
   .no_border
     border: none
 
-.color
-  height: 14px
-  width: 47px
-
 #teams
   display: table
   padding-top: 10px
+  .color
+    height: 14px
+    width: 47px
   #pythons_team
     border-right: 1px solid #d9e0e6
     float: left
