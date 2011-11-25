@@ -10,6 +10,11 @@ import urllib, httplib
 from snake_game import Game, FINISHED, DIRECT
 from game_controller import Controller
 
+class BaseAI():
+    def setmap(self, map):
+        pass
+    def step(self, info):
+        pass
 
 def get_dirs(body):
     """
@@ -68,7 +73,7 @@ class WebController():
     def info(self):
         return self.get('info')
     
-    def turn(self, id, d, round):
+    def turn(self, id, d, round=-1):
         result = self.post(
             'turn', dict(id=id,
                          direction=d,
@@ -84,6 +89,7 @@ class ZeroController():
     """
     def __init__(self, room):
         import zmq
+        self.zmq = zmq
         context = zmq.Context()
         self.room = room
         # 用来接受info更新
@@ -111,10 +117,16 @@ class ZeroController():
 
     def info(self):
         info = self.suber.recv()
+        # try:
+        #     while True:
+        #         info = self.suber.recv(self.zmq.NOBLOCK)
+        # except self.zmq.ZMQError:
+        #     pass
+            
         info = info[info.index(' '):]
         return json.loads(info)
     
-    def turn(self, id, d, round):
+    def turn(self, id, d, round=-1):
         return self.op(
             'turn', dict(id=id,
                          direction=d,
@@ -163,9 +175,7 @@ def run_ai(ai, controller):
             logging.debug("add ai: %d" % ai.seq)
             continue
 
-        if not me: continue
-        
-        if info['status'] == 'finished':
+        if info['status'] == 'finished' or not me:
             # 游戏结束的话, 或者发现没有蛇的信息, ai复位..
             ai.status = NEED_ADDING
             continue
@@ -178,13 +188,44 @@ def run_ai(ai, controller):
 
         # 发出操作
         d = ai.step(info)
-        result = c.turn(ai.id, d, info['round'])
+        result = c.turn(ai.id, d)
 
         # 操作失败显示下
         if result['status'] != 'ok':
             logging.debug(result['status'])
         # logging.debug("turn: %d in round: %d", d, info['round'])
 
+def cmd_run(AI):
+    usage = """\
+    $ %s [connect type] [room number] [ai number]
+    connect type is in [web, zero]
+        web means use Restful http API,
+        zero means use zeromq.
+        ai number means how much ai you are running
+        """%sys.argv
+
+    try:
+        room = int(sys.argv[2])
+    except:
+        print usage
+        
+    if sys.argv[1] == 'web':
+        C = WebController
+    elif sys.argv[1] == 'zero':
+        C = ZeroController
+    else:
+        print usage
+
+    if len(sys.argv) > 3:
+        def run():
+            run_ai(AI(), C(room))
+        import multiprocessing
+        ps = [multiprocessing.Process(target=run, args=())
+              for i in range(int(sys.argv[3]))]
+        for p in ps: p.start()
+        for p in ps: p.join()
+    else:
+        run_ai(AI(), C(room))
 
 def main():
     import doctest

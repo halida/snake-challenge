@@ -1,5 +1,3 @@
-
-
 # Version 1.1
 #
 # Changes in 1.1: 

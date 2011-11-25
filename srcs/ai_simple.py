@@ -6,9 +6,7 @@ a simple ai demo
 """
 from ailib import *
 
-import random
-
-class AI():
+class AI(BaseAI):
     def __init__(self):
         self.name = 'simple ai %d' % random.randint(1, 1000)
         types = ['python', 'ruby']
@@ -82,37 +80,6 @@ class AI():
         d = max(zip(ps, dirs), key=lambda x: x[0])[1]
         return DIRECT.index(d)
 
-usage = """\
-    $ ai_simple.py [connect type] [room number]
-    connect type is in [web, zero]
-        web means use Restful http API,
-        zero means use zeromq.
-"""
-
-def main():
-    from ailib import run_ai, WebController, ZeroController
-    try:
-        room = int(sys.argv[2])
-    except:
-        print usage
-        
-    if sys.argv[1] == 'web':
-        C = WebController
-    elif sys.argv[1] == 'zero':
-        C = ZeroController
-    else:
-        print usage
-
-    if len(sys.argv) > 3:
-        def run():
-            run_ai(AI(), C(room))
-        import multiprocessing
-        ps = [multiprocessing.Process(target=run, args=())
-              for i in range(int(sys.argv[3]))]
-        for p in ps: p.start()
-        for p in ps: p.join()
-    else:
-        run_ai(AI(), C(room))
     
 if __name__=="__main__":
-    main()
+    cmd_run(AI)
