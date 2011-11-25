@@ -29,10 +29,8 @@ window.run_application = (server, r) ->
     switch data.op
       when "info"
         update_room data
-      when "add" #add user success
-        user_seq = data.seq
-        user_snake_id = data.id
-        $("#user-control-panel").show()
+      when "add"
+        add_user_ok(data)
       when  "map"
         setup_map(data)
 
@@ -57,9 +55,10 @@ update_room = (info) ->
 
   if user_seq >= 0
     snake = info.snakes[user_seq]
-    if snake.alive
+    if snake and snake.alive
       $("#user-control-panel").show()
     else
+      user_seq = -1
       $("#user-control-panel").hide()
 
 update = (info) ->
@@ -149,4 +148,12 @@ window.turn = (direction) ->
     direction: direction
     round: -1
   )
+
+add_user_ok = (data)->
+  user_seq = data.seq
+  user_snake_id = data.id
+  $("#user-control-panel").show()
+
+  $('document').keypress (e)->
+    console.log(e.keycode)
 

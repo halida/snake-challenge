@@ -103,6 +103,7 @@ class MapBeanGen(BeanGen):
     def can(self, ctx):
         return ctx.status == 'running' and (self.canEgg(ctx) or self.canGem(ctx))
         #return ctx.round % 4 == 0 and ctx.status == 'running'
+
     def gen(self, ctx):
         gems,eggs = [],[]
         needgem, needegg = self.maxbean - len(ctx.gems), self.maxbean - len(ctx.eggs)

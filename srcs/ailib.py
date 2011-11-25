@@ -132,7 +132,19 @@ def run_ai(ai, controller):
     while True:
         # 先获取场上的情况
         info = c.info()
+
+        # found me
+        names = [s['name'] for s in info['snakes']]
+        if ai.name in names:
+            me = info['snakes'][names.index(ai.name)]
+        else:
+            me = None
+
+        # need add to game
         if ai.status == NEED_ADDING:
+            # if already added, not add again
+            if me: continue
+            
             # 游戏结束的时候就不上场了.
             if info['status'] == 'finished':
                 logging.debug('finished, waiting for adding..')
@@ -140,6 +152,8 @@ def run_ai(ai, controller):
 
             # add ai
             result = c.add(ai.name, ai.type)
+            if not result.has_key('seq'): # cannot enter?
+                continue
             ai.seq = result['seq']
             ai.id = result['id']
             ai.status = RUNNING
@@ -147,25 +161,29 @@ def run_ai(ai, controller):
             m = c.map()
             ai.setmap(m)
             logging.debug("add ai: %d" % ai.seq)
-            
-        else:
-            if info['status'] == 'finished' or len(info['snakes']) <= ai.seq:
-                # 游戏结束的话, 或者发现没有蛇的信息, ai复位..
-                ai.status = NEED_ADDING
-                logging.debug("finished..")
-            else:
-                # 如果自己死掉了, 那就不发出操作
-                if not info['snakes'][ai.seq]['alive']:
-                    logging.debug('oops, died.')
-                    continue
+            continue
 
-                # 发出操作
-                d = ai.step(info)
-                result = c.turn(ai.id, d, info['round'])
-                # 操作失败显示下
-                if result['status'] != 'ok':
-                    logging.debug(result['status'])
-                logging.debug("turn: %d in round: %d", d, info['round'])
+        if not me: continue
+        
+        if info['status'] == 'finished':
+            # 游戏结束的话, 或者发现没有蛇的信息, ai复位..
+            ai.status = NEED_ADDING
+            continue
+
+        # 如果自己死掉了, 那就不发出操作
+        if not me['alive']:
+            logging.debug(ai.name+' is dead.')
+            ai.status = NEED_ADDING            
+            continue
+
+        # 发出操作
+        d = ai.step(info)
+        result = c.turn(ai.id, d, info['round'])
+
+        # 操作失败显示下
+        if result['status'] != 'ok':
+            logging.debug(result['status'])
+        # logging.debug("turn: %d in round: %d", d, info['round'])
 
 
 def main():

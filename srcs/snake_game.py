@@ -168,7 +168,7 @@ class Game():
         if type not in (PYTHON, RUBY):
             return 'snake type error: %s' % type, None, None
         # 检查蛇数量
-        if len(self.snakes) >= 10:
+        if len(self.snakes) >= 20:
             return 'no place for new snake.', None, None
         
         # 随机生成蛇的位置
