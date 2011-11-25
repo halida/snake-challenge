@@ -5,3 +5,6 @@ window.init = ()->
                 ()->
                         flash.fadeIn(800)
                 , 3000)
+
+
+

@@ -40,9 +40,7 @@ window.run_application = (server, r) ->
   ws.onclose = ->
     alert "connection closed, refresh please.."
 
-  ws.onopen = ->
-    ws.send "room:" + room
-
+  ws.onopen = ->  ws.send JSON.stringify(room: room)
 
 update_room = (info) ->
 

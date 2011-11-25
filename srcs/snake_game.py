@@ -162,7 +162,7 @@ class Game():
                   type=PYTHON,
                   direction=DOWN,
                   head=None,
-                  length=5,
+                  length=10,
                   name="AAA"):
         # 检查蛇类型
         if type not in (PYTHON, RUBY):

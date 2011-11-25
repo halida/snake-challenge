@@ -28,5 +28,6 @@ window.chat_init = (server, name, room) ->
 
 window.chat_send = ->
   msg = $("#msg").val()
+  return unless msg
   chat_ws.send JSON.stringify(msg: msg)
   $("#msg").val ""
