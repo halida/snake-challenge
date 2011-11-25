@@ -6,7 +6,7 @@
   .title_bar
     = image_tag("step.gif", :style => "vertical-align:middle;")
     %span#round_counter{:style => "font-weight: bold;font-size:18px;"} 0
-  %canvas#canvas{:height => "375", :width => "750"}
+  %canvas#canvas
   #canvas_images{:style => "display:none;"}
     = image_tag("icons/egg.gif", :id => "icon_egg")
     = image_tag("icons/gem.gif", :id => "icon_gem")

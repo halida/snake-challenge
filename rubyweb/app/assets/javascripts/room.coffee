@@ -127,6 +127,8 @@ draw_walls = ->
 
 setup_map = (data)->
   map = data
+  canvas.attr('width', data.size[0]*scale)
+  canvas.attr('height', data.size[1]*scale)
   draw_walls()
 
 window.add_user = (name, type) ->

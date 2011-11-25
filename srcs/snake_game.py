@@ -120,12 +120,11 @@ class Game():
     scores = [('AAA', i)
               for i in range(1, 10)]
 
-    def __init__(self, size=(50, 25),
+    def __init__(self,
                  enable_bean=True,
                  enable_wall=True,
                  enable_no_resp_die=True,
                  map=None):
-        self.size = self.w, self.h = size
         self.enable_bean = enable_bean
         self.enable_wall = enable_wall
         self.enable_no_resp_die = enable_no_resp_die
@@ -139,6 +138,7 @@ class Game():
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
         self.beangen = map.beangen
+        self.size = self.w, self.h = map.meta['width'], map.meta['height']
 
     def restart(self):
         '''
