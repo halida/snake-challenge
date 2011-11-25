@@ -67,7 +67,7 @@ class Server():
                     rc = json.loads(rc)
                     result = self.controller.op(rc)
                     result['op'] = rc['op']
-                    logging.debug('process op %s ', rc)
+                    # logging.debug('process op %s ', rc)
                 # 为了防止错误命令搞挂服务器, 加上错误处理
                 except Exception as e:
                     error_msg = str(e)
@@ -97,7 +97,7 @@ class Server():
 
                 # 游戏处理
                 g.step()
-                logging.debug("room %d stepping: %s" % (i, g.status))
+                # logging.debug("room %d stepping: %s" % (i, g.status))
                 # 发送更新信息
                 info = self.controller.op(
                     dict(room=i, op='info'))

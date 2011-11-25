@@ -94,7 +94,7 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
         
     def on_message(self, message):
         data = json.loads(message)
-        if data.has_key('room'):
+        if data.get('op') == 'setroom':
             self.room = int(data['room'])
         else:
             self.process_cmd(message)

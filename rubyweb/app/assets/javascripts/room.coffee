@@ -1,4 +1,3 @@
-walls = []
 scale = 15
 colors =
   wall: "#8c8c8c"
@@ -12,6 +11,7 @@ score_board_html = ""
 finished = false
 canvas = undefined
 ctx = undefined
+map = undefined
 room = -1
 
 user_snake_id=[]
@@ -19,8 +19,8 @@ user_seq= -1
 
 window.run_application = (server, r) ->
   room = r
-  canvas = $("#canvas")[0]
-  ctx = canvas.getContext("2d")
+  canvas = $("#canvas")
+  ctx = canvas[0].getContext("2d")
 
   ws = new WebSocket(server)
   ws.onmessage = (e) ->
@@ -33,6 +33,8 @@ window.run_application = (server, r) ->
         user_seq = data.seq
         user_snake_id = data.id
         $("#user-control-panel").show()
+      when  "map"
+        setup_map(data)
 
   ws.onerror = (error) ->
     console.log error
@@ -40,16 +42,14 @@ window.run_application = (server, r) ->
   ws.onclose = ->
     alert "connection closed, refresh please.."
 
-  ws.onopen = ->  ws.send JSON.stringify(room: room)
+  ws.onopen = ->
+    ws.send JSON.stringify(op: 'setroom', room: room)
+    ws.send JSON.stringify(op: 'map', room: room)
 
 update_room = (info) ->
 
-  if walls.length <= 0
-    setup_walls_data()
-
   if finished
     unless info.status is "finished"
-      setup_walls_data()
       finished = false
   else
     update info
@@ -63,16 +63,20 @@ update_room = (info) ->
       $("#user-control-panel").hide()
 
 update = (info) ->
-  canvas.width = canvas.width
-  score_board_html = ""
+  ctx.fillStyle = '#ffffff'
+  ctx.fillRect 0, 0, ctx.canvas.width, ctx.canvas.height
   draw_walls()
+
+  score_board_html = ""
   $("#round_counter").html info.round + " " + info.status
+
   $.each info.snakes.sort((a, b) ->
     b.body.length - a.body.length
   ), (index) ->
     draw_snake this, index % 4
 
   $("#score_board").html score_board_html
+
   $.each info.eggs, ->
     draw_egg this
 
@@ -115,16 +119,15 @@ draw_egg = (egg) ->
 draw_gem = (gem) ->
   ctx.drawImage document.getElementById("icon_gem"), gem[0] * scale, gem[1] * scale
 
-
 draw_walls = ->
+  return unless map
   ctx.fillStyle = colors.wall
-  $.each walls, ->
-    ctx.fillRect this[0] * scale, this[1] * scale, scale, scale
+  for wall in map.walls
+    ctx.fillRect wall[0] * scale, wall[1] * scale, scale, scale
 
-
-setup_walls_data = ->
-  $.getJSON "map", (map) ->
-    walls = map.walls
+setup_map = (data)->
+  map = data
+  draw_walls()
 
 window.add_user = (name, type) ->
   ws.send JSON.stringify(
