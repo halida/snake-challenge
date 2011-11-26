@@ -22,7 +22,7 @@
         PythonVSRuby 2011 Episode II - Sprint of Snake Challenge
         %br/
         Source Code -
-        %a{:href => "https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home", :target => "_blank"} https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home
+        %a{:href => "https://github.com/halida/snake-challenge", :target => "_blank"} https://bitbucket.org/linjunhalida/snake-challenge/wiki/Home
         %br/
         Time: June 24th - June 26th
         %br/
@@ -109,7 +109,9 @@
       %h1 Play Online
     #room_icons
       - for i in 1..4
-        %a.room_icon{:href => "/room/#{i-1}/"}= image_tag("room_0#{i}.png")
+        %a.room_icon{:href => "/room/#{i-1}/", id:"room-#{i}"}
+          .number= "%02d" % i
+          .room GAME ROOM
 
     - if !@replays.blank?
       .title_bar_r

@@ -7,7 +7,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%
   font: inherit
   vertical-align: baseline
-  color: #0A667D
   font-size: 12px
 
 /* HTML5 display-role reset for older browsers
@@ -16,9 +15,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 body
   line-height: 1
+  color: #0A667D
 
 a
   text-decoration: none
+  color: #0A667D
+
   &:hover
     color: #37D8F9
 
@@ -159,9 +161,38 @@ h1
   border-bottom: thick solid #07243A
   border-bottom-width: 1px
   padding: 33px 3px
-  .room_icon img
+  .room_icon
     margin-left: 20px
     margin-bottom: 20px
+    display: inline-block
+    width: 72px
+    height: 72px
+    +border-radius(36px)
+    background-color: #11b734
+    text-align: center
+    color: white
+    &:hover
+      color: black
+    .number, .room
+      display: inline-block
+      text-align: center
+
+    .number
+      font-size: 26px
+      font-weight: bold
+      padding-top: 10px  
+    .room
+      font-size: 10px
+      font-weight: bold
+
+  #room-1  
+    background-color: #11b734
+  #room-2
+    background-color: #7f1995
+  #room-3  
+    background-color: #219fef
+  #room-4  
+    background-color: #f2590d
 
 #game_replay
   border-bottom: thick solid #07243A
