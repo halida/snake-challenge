@@ -85,6 +85,7 @@ class Server():
                 else:
                     # 其他状态的话, 最小时间的方式定时更新                    
                     ok = True
+                    
                 if not self.on_logic(g, ok):
                     continue
     

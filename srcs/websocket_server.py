@@ -30,6 +30,8 @@ oper.connect('ipc:///tmp/game_oper.ipc')
 
 class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
     connects = []
+    chats = {}
+    SAVED_CHATS = 30
     def open(self):
         self.name = '???'
         self.room = "root"
@@ -40,28 +42,38 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
         else:
             current_ins = 'none'
         self.write_message('current in: \n' + current_ins)
+            
         self.connects.append(self)
         
     def on_message(self, message):
         data = json.loads(message)
         if data.has_key('name'):
             self.name = data['name']
-            self.room = data['room']
+            self.room = data['room']            
             self.broadcast(self.room, self.name + ' enters.')
+            # write some history chats
+            for chat in self.chats.get(self.room, []):
+                self.write_message(chat)
             return
         else:
             self.broadcast(self.room, self.name + ' says: ' + data['msg'])
 
     def broadcast(self, room, msg):
+        # save chat
+        if not self.chats.has_key(room):
+            self.chats[room] = []
+        room_chats = self.chats[room]
+        room_chats.append(msg)
+        if len(room_chats) > self.SAVED_CHATS:
+            self.chats[room] = room_chats[-self.SAVED_CHATS:]
+        
         for c in self.connects:
             if c.room != room:
                 continue
-            
             try:
                 c.write_message(msg)
-            except:
-                raise
-                # 防止出现错误
+            except Exception as e:
+                logging.debug(str(e))
                 self.connects.remove(c)
             
     def on_close(self):
