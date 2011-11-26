@@ -4,7 +4,7 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %title Ruby VS Python Official Site
 
-    = stylesheet_link_tag "main", "map_builder", :cache => "cached_main"
+    = stylesheet_link_tag "main.css", "map_builder.css"
     = yield :styles
     = javascript_include_tag "jquery", "json", "application", "map_builder", "chatroom", :cache => "cached_application"
     = csrf_meta_tag

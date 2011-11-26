@@ -9,6 +9,8 @@
 *.bak
 *.out
 
+tmp
+
 # rubyweb
 
 rubyweb/public/assets/*.css

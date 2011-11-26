@@ -1,0 +1,11 @@
+#place
+  #scoreboard
+    - for name, data in [['daily', @dailys], ['weekly', @weeklys], ['monthly', @monthlys]]
+      %table{border: "1", cellpadding: "2", cellspacing: "2", class: name}
+        %tr
+          %th{COLSPAN: "2"}= "#{name} score"
+    
+        - for name, count in data
+          %tr
+            %td.name= name
+            %td.score= count

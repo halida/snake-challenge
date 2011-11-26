@@ -17,6 +17,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 body
   line-height: 1
 
+a
+  text-decoration: none
+  &:hover
+    color: #37D8F9
+
 ol, ul
   list-style: none
 
@@ -247,3 +252,31 @@ ul#maps
 
 .clear
   clear: both
+
+#scoreboard-link
+  a
+    font-size: 30px
+  padding-bottom: 10px
+  padding-left: 35px
+  width: 100%
+
+#scoreboard
+  margin: 20px auto
+  width: 800px
+  .daily, .weekly, .monthly
+    display: inline-block
+    min-width: 250px
+    th
+      min-width: 100px
+      height: 50px
+      font-size: 30px
+      text-align: center
+    td
+      min-width: 100px
+      font-size: 20px
+    td.name
+      color: #88DB99
+      text-align: left
+    td.score
+      color: #A5C9E7
+      text-align: right

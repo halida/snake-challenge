@@ -92,7 +92,7 @@ class Server():
                 if loop and g.status == FINISHED:
                     g.loop_count += 1
                     if g.loop_count > 20:
-                        g.restart()
+                        g.start()
                         g.loop_count = 0
 
                 # 游戏处理

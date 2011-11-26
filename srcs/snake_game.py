@@ -7,9 +7,7 @@ from lib import *
 from simple import *
 from map.map import Map
 from random_wall import RandomWallGen
-import uuid
-
-
+import db
 # 蛇的方向
 LEFT, UP, RIGHT, DOWN = range(4)
 
@@ -30,7 +28,6 @@ FINISHED='finished'
 # 蛇的种类
 PYTHON = 'python'
 RUBY = 'ruby'
-
 
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):
@@ -117,9 +114,6 @@ class Snake():
 class Game():
     """游戏场景"""
     # 记录分数
-    scores = [('AAA', i)
-              for i in range(1, 10)]
-
     def __init__(self,
                  enable_bean=True,
                  enable_wall=True,
@@ -132,7 +126,7 @@ class Game():
         if not map:
             map = Map.load('srcs/map/flat.map')
         self.setMap(map)
-        self.restart()
+        self.start()
 
     def setMap(self, map):
         self.wallgen = map.wallgen
@@ -140,7 +134,7 @@ class Game():
         self.beangen = map.beangen
         self.size = self.w, self.h = map.meta['width'], map.meta['height']
 
-    def restart(self):
+    def start(self):
         '''
         # 因为js没有(), 只好用[]
         self.walls = [[10, i]
@@ -234,12 +228,8 @@ class Game():
         # 计算谁的分数最大
         highest = max(lives, key=lambda s: s.length())
         # 再加到最高分里面去
-        self.scores.append(
-            (highest.name, highest.length()))
-        self.scores.sort(key= lambda d: d[1])
-        # 只统计10个
-        if len(self.scores) > 10:
-            self.scores.pop(0)
+        db.cursor.execute('insert into scores values(?, ?)', (time.time(), highest.name))
+        db.db.commit() 
 
     def step(self):
         """游戏进行一步..."""
