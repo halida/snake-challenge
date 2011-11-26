@@ -144,7 +144,7 @@ window.add_user = (name, type) ->
   )
 
 window.turn = (direction) ->
-  return if user_seq < 0
+  return false if user_seq < 0
   ws.send JSON.stringify(
     op: "turn"
     id: user_snake_id
@@ -153,12 +153,24 @@ window.turn = (direction) ->
     direction: direction
     round: -1
   )
+  return true
 
 add_user_ok = (data)->
   user_seq = data.seq
   user_snake_id = data.id
   $("#user-control-panel").show()
 
-  $('document').keypress (e)->
-    console.log(e.keycode)
+  $(document).keyup (e)->
+    dir = -1
+    if (e.keyCode == 38 or e.keyCode == 87) # up w
+      dir = 1
+    if (e.keyCode == 37 or e.keyCode == 65) # left a
+      dir = 0
+    if (e.keyCode == 40 or e.keyCode == 83) # down s
+      dir = 3
+    if (e.keyCode == 39 or e.keyCode == 68) # right d
+      dir = 2
+
+    return unless dir >= 0
+    e.preventDefault() if turn(dir)
 
