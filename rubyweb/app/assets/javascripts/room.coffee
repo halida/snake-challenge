@@ -17,12 +17,17 @@ room = -1
 user_snake_id=[]
 user_seq= -1
 
+if MozWebSocket?
+  WS = MozWebSocket
+else
+  WS = WebSocket
+
 window.run_application = (server, r) ->
   room = r
   canvas = $("#canvas")
   ctx = canvas[0].getContext("2d")
 
-  ws = new WebSocket(server)
+  ws = new WS(server)
   ws.onmessage = (e) ->
     data = $.parseJSON(e.data)
 

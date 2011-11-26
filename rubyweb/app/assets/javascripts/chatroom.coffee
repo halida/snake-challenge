@@ -1,15 +1,20 @@
+if MozWebSocket?
+  WS = MozWebSocket
+else
+  WS = WebSocket
+
 # chats
 chat_ws = []
 
-msg = (m) ->
-  $("#debug-msg").text m
-
 append = (msg) ->
-  $("#msgs").prepend msg
+  return unless msg
+  mark = msg.substring(0, msg.indexOf(' '))
+  color = random_color('p' + mark)
+  $("#msgs").prepend ('<span style="color: '+color+'">'+msg+"</span>")
   $("#msgs").prepend "<br/>"
 
 window.chat_init = (server, name, room) ->
-  chat_ws = new WebSocket(server)
+  chat_ws = new WS(server)
 
   chat_ws.onopen = ->
     chat_ws.send JSON.stringify(
@@ -23,7 +28,7 @@ window.chat_init = (server, name, room) ->
   chat_ws.onclose = ->
     append "closed"
 
-  $("#send-msg").show 200
+  $("#send-msg").show()
   $("#msg").focus()
 
 window.chat_send = ->

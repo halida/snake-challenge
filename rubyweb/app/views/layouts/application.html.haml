@@ -6,7 +6,7 @@
 
     = stylesheet_link_tag "main.css", "map_builder.css"
     = yield :styles
-    = javascript_include_tag "jquery", "json", "application", "map_builder", "chatroom", :cache => "cached_application"
+    = javascript_include_tag "jquery", "json", "application", "map_builder", "chatroom"
     = csrf_meta_tag
     = yield :javascripts
 
