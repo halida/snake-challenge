@@ -32,7 +32,7 @@ window.run_application = (server, r) ->
 
     switch data.op
       when "info"
-        update_room data
+        update_info data
         check_ai_info(data)
       when "add"
         add_user_result(data)
@@ -55,7 +55,10 @@ window.run_application = (server, r) ->
     ws.send JSON.stringify(op: 'setroom', room: room)
     ws.send JSON.stringify(op: 'map', room: room)
 
-update_room = (info) ->
+update_info = (info) ->
+  if info.logs
+    for log in info.logs
+      console.log log
 
   update info
 

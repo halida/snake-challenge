@@ -95,7 +95,8 @@ class Controller():
                     status=g.status,
                     eggs=g.eggs,
                     gems=g.gems,
-                    round=g.round)
+                    round=g.round,
+                    logs=g.logs)
         return info
 
 def test():

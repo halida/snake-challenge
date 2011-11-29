@@ -77,10 +77,12 @@ class Snake():
         # 撞死了
         if what not in (GEM, EGG):
             self.alive = False
+            self.game.log('snake hit and die: '+ self.name)
             # 如果撞到其他蛇的头部, 其他蛇也挂了
             if (isinstance(what, Snake)
                 and what.head() == next):
                 what.alive = False
+                self.game.log('snake hit by others and die: '+ what.name)
             return
 
         # 吃掉豆子
@@ -97,7 +99,7 @@ class Snake():
             # 足够短就被饿死了..
             if self.length() <= 3:
                 self.alive = False
-
+                self.game.log('snake die because of eat wrong type of bean: '+ self.name)
         # 吃完豆子, 再到新的长度..
         self.body.insert(0, next)
                 
@@ -128,6 +130,9 @@ class Game():
         self.setMap(map)
         self.start()
 
+    def log(self, msg):
+        self.logs.append(msg)
+        
     def setMap(self, map):
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
@@ -140,6 +145,8 @@ class Game():
         self.walls = [[10, i]
                       for i in range(5, 35)]
         '''
+        self.logs = []
+
         self.walls = [] # to pass unittest
         self.snakes = []
         self.round = 0
@@ -227,12 +234,14 @@ class Game():
         if len(lives) <=0: return
         # 计算谁的分数最大
         highest = max(lives, key=lambda s: s.length())
+        self.log('game finished, winner: ' + highest.name)
         # 再加到最高分里面去
         db.cursor.execute('insert into scores values(?, ?)', (time.time(), highest.name))
         db.db.commit() 
 
     def step(self):
         """游戏进行一步..."""
+        self.logs = []
         # 游戏结束就不进行了.
         if self.status == FINISHED: return
                 
@@ -247,6 +256,7 @@ class Game():
         if self.status == WAITPLAYER:
             if len(self.snakes) < 2: return
             self.status = RUNNING
+            self.log('game running.')
 
         # 获胜条件:
         # 并且只有一个人剩余
@@ -262,7 +272,7 @@ class Game():
             snake = self.snakes[i]
             if not snake.alive: continue
             if d == None:
-                # 如果连续没有响应超过3次, 让蛇死掉
+                # 如果连续没有响应超过10次, 让蛇死掉
                 if self.enable_no_resp_die:
                     self.no_response_snake_die(snake, self.round)
             else:
@@ -352,6 +362,7 @@ class Game():
             snake.alive = False
             logging.debug('kill no response snake: %d' % \
                          self.snakes.index(snake))
+            self.log('kill snake for no response: '+snake.name)
         
 def test():
     """

@@ -124,7 +124,7 @@ def main():
         s.run()
     elif cmd == '4web':
         s = Server()
-        s.run(loop=True, max_waits=1.0, enable_no_resp_die=False)
+        s.run(loop=True, max_waits=1.0, enable_no_resp_die=True)
     elif cmd == '4webai':
         s = Server()
         s.run(loop=True, max_waits=10.0)
