@@ -9,7 +9,7 @@ from game import *
 class Map:
     walltoken = ['.','W','S']
     # nydus tokens
-    nydustoken = ['A','B','C','D','E']
+    portal_token = ['A','B','C','D','E']
 
     def __init__(self):
         self.beangen = MapBeanGen(self)
@@ -59,7 +59,7 @@ class Map:
         self.walls = []
         #self.beans = []
         self.snakes = []
-        self.nydus = {}
+        self.portals = []
         
         for y in range(self.meta['height']):
             for x in range(self.meta['width']):
@@ -70,14 +70,16 @@ class Map:
                 #    self.beans.append([x,y])
                 elif v == 'S':
                     self.snakes.append([x,y])
-                elif v in self.nydustoken:
-                    idx = nydustoken.index(v)
-                    if idx in self.nydus.keys():
-                        self.nydus[2*idx+1] = [x,y]
+                elif v in self.portal_token:
+                    idx = self.portal_token.index(v)
+                    shortage = (idx+1)*2 - len(self.portals)
+                    if shortage > 0:
+                        self.portals.extend([None] * shortage)
+                    if self.portals[2*idx]:
+                        self.portals[2*idx+1] = [x,y]
                     else:
-                        self.nydus[2*idx] = [x,y]
-        
-        self.nydus = list(self.nydus)
+                        self.portals[2*idx] = [x,y]
+
         return pt + self.meta['height']
         
     def ommitComment(self, str):

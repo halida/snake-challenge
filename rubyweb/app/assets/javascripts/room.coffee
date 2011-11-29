@@ -4,6 +4,7 @@ colors =
   python: [ [ "#a5c9e7", "#08467b", "#3e9be9" ], [ "#88db99", "#0e7483", "#85f56b" ], [ "#a5c9e7", "#0a4846", "#3ae712" ], [ "#88db99", "#f3f00a", "#0db02c" ] ]
   ruby: [ [ "#eb88a9", "#b30c43", "#f81919" ], [ "#f45e5e", "#83103e", "#e07711" ], [ "#eb88a9", "#8151a6", "#59edef" ], [ "#f45e5e", "#f8952a", "#ffea00" ] ]
   dead: [ "#8c8c8c", "#8c8c8c", "#8c8c8c" ]
+  portal: ["#bb0000", "#bb0022", "#bb0044", "#bb0066", "#bb0088"]
 
 ws = undefined
 canvas = undefined
@@ -49,7 +50,7 @@ window.run_application = (server, r) ->
     console.log error
 
   ws.onclose = ->
-    alert "connection closed, refresh please.."
+    error "connection closed, refresh please.."
 
   ws.onopen = ->
     ws.send JSON.stringify(op: 'setroom', room: room)
@@ -84,6 +85,12 @@ update = (info) ->
     draw_snake this, index % 4
 
   $("#score_board").html score_board_html
+
+  if info.portals.length > 0
+    for i in [0..info.portals.length-1]
+      portal = info.portals[i]
+      ctx.fillStyle = colors.portal[i%2]
+      ctx.fillRect portal[0] * scale, portal[1] * scale, scale, scale
 
   $.each info.eggs, ->
     draw_egg this

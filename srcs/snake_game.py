@@ -17,7 +17,7 @@ DIRECT = (
     )
 
 # 检查hit时的标识
-NULL, WALL, GEM, EGG = range(4)
+NULL, WALL, GEM, EGG, PORTAL = range(5)
 
 # 游戏状态
 INITIAL = 'initial'
@@ -74,15 +74,22 @@ class Snake():
             self.body.insert(0, next)
             return
 
+        # portal
+        if what == PORTAL:
+            portal_next = self.game.get_portal_next(next)
+            # 检查是否portal对面是蛇
+            portal_next_what = self.game.check_hit_snake(portal_next)
+            if portal_next_what:
+                self.hit_others(next, portal_next_what)
+                return
+            # 移动头部
+            self.body.pop(-1)
+            self.body.insert(0, portal_next)
+            return
+
         # 撞死了
         if what not in (GEM, EGG):
-            self.alive = False
-            self.game.log('snake hit and die: '+ self.name)
-            # 如果撞到其他蛇的头部, 其他蛇也挂了
-            if (isinstance(what, Snake)
-                and what.head() == next):
-                what.alive = False
-                self.game.log('snake hit by others and die: '+ what.name)
+            self.hit_others(next, what)
             return
 
         # 吃掉豆子
@@ -102,7 +109,15 @@ class Snake():
                 self.game.log('snake die because of eat wrong type of bean: '+ self.name)
         # 吃完豆子, 再到新的长度..
         self.body.insert(0, next)
-                
+
+    def hit_others(self, next, what):
+        self.alive = False
+        self.game.log('snake hit and die: '+ self.name)
+        # 如果撞到其他蛇的头部, 其他蛇也挂了
+        if (isinstance(what, Snake)
+            and what.head() == next):
+            what.alive = False
+            self.game.log('snake hit by others and die: '+ what.name)
 
     def head(self):
         """获取蛇的头部位置"""
@@ -137,6 +152,7 @@ class Game():
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
         self.beangen = map.beangen
+        self.portals = map.portals
         self.size = self.w, self.h = map.meta['width'], map.meta['height']
 
     def start(self):
@@ -154,7 +170,7 @@ class Game():
         self.snake_op = []
         self.bean_time = 4 # 多少轮会出现一个豆子
         self.eggs = []
-        self.gems = []        
+        self.gems = []
         self.status = WAITPLAYER
         #if self.wallgen.can(self):
         if self.enable_wall:
@@ -251,11 +267,12 @@ class Game():
                   for s in self.snakes
                   ]
         self.info = dict(snakes=snakes,
-                    status=self.status,
-                    eggs=self.eggs,
-                    gems=self.gems,
-                    round=self.round,
-                    logs=self.logs)
+                         status=self.status,
+                         eggs=self.eggs,
+                         gems=self.gems,
+                         portals=self.portals,
+                         round=self.round,
+                         logs=self.logs)
         return self.info
 
     def step(self):
@@ -311,6 +328,10 @@ class Game():
         # next round
         self.round += 1
         self.snake_op = [None, ] * len(self.snakes)
+
+    def get_portal_next(self, p):
+        seq = self.portals.index(p)
+        return self.portals[(seq / 2)*2 + ((seq%2)+1)%2 ]
     
     def create_bean(self):
         """生成豆子
@@ -335,6 +356,11 @@ class Game():
             return EGG
         if p in self.gems:
             return GEM
+        if p in self.portals:
+            return PORTAL
+        return self.check_hit_snake(p)
+
+    def check_hit_snake(self, p):
         for snake in self.snakes:
             if p in snake.body:
                 return snake
