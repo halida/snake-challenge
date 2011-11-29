@@ -214,10 +214,10 @@ class Game():
                   name="AAA"):
         # 检查蛇类型
         if type not in (PYTHON, RUBY):
-            return 'snake type error: %s' % type, None, None
+            return dict(status='snake type error: %s' % type)
         # 检查蛇数量
         if len(self.snakes) >= 20:
-            return 'no place for new snake.', None, None
+            return dict(status='no place for new snake.')
         
         # 随机生成蛇的位置
         d = DIRECT[direction]
@@ -239,8 +239,8 @@ class Game():
         snake = Snake(self, type, direction, head, length, name)
         self.snakes.append(snake)
         self.snake_op.append(dict(op='turn', direction=direction))
-        # 返回蛇的顺序, 以及蛇的id
-        return None, len(self.snakes) - 1, snake.id
+        # 返回蛇的顺序, 以及蛇的id(用来验证控制权限)
+        return dict(seq=len(self.snakes) - 1, id=snake.id)
 
     def set_snake(self, n, snake):
         """设置蛇, 调试用"""

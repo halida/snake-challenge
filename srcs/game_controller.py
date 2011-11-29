@@ -33,37 +33,25 @@ class Controller():
         """
         op = data['op']
         if op == 'add':
-            return self.add(data['name'], data['type'])
+            return self.game.add_snake(type=data['type'], name=data['name'])
+        
         elif op in ('turn', 'sprint'):
-            return self.snake_op(data['id'], data['round'], data)
+            return dict(status=self.game.set_snake_op(data['id'], int(data['round']), data))
+        
         elif op == 'map':
             return self.game.get_map()
+        
         elif op == 'info':
             return self.game.get_info()
+        
         elif op == 'history':
             return self.history()
+        
         elif op == 'scores':
             return self.game.scores()
+        
         else:
             return dict(status='op error: '+op)
-
-    def add(self, name, type):
-        """
-        >>> c = Controller(Game())
-        >>> c.add('p1', 'python') ['seq']
-        0
-        >>> c.add('r1', 'ruby') ['seq']
-        1
-        """
-        status, seq, id = self.game.add_snake(type=type, name=name)
-        if status:
-            return dict(status=status)
-        else:
-            return dict(seq=seq, id=id)
-
-    def snake_op(self, id, round, data):
-        status = self.game.set_snake_op(id, int(round), data)
-        return dict(status=status)
 
 def test():
     """
