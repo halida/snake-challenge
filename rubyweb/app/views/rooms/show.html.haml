@@ -35,6 +35,7 @@
       #user-control-panel
         #ai-control
           %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
+          %input{type: "submit", onclick: "javascript:sprint()", value: "sprint"}/ 
         %input{type: "submit", onclick: "javascript:turn(1);", class: "turn", id: "turn-up", value: "^"}/
         %input{type: "submit", onclick: "javascript:turn(0);", class: "turn", id: "turn-left", value: "<"}/
         %input{type: "submit", onclick: "javascript:turn(3);", class: "turn", id: "turn-down", value: "V"}/

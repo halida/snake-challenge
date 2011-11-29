@@ -40,7 +40,7 @@ window.run_application = (server, r) ->
       when  "map"
         setup_map(data)
         check_ai_map(data)
-      when "turn"
+      when "turn", "sprint"
         undefined
       else
         error data.status if data.status
@@ -153,6 +153,17 @@ window.add_user = (name, type) ->
     name: name
     type: type
   )
+
+window.sprint = ()->
+  return false if user_seq < 0
+  ws.send JSON.stringify(
+    op: "sprint"
+    id: user_snake_id
+    snake_id: user_snake_id
+    room: room
+    round: -1
+  )
+  return true
 
 window.turn = (direction) ->
   return false if user_seq < 0

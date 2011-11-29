@@ -34,16 +34,18 @@ class Controller():
         op = data['op']
         if op == 'add':
             return self.add(data['name'], data['type'])
-        elif op == 'turn':
-            return self.turn(data['id'], data['direction'],data['round'])
+        elif op in ('turn', 'sprint'):
+            return self.snake_op(data['id'], data['round'], data)
         elif op == 'map':
-            return self.map()
+            return self.game.get_map()
         elif op == 'info':
-            return self.info()
+            return self.game.get_info()
         elif op == 'history':
             return self.history()
         elif op == 'scores':
-            return self.scores()
+            return self.game.scores()
+        else:
+            return dict(status='op error: '+op)
 
     def add(self, name, type):
         """
@@ -59,31 +61,9 @@ class Controller():
         else:
             return dict(seq=seq, id=id)
 
-    def turn(self, id, d, round):
-        status = self.game.turn_snake(id, int(d), int(round))
+    def snake_op(self, id, round, data):
+        status = self.game.set_snake_op(id, int(round), data)
         return dict(status=status)
-
-    def map(self):
-        """
-        >>> c = Controller(Game())
-        >>> result = c.map()
-        """
-        return dict(walls=self.game.walls,
-                    size=self.game.size)
-
-    def scores(self):
-        """
-        >>> c = Controller(Game())
-        >>> result = c.scores()
-        """
-        return self.game.scores()
-
-    def info(self):
-        """
-        >>> c = Controller(Game())
-        >>> result = c.info()
-        """
-        return self.game.get_info()
 
 def test():
     """

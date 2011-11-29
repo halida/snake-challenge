@@ -29,6 +29,11 @@ FINISHED='finished'
 PYTHON = 'python'
 RUBY = 'ruby'
 
+#sprint
+SPRINT_ROUND = 5 
+SPRINT_STEP = 3 # sprint的时候, 每轮可以走的步数
+SPRINT_REST = 20 # sprint之后需要休息的时间
+
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):
         """设置snake
@@ -38,9 +43,10 @@ class Snake():
         self.name = name
         self.w, self.h = self.game.size
         self.id = uuid.uuid4().hex
-        
+
         self.alive = True
         self.direction = direction
+        self.sprint = None
 
         # 计算身体
         dx, dy = DIRECT[direction]
@@ -49,9 +55,14 @@ class Snake():
              (head[1] - dy * i + self.h) % self.h]
             for i in range(length)]
 
-    def turn(self, d):
-        """控制蛇的方向"""
-        self.direction = d
+    def op(self, d):
+        if not d: return
+        op = d['op']
+        if op == 'turn':
+            self.direction = d['direction']
+        elif op == 'sprint':
+            if self.sprint: return
+            self.sprint = SPRINT_ROUND
 
     def get_next(self):
         """获取蛇下一个移动到的位置"""
@@ -65,6 +76,25 @@ class Snake():
         """移动蛇"""
         if not self.alive: return
 
+        if not self.sprint:
+            return self.one_step()
+        
+        if self.sprint > 0:
+            self.sprint -= 1
+            for i in range(SPRINT_STEP):
+                self.one_step()
+            if self.sprint == 0:
+                self.sprint -= SPRINT_REST
+
+        if self.sprint < 0:
+            self.sprint += 1
+            if self.sprint == 0:
+                self.sprint = None
+            return
+
+    def one_step(self):
+        """移动一步"""
+        if not self.alive: return
         next = self.get_next()
         # 检查是否撞到东西
         what = self.game.check_hit(next)
@@ -208,7 +238,7 @@ class Game():
         # 生成蛇
         snake = Snake(self, type, direction, head, length, name)
         self.snakes.append(snake)
-        self.snake_op.append(direction)
+        self.snake_op.append(dict(op='turn', direction=direction))
         # 返回蛇的顺序, 以及蛇的id
         return None, len(self.snakes) - 1, snake.id
 
@@ -222,25 +252,34 @@ class Game():
             if s.id == id:
                 return i
 
-    def turn_snake(self, n, d, round):
+    def set_snake_op(self, id, round, kw):
         # 获取蛇的seq
-        if type(n) in (str, unicode):
-            n = self.get_seq(n)
-            if n == None:
-                return "noid"
+        n = self.get_seq(id)
+        if n == None:
+            return "noid"
         # 检查轮数是否正确
         if round != -1 and self.round != round:
             return "round error, current round: %d" % self.round
-        # 检查direction
-        if not 0<=d<=3:
-            return "direction error: %d" % d
-        # check turn back
-        sd = self.snakes[n].direction
-        if (sd != d and sd % 2 == d % 2):
-            return "noturnback"
         
-        self.snake_op[n] = d
-        return 'ok'
+        if kw['op'] == 'turn':
+            kw['direction'] = int(kw['direction'])
+            d = kw['direction']
+            # 检查direction
+            if not 0<=d<=3:
+                return "direction error: %d" % d
+            # check turn back
+            sd = self.snakes[n].direction
+            if (sd != d and sd % 2 == d % 2):
+                return "noturnback"
+        
+            self.snake_op[n] = kw
+            return 'ok'
+
+        elif kw['op'] == 'sprint':
+            self.snake_op[n] = kw
+            return 'ok'
+        else:
+            return 'wrong op: ' + kw['op'] 
 
     def check_score(self):
         """计算最高分, 保存到历史中"""
@@ -263,6 +302,10 @@ class Game():
         weeklys = list(db.cursor.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (today - datetime.timedelta(days=7), )))
         monthlys = list(db.cursor.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (today - datetime.timedelta(days=30), )))
         return dict(dailys=dailys, weeklys=weeklys, monthlys=monthlys)
+
+    def get_map(self):
+        return dict(walls=self.walls,
+                    size=self.size)
 
     def get_info(self):
         if self.info:
@@ -307,7 +350,7 @@ class Game():
         # 并且只有一个人剩余
         # 或者时间到
         alives = sum([s.alive for s in self.snakes])
-        if alives <= 1 or self.round > 30:
+        if alives <= 1 or self.round > 3000:
             self.status = FINISHED
             self.check_score()
             return
@@ -316,12 +359,12 @@ class Game():
         for i, d in enumerate(self.snake_op):
             snake = self.snakes[i]
             if not snake.alive: continue
-            if d == None:
-                # 如果连续没有响应超过10次, 让蛇死掉
-                if self.enable_no_resp_die:
-                    self.no_response_snake_die(snake, self.round)
-            else:
-                snake.turn(d)
+
+            # 如果连续没有响应超过10次, 让蛇死掉
+            if d == None and self.enable_no_resp_die:
+                self.no_response_snake_die(snake, self.round)
+
+            snake.op(d)
             snake.move()
 
         # 生成豆子
