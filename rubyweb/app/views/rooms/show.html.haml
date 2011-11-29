@@ -13,8 +13,8 @@
   .clear
   #chat
     %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
-      %input#msg{:type => "text"}/
       %input{:type => "submit", :value => "send"}/
+      %input#msg{:type => "text"}/
     #msgs
     :javascript
       chat_init("ws://"+window.location.hostname+":9999/chatroom", "#{current_user ? current_user.name : request.remote_ip}", "room-#{params[:id]}");
