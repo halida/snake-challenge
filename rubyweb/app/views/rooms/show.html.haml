@@ -1,6 +1,6 @@
 - content_for :styles do
-  = stylesheet_link_tag "room", :cache => "cached_room"
-  = javascript_include_tag "room"
+  = stylesheet_link_tag "room"
+  = javascript_include_tag "simple_snake", "room"
 
 #left
   .title_bar
@@ -33,6 +33,7 @@
           %p left, right, up, down or AWSD to control snake
 
       #user-control-panel
+        %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
         %input{type: "submit", onclick: "javascript:turn(1);", class: "turn", id: "turn-up", value: "^"}/
         %input{type: "submit", onclick: "javascript:turn(0);", class: "turn", id: "turn-left", value: "<"}/
         %input{type: "submit", onclick: "javascript:turn(3);", class: "turn", id: "turn-down", value: "V"}/

@@ -6,6 +6,15 @@ window.init = ()->
                         flash.fadeIn(800)
                 , 3000)
 
+window.error = (msg)->
+        error = $('#flash_error')
+        error.html(msg)
+        error.fadeIn(800)
+        setTimeout(
+                ()->
+                        error.fadeOut(800)
+                , 3000)
+
 window.random_color = (text)->
   v = 0
   for k in text

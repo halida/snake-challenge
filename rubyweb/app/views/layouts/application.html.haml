@@ -11,14 +11,18 @@
     = yield :javascripts
 
   %body
-    - if flash[:error]
-      #flash_error.flash= flash[:error]
-      :coffeescript
-        setTimeout((-> $('.flash').fadeOut(500)), 3000)
-    - if flash[:notice]
-      #flash_notice.flash= flash[:notice]
-      :coffeescript
-        setTimeout((-> $('.flash').fadeOut(500)), 3000)
+    #flash_error.flash{style: "display: none"}
+      - if flash[:error]
+        = flash[:error]
+        :coffeescript
+          $('#flash_error').show()
+          setTimeout((-> $('.flash').fadeOut(500)), 3000)
+    #flash_notice.flash{style: "display: none"}
+      - if flash[:notice]
+        = flash[:notice]
+        :coffeescript
+          $('#flash_notice').show()
+          setTimeout((-> $('.flash').fadeOut(500)), 3000)
 
     #header
       %a{:href => "/", :title => "Go home"}= image_tag("logo.png")

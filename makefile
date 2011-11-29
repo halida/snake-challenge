@@ -18,7 +18,7 @@ ai:
 	python srcs/ai_simple.py zero 0
 # run lots of test ai
 ais:
-	python srcs/ai_simple.py zero 0 4
+	python srcs/ai_simple.py zero 0 1
 
 # pygame show local game
 pygame:

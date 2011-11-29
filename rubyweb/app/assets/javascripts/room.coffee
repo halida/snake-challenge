@@ -6,13 +6,12 @@ colors =
   dead: [ "#8c8c8c", "#8c8c8c", "#8c8c8c" ]
 
 ws = undefined
-
-score_board_html = ""
-finished = false
 canvas = undefined
 ctx = undefined
 map = undefined
 room = -1
+
+score_board_html = ""
 
 user_snake_id=[]
 user_seq= -1
@@ -34,10 +33,17 @@ window.run_application = (server, r) ->
     switch data.op
       when "info"
         update_room data
+        check_ai_info(data)
       when "add"
-        add_user_ok(data)
+        add_user_result(data)
       when  "map"
         setup_map(data)
+        check_ai_map(data)
+      when "turn"
+        undefined
+      else
+        error data.status if data.status
+        console.log(data)
 
   ws.onerror = (error) ->
     console.log error
@@ -51,12 +57,7 @@ window.run_application = (server, r) ->
 
 update_room = (info) ->
 
-  if finished
-    unless info.status is "finished"
-      finished = false
-  else
-    update info
-    finished = info.status is "finished"
+  update info
 
   if user_seq >= 0
     snake = info.snakes[user_seq]
@@ -155,7 +156,12 @@ window.turn = (direction) ->
   )
   return true
 
-add_user_ok = (data)->
+add_user_result = (data)->
+  unless data.seq
+    console.log data
+    error data.status
+    return
+
   user_seq = data.seq
   user_snake_id = data.id
   $("#user-control-panel").show()
@@ -174,3 +180,26 @@ add_user_ok = (data)->
     return unless dir >= 0
     e.preventDefault() if turn(dir)
 
+# ai
+# -------------------------------------------------
+
+ai = undefined
+
+check_ai_info = (info) ->
+  return unless user_seq >= 0
+  return unless ai
+
+  direction = ai.step info
+  turn direction
+  # console.log(direction)
+
+check_ai_map = (map)->
+  return unless user_seq >= 0
+  return unless ai
+
+  ai.onmap map
+
+window.set_ai = (ainame) ->
+  ai = simple_snake
+  ai.init(user_seq)
+  ai.setmap map
