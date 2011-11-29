@@ -1,6 +1,6 @@
 #place
   #scoreboard
-    - for name, data in [['daily', @dailys], ['weekly', @weeklys], ['monthly', @monthlys]]
+    - for name, data in [['daily', @data['dailys']], ['weekly', @data['weeklys']], ['monthly', @data['monthlys']]]
       %table{border: "1", cellpadding: "2", cellspacing: "2", class: name}
         %tr
           %th{COLSPAN: "2"}= "#{name} score"

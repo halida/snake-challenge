@@ -76,7 +76,7 @@ class Controller():
         >>> c = Controller(Game())
         >>> result = c.scores()
         """
-        return self.game.scores
+        return self.game.scores()
 
     def info(self):
         """

@@ -1,0 +1,6 @@
+development:
+  game_server: localhost:9999
+
+production:
+  game_server: localhost:9999
+

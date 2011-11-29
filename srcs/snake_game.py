@@ -253,8 +253,16 @@ class Game():
         highest = max(lives, key=lambda s: s.length())
         self.log('game finished, winner: ' + highest.name)
         # 再加到最高分里面去
-        db.cursor.execute('insert into scores values(?, ?)', (time.time(), highest.name))
+        db.cursor.execute('insert into scores values(?, ?)', (datetime.datetime.now(), highest.name))
         db.db.commit()
+
+    def scores(self):
+        d = date.today()
+        today = datetime.datetime(d.year, d.month, d.day)
+        dailys =  list(db.cursor.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (today, )))
+        weeklys = list(db.cursor.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (today - datetime.timedelta(days=7), )))
+        monthlys = list(db.cursor.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (today - datetime.timedelta(days=30), )))
+        return dict(dailys=dailys, weeklys=weeklys, monthlys=monthlys)
 
     def get_info(self):
         if self.info:
@@ -299,7 +307,7 @@ class Game():
         # 并且只有一个人剩余
         # 或者时间到
         alives = sum([s.alive for s in self.snakes])
-        if alives <= 1 or self.round > 3000:
+        if alives <= 1 or self.round > 30:
             self.status = FINISHED
             self.check_score()
             return

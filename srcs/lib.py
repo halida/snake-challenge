@@ -3,7 +3,8 @@
 """
 module: lib
 """
-import time, sys, logging, json, random, uuid
+import time, sys, logging, json, random, uuid, datetime
+from datetime import date
 
 logging.basicConfig(level=logging.DEBUG,
                     format="%(asctime)s - %(levelname)s - %(message)s")

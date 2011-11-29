@@ -1,3 +1,4 @@
+require 'net/http'
 
 class HomeController < ApplicationController
   require 'sqlite3'
@@ -8,9 +9,9 @@ class HomeController < ApplicationController
   end
 
   def scoreboard
-    @dailys =  @@db.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', Date.today.to_time.to_f)
-    @weeklys = @@db.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (Date.today - 7.days).to_time.to_f)
-    @monthlys = @@db.execute('select * from (select name, count(*) as count from scores where time > ? group by name) order by count desc limit 10', (Date.today - 30.days).to_time.to_f)
+    params = {op: 'scores', room: 0}
+    @data = JSON.load Net::HTTP.post_form(URI.parse("http://#{ServerConfig['game_server']}/cmd"), params).body
+    puts @data
   end
 
 end
