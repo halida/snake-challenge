@@ -80,6 +80,17 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
         self.connects.remove(self)
         self.broadcast(self.room, self.name + ' leaves.')
 
+class Cmd(tornado.web.RequestHandler):
+    def post(self):
+        data = self.request.arguments
+        # warp list
+        for key in data:
+            data[key] = data[key][0]
+        data = json.dumps(data)
+        oper.send_unicode(data)
+        result = oper.recv()
+        self.set_header("Content-Type", "application/json")
+        self.write(result)
 
 class InfoWebSocket(tornado.websocket.WebSocketHandler):
     
@@ -136,6 +147,7 @@ settings = {
 application = tornado.web.Application([
     (r"/info", InfoWebSocket),
     (r"/chatroom", ChatRoomWebSocket),
+    (r"/cmd", Cmd),
     ], **settings)
 
 def main():

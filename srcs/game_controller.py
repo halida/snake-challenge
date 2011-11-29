@@ -83,21 +83,7 @@ class Controller():
         >>> c = Controller(Game())
         >>> result = c.info()
         """
-        g = self.game
-        snakes = [dict(direction=s.direction,
-                       body=s.body,
-                       name=s.name,
-                       type=s.type,
-                       alive=s.alive)
-                  for s in g.snakes
-                  ]
-        info = dict(snakes=snakes,
-                    status=g.status,
-                    eggs=g.eggs,
-                    gems=g.gems,
-                    round=g.round,
-                    logs=g.logs)
-        return info
+        return self.game.get_info()
 
 def test():
     """

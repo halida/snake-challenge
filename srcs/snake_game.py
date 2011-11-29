@@ -146,6 +146,7 @@ class Game():
                       for i in range(5, 35)]
         '''
         self.logs = []
+        self.info = None
 
         self.walls = [] # to pass unittest
         self.snakes = []
@@ -237,11 +238,30 @@ class Game():
         self.log('game finished, winner: ' + highest.name)
         # 再加到最高分里面去
         db.cursor.execute('insert into scores values(?, ?)', (time.time(), highest.name))
-        db.db.commit() 
+        db.db.commit()
+
+    def get_info(self):
+        if self.info:
+            return self.info
+        snakes = [dict(direction=s.direction,
+                       body=s.body,
+                       name=s.name,
+                       type=s.type,
+                       alive=s.alive)
+                  for s in self.snakes
+                  ]
+        self.info = dict(snakes=snakes,
+                    status=self.status,
+                    eggs=self.eggs,
+                    gems=self.gems,
+                    round=self.round,
+                    logs=self.logs)
+        return self.info
 
     def step(self):
         """游戏进行一步..."""
         self.logs = []
+        self.info = None
         # 游戏结束就不进行了.
         if self.status == FINISHED: return
                 
