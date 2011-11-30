@@ -1,3 +1,8 @@
+if MozWebSocket?
+  window.WS = MozWebSocket
+else
+  window.WS = WebSocket
+
 window.init = ()->
         flash = $('.flash')
         return if flash.length <= 0

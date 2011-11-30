@@ -14,4 +14,7 @@ class HomeController < ApplicationController
     puts @data
   end
 
+  def replay
+  end
+
 end

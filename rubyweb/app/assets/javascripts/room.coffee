@@ -10,6 +10,8 @@ ws = undefined
 canvas = undefined
 ctx = undefined
 map = undefined
+
+server = undefined
 room = -1
 
 score_board_html = ""
@@ -17,34 +19,21 @@ score_board_html = ""
 user_snake_id=[]
 user_seq= -1
 
-if MozWebSocket?
-  WS = MozWebSocket
-else
-  WS = WebSocket
+window.run_application = (s, r) ->
+  init_canvas()
+  init_ws(s, r)
 
-window.run_application = (server, r) ->
-  room = r
+init_canvas = ()->
   canvas = $("#canvas")
   ctx = canvas[0].getContext("2d")
 
-  ws = new WS(server)
-  ws.onmessage = (e) ->
-    data = $.parseJSON(e.data)
-
-    switch data.op
-      when "info"
-        update_info data
-        check_ai_info(data)
-      when "add"
-        add_user_result(data)
-      when  "map"
-        setup_map(data)
-        check_ai_map(data)
-      when "turn", "sprint"
-        undefined
-      else
-        error data.status if data.status
-        console.log(data)
+init_ws = (s, r)->
+  server = s
+  room = r
+  ws = new window.WS(server)
+  ws.onmessage = (e)->
+    record_data(e.data) if onrecord
+    onmessage(e.data)
 
   ws.onerror = (error) ->
     console.log error
@@ -55,6 +44,26 @@ window.run_application = (server, r) ->
   ws.onopen = ->
     ws.send JSON.stringify(op: 'setroom', room: room)
     ws.send JSON.stringify(op: 'map', room: room)
+
+
+onmessage = (data)->
+  data = $.parseJSON(data)
+
+  switch data.op
+    when "info"
+      update_info data
+      check_ai_info(data)
+    when "add"
+      add_user_result(data)
+    when  "map"
+      setup_map(data)
+      check_ai_map(data)
+    when "turn", "sprint"
+      undefined
+    else
+      error data.status if data.status
+      console.log(data)
+
 
 update_info = (info) ->
   if info.logs
@@ -201,8 +210,8 @@ add_user_result = (data)->
     return unless dir >= 0
     e.preventDefault() if turn(dir)
 
-# ai
 # -------------------------------------------------
+# ai
 
 ai = undefined
 
@@ -224,3 +233,47 @@ window.set_ai = (ainame) ->
   ai = simple_snake
   ai.init(user_seq)
   ai.setmap map
+
+
+# -------------------------------------------------
+# record
+onrecord = false
+onreplay = false
+record = []
+replay_seq = 0
+
+window.toggle_record = ()->
+  onrecord = not onrecord
+  if onrecord
+    $('#record-button').addClass('on')
+    record = []
+  else
+    $('#record-button').removeClass('on')
+
+window.toggle_replay = ()->
+  return if record.length <= 0
+  onreplay = not onreplay
+  if onreplay
+    toggle_record() if onrecord
+    $('#replay-button').addClass('on')
+    ws.onclose = ()-> undefined
+    ws.close()
+    replay_seq = 0
+    replay()
+  else
+    $('#replay-button').removeClass('on')
+    init_ws(server, room)
+
+record_data = (data)->
+  $('#record-count').html(record.length)
+  record.push data
+
+replay = ()->
+  return unless record
+  return unless onreplay
+  $('#replay-count').html(replay_seq)
+
+  onmessage record[replay_seq]
+  replay_seq = (replay_seq + 1) % record.length
+  setTimeout(replay, 300)
+

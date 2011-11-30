@@ -1,9 +1,3 @@
-if MozWebSocket?
-  WS = MozWebSocket
-else
-  WS = WebSocket
-
-# chats
 chat_ws = []
 
 append = (msg) ->
@@ -14,7 +8,7 @@ append = (msg) ->
   $("#msgs").prepend "<br/>"
 
 window.chat_init = (server, name, room) ->
-  chat_ws = new WS(server)
+  chat_ws = new window.WS(server)
 
   chat_ws.onopen = ->
     chat_ws.send JSON.stringify(

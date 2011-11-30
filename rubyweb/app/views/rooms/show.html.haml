@@ -32,6 +32,11 @@
         #keyboard-shortcut-hint{style: "display:none"}
           %p left, right, up, down or AWSD to control snake
 
+        %input{type: "submit", onclick: "javascript:toggle_record()", value: "record", id: 'record-button'}/ 
+        %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
+        %span#record-count
+        %span#replay-count
+
       #user-control-panel
         #ai-control
           %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
