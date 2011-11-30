@@ -29,7 +29,8 @@ class Map:
     
     def load(self, data):
         self.meta = data
-        self.beangen.maxbean = self.meta['food']
+        if self.meta.has_key('food'):
+            self.beangen.maxbean = self.meta['food']
 
         self.walls = []
         self.snakes = []

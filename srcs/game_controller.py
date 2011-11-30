@@ -40,6 +40,9 @@ class Controller():
         
         elif op == 'map':
             return self.game.get_map()
+
+        elif op == 'setmap':
+            return dict(status=self.game.user_set_map(data['data']))
         
         elif op == 'info':
             return self.game.get_info()

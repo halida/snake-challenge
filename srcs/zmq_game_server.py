@@ -35,14 +35,11 @@ class Server():
             g.pre = now
             return True
         
-    def run(self, loop=False, max_waits=10.0, enable_no_resp_die=True):
+    def run(self, max_waits=10.0, enable_no_resp_die=True):
         self.max_waits = max_waits
         self.games = [Game(enable_no_resp_die=enable_no_resp_die)
                       for i in range(ROOMS)]
         self.controller = game_controller.RoomController(self.games)
-        if loop:
-            for g in self.games:
-                g.loop_count=0
         
         # 用来发布信息更新
         puber = context.socket(zmq.PUB)
@@ -89,13 +86,6 @@ class Server():
                 if not self.on_logic(g, ok):
                     continue
     
-                # 如果游戏结束, 等待一会继续开始
-                if loop and g.status == FINISHED:
-                    g.loop_count += 1
-                    if g.loop_count > 20:
-                        g.start()
-                        g.loop_count = 0
-
                 # 游戏处理
                 g.step()
                 # logging.debug("room %d stepping: %s" % (i, g.status))
@@ -124,10 +114,10 @@ def main():
         s.run()
     elif cmd == '4web':
         s = Server()
-        s.run(loop=True, max_waits=1.0, enable_no_resp_die=False)
+        s.run(max_waits=1.0, enable_no_resp_die=False)
     elif cmd == '4webai':
         s = Server()
-        s.run(loop=True, max_waits=10.0)
+        s.run(max_waits=10.0)
     else:
         print usage
         

@@ -39,9 +39,6 @@
         %select#snake-type
           %option python
           %option ruby
-        %a{onmouseover: "$('#keyboard-shortcut-hint').show()", onmouseout: "$('#keyboard-shortcut-hint').hide()"} keyboard shortcut?
-        #keyboard-shortcut-hint{style: "display:none"}
-          %p left, right, up, down or AWSD to control snake
 
       #record-panel
         = form_for(Replay.new) do |f|
@@ -51,11 +48,21 @@
         %span#record-count
         %span#replay-count
         %input{type: "submit", onclick: "javascript:save_replay()", value: "save", id: 'save-record-button'}/ 
+      #change-map
+        %select#maps
+          - for m in Map.all
+            %option{value: m.id}= m.title
+        %input{type: "submit", onclick: "javascript:set_map($('select#maps').val())", value: "set map", id: 'set-map-button'}/        
 
       #user-control-panel
-        #ai-control
-          %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
-          %input{type: "submit", onclick: "javascript:sprint()", value: "sprint"}/ 
+        #keyboard-shortcut-hint
+          %p keyboard shortcut?
+          %p left, right, up, down or AWSD to control snake
+
+        -# #ai-control
+        -#   %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
+
+        %input{type: "submit", onclick: "javascript:sprint()", value: "sprint"}/ 
         %input{type: "submit", onclick: "javascript:turn(1);", class: "turn", id: "turn-up", value: "^"}/
         %input{type: "submit", onclick: "javascript:turn(0);", class: "turn", id: "turn-left", value: "<"}/
         %input{type: "submit", onclick: "javascript:turn(3);", class: "turn", id: "turn-down", value: "V"}/

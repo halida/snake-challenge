@@ -34,6 +34,8 @@ SPRINT_ROUND = 5
 SPRINT_STEP = 3 # sprint的时候, 每轮可以走的步数
 SPRINT_REST = 20 # sprint之后需要休息的时间
 
+DEFAULT_MAP = 'srcs/map/flat.yml'
+
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):
         """设置snake
@@ -171,14 +173,28 @@ class Game():
         self.enable_no_resp_die = enable_no_resp_die
 
         if not map:
-            map = Map.loadfile('srcs/map/flat.yml')
-        self.setMap(map)
+            map = Map.loadfile(DEFAULT_MAP)
+        self.set_map(map)
         self.start()
 
     def log(self, msg):
         self.logs.append(msg)
+
+    def user_set_map(self, data):
+        if self.status != WAITPLAYER:
+            return "only can set map when the game state is waitplayer"
+
+        try:
+            m = Map.loaddata(data)
+            self.set_map(m)
+            self.start()
+        except:
+            # if error, fall back to default map
+            self.set_map(Map.loadfile(DEFAULT_MAP))
+            self.start()
+            raise
         
-    def setMap(self, map):
+    def set_map(self, map):
         self.wallgen = map.wallgen
         #self.wallgen = RandomWallGen() #SimpleWallGen()
         self.beangen = map.beangen
@@ -201,6 +217,7 @@ class Game():
         self.bean_time = 4 # 多少轮会出现一个豆子
         self.eggs = []
         self.gems = []
+        self.loop_count = 0
         self.status = WAITPLAYER
         #if self.wallgen.can(self):
         if self.enable_wall:
@@ -330,15 +347,14 @@ class Game():
         """游戏进行一步..."""
         self.logs = []
         self.info = None
-        # 游戏结束就不进行了.
-        if self.status == FINISHED: return
-                
-        # 是否更新墙
-        #if self.wallgen.can(self):
-        #    self.walls = self.wallgen.gen(self)
-            
-        #if self.status == INITIAL:
-        #	self.status = WAITPLAYER
+        # 如果游戏结束或者waitplayer, 等待一会继续开始
+        if self.loop_count <= 50 and self.status in [FINISHED, WAITPLAYER]:
+            self.loop_count += 1
+            return
+        
+        if self.status == FINISHED:
+            self.loop_count = 0
+            return self.start()
 
         # 游戏开始的时候, 需要有2条以上的蛇加入.
         if self.status == WAITPLAYER:
@@ -346,14 +362,14 @@ class Game():
             self.status = RUNNING
             self.log('game running.')
 
-        # 获胜条件:
+        # 首先检查获胜条件:
         # 并且只有一个人剩余
         # 或者时间到
         alives = sum([s.alive for s in self.snakes])
         if alives <= 1 or self.round > 3000:
             self.status = FINISHED
-            self.check_score()
-            return
+            self.loop_count = 0
+            return self.check_score()
 
         # 移动snake
         for i, d in enumerate(self.snake_op):

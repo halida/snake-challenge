@@ -290,3 +290,14 @@ window.load_replay = (id)->
         $('#record-count').html(record.length)
         notice("replay loaded")
         )
+
+# -------------------------------------------------
+# set map
+window.set_map = (id)->
+  $.get('/maps/'+id, {json: true}, (data)->
+        set_map_data(data)
+        )
+
+set_map_data = (data)->
+  ws.send(JSON.stringify(op: 'setmap', data: data, room: room))
+  ws.send(JSON.stringify(op: 'map', room: room))

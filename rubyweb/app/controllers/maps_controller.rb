@@ -8,7 +8,9 @@ class MapsController < ApplicationController
   end
 
   def show
-    map
+    @map = Map.find(params[:id])
+    print @map.title, @map.data
+    return render json: JSON.load(@map.data) if params[:json]
   end
   
   def create
