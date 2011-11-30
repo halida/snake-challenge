@@ -3,7 +3,7 @@
 """
 module: map
 """
-import random
+import random, yaml, json
 from game import *
 
 class Map:
@@ -15,61 +15,38 @@ class Map:
         self.beangen = MapBeanGen(self)
         self.wallgen = MapWallGen(self)
         self.meta = {}
-        
+
     @staticmethod
-    def load(mapfile):
+    def loadfile(filename):
+        data = yaml.load(open(filename).read())
+        return Map.loaddata(data)
+
+    @staticmethod
+    def loaddata(data):
         map = Map()
-        map.loadfile(mapfile)
+        map.load(data)
         return map
     
-    def loadfile(self, mapfile):
-        self.meta = {}
-        with open(mapfile, 'r') as f:
-            data = f.readlines()
-            
-        pt, linelen = 0, len(data)
-        while pt<linelen:
-            pt = self.parse(data, pt)
-    
-    def parse(self, data, pt):
-        ret = self.ommitComment(data[pt].strip())
-        if ret == '': return pt+1
-        ret = ret.split(':')
-        if len(ret)!=2: raise Exception('map parse fail')
-        
-        if ret[0] == 'map':
-            return self.parseMap(data, pt+1)
-        elif ret[0] == 'walls':
-            pass # TODO
-        elif ret[0] == 'beans':
-            pass # TODO
-        elif ret[0] == 'size':
-            size = ret[1].strip().split('x')
-            if len(size)!=2: raise Exception('map size parse fail')
-            self.meta['width'] = int(size[0])
-            self.meta['height'] = int(size[1])
-        elif ret[0] == 'food':
-            self.meta['food'] = int(ret[1])
-            self.beangen.maxbean = self.meta['food']
-        elif ret[0] in ['author','version','name','snakelength','maxfoodvalue']:
-            self.meta[ret[0]] = ret[1]
-        return pt+1
-        
-    def parseMap(self, data, pt):
+    def load(self, data):
+        self.meta = data
+        self.beangen.maxbean = self.meta['food']
+
         self.walls = []
-        #self.beans = []
         self.snakes = []
         self.portals = []
         
+        data = data['map'].strip().split('\n')
+
         for y in range(self.meta['height']):
             for x in range(self.meta['width']):
-                v = data[pt+y][x]
+                v = data[y][x]
                 if v == 'W':
                     self.walls.append([x,y])
                 #elif v == 'X':
                 #    self.beans.append([x,y])
                 elif v == 'S':
                     self.snakes.append([x,y])
+                    
                 elif v in self.portal_token:
                     idx = self.portal_token.index(v)
                     shortage = (idx+1)*2 - len(self.portals)
@@ -80,13 +57,6 @@ class Map:
                     else:
                         self.portals[2*idx] = [x,y]
 
-        return pt + self.meta['height']
-        
-    def ommitComment(self, str):
-        sharp = str.find('#')
-        if sharp >0:
-            return str[:sharp]
-        return str
 
 class MapWallGen:
     def __init__(self, map):

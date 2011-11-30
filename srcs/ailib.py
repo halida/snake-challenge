@@ -189,7 +189,7 @@ def run_ai(ai, controller):
         # 发出操作
         try:
             d = ai.step(info)
-        except e as Exception:
+        except e as Exception: 
             logging.debug(str(e))
             ai.status == NEED_ADDING
             continue

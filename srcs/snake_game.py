@@ -171,7 +171,7 @@ class Game():
         self.enable_no_resp_die = enable_no_resp_die
 
         if not map:
-            map = Map.load('srcs/map/flat.map')
+            map = Map.loadfile('srcs/map/flat.yml')
         self.setMap(map)
         self.start()
 
