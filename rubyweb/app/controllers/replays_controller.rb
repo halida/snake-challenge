@@ -1,34 +1,23 @@
 class ReplaysController < ApplicationController
-  # GET /replays
-  # GET /replays.xml
   def index
-    @replays = Replay.page(params[:page]).per(20)
+    @replays = Replay.recent.page(params[:page]).per(20)
   end
 
-  # GET /replays/1
-  # GET /replays/1.xml
   def show
     @replay = Replay.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json  { render :json => @replay.to_json }
-    end
+    return render json: JSON.load(@replay.json) if params[:json]
+    @room_id = 0
+    render "rooms/show"
   end
 
-  # POST /replays
-  # POST /replays.xml
   def create
     @replay = Replay.new(params[:replay])
+    @replay.user = current_user
 
-    respond_to do |format|
-      if @replay.save
-        format.html { redirect_to(@replay, :notice => 'Replay was successfully created.') }
-        format.json  { render :json => { :id => @replay.id, :status => 1 } }
-      else
-        format.html { render :action => "new" }
-        format.json  { render :json => { :status => 0 } }
-      end
+    if @replay.save
+      render json: {status: 'replay saved.', id: @replay.id}
+    else
+      render json: {status: 'replay save failed', }
     end
   end
 

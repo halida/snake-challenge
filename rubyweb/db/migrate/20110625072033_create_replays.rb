@@ -2,9 +2,8 @@ class CreateReplays < ActiveRecord::Migration
   def self.up
     create_table :replays do |t|
       t.string :title, :null => false
-      t.integer :round, :null => false, :default => 0
       t.text :json, :null => false
-
+      t.integer :user_id
       t.timestamps
     end
   end

@@ -1,0 +1,8 @@
+#place
+  .left_content
+    %h1 Listing Replays
+    %ul
+      - @replays.each do |replay|
+        %li
+          %a{:href => replay_path(replay.id)}= replay.title
+    = paginate @replays

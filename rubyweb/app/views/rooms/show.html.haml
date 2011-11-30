@@ -11,16 +11,27 @@
     = image_tag("icons/egg.gif", :id => "icon_egg")
     = image_tag("icons/gem.gif", :id => "icon_gem")
   .clear
-  #chat
-    %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
-      %input{:type => "submit", :value => "send"}/
-      %input#msg{:type => "text"}/
-    #msgs
-    :javascript
-      chat_init("ws://"+window.location.hostname+":9999/chatroom", "#{current_user ? current_user.name : request.remote_ip}", "room-#{params[:id]}");
+  - if controller_name == 'rooms'
+    #chat
+      %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
+        %input{:type => "submit", :value => "send"}/
+        %input#msg{:type => "text"}/
+      #msgs
+      :javascript
+        chat_init("ws://"+window.location.hostname+":9999/chatroom", "#{current_user ? current_user.name : request.remote_ip}", "room-#{@room_id}");
 
 #right
-  - if current_user
+  - if controller_name == 'replays'
+    #user-control.right-block
+      .title_bar
+      #record-panel
+        %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
+        %span#record-count
+        %span#replay-count
+    :javascript
+      load_replay(#{@replay.id});
+
+  - if current_user and controller_name == 'rooms'
     #user-control.right-block
       .title_bar
       #add-user
@@ -32,10 +43,14 @@
         #keyboard-shortcut-hint{style: "display:none"}
           %p left, right, up, down or AWSD to control snake
 
+      #record-panel
+        = form_for(Replay.new) do |f|
+          .form
         %input{type: "submit", onclick: "javascript:toggle_record()", value: "record", id: 'record-button'}/ 
         %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
         %span#record-count
         %span#replay-count
+        %input{type: "submit", onclick: "javascript:save_replay()", value: "save", id: 'save-record-button'}/ 
 
       #user-control-panel
         #ai-control
@@ -72,4 +87,4 @@
       = image_tag("category_dead.gif")
 
 :javascript
-  run_application("ws://"+window.location.hostname+":9999/info", #{params[:id]});
+  run_application("ws://"+window.location.hostname+":9999/info", #{@room_id}, #{controller_name == 'replays'});

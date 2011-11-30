@@ -19,21 +19,22 @@ score_board_html = ""
 user_snake_id=[]
 user_seq= -1
 
-window.run_application = (s, r) ->
-  init_canvas()
-  init_ws(s, r)
-
-init_canvas = ()->
+window.run_application = (s, r, nows=false) ->
   canvas = $("#canvas")
   ctx = canvas[0].getContext("2d")
 
-init_ws = (s, r)->
-  server = s
   room = r
+  server = s
+
+  return if nows
+  init_ws()
+
+init_ws = ()->
   ws = new window.WS(server)
   ws.onmessage = (e)->
-    record_data(e.data) if onrecord
-    onmessage(e.data)
+    data = $.parseJSON(e.data)
+    record_data(data) if onrecord
+    onmessage(data)
 
   ws.onerror = (error) ->
     console.log error
@@ -47,8 +48,6 @@ init_ws = (s, r)->
 
 
 onmessage = (data)->
-  data = $.parseJSON(data)
-
   switch data.op
     when "info"
       update_info data
@@ -236,7 +235,7 @@ window.set_ai = (ainame) ->
 
 
 # -------------------------------------------------
-# record
+# replay
 onrecord = false
 onreplay = false
 record = []
@@ -247,6 +246,7 @@ window.toggle_record = ()->
   if onrecord
     $('#record-button').addClass('on')
     record = []
+    record.push(map) #save map
   else
     $('#record-button').removeClass('on')
 
@@ -256,13 +256,14 @@ window.toggle_replay = ()->
   if onreplay
     toggle_record() if onrecord
     $('#replay-button').addClass('on')
-    ws.onclose = ()-> undefined
-    ws.close()
+    if ws
+      ws.onclose = ()-> undefined
+      ws.close()
     replay_seq = 0
     replay()
   else
     $('#replay-button').removeClass('on')
-    init_ws(server, room)
+    init_ws(server, room) if ws
 
 record_data = (data)->
   $('#record-count').html(record.length)
@@ -277,3 +278,15 @@ replay = ()->
   replay_seq = (replay_seq + 1) % record.length
   setTimeout(replay, 300)
 
+window.save_replay = ()->
+  return unless record
+  $.post('/replays', {replay: {json: JSON.stringify(record)}, authenticity_token: $('#new_replay input[name=authenticity_token]').attr('value')}, (data)->
+        notice(data.status)
+        )
+
+window.load_replay = (id)->
+  $.get('/replays/'+id, {json: true}, (data)->
+        record = data
+        $('#record-count').html(record.length)
+        notice("replay loaded")
+        )

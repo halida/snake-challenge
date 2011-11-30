@@ -78,12 +78,11 @@ ActiveRecord::Schema.define(:version => 20110905105502) do
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
 
   create_table "replays", :force => true do |t|
-    t.string   "title",                     :null => false
-    t.integer  "round",      :default => 0, :null => false
-    t.text     "json",                      :null => false
+    t.string   "title",      :null => false
+    t.text     "json",       :null => false
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "map"
   end
 
   create_table "rooms", :force => true do |t|

@@ -20,6 +20,16 @@ window.error = (msg)->
                         error.fadeOut(800)
                 , 3000)
 
+window.notice = (msg)->
+        notice = $('#flash_notice')
+        notice.html(msg)
+        notice.fadeIn(800)
+        setTimeout(
+                ()->
+                        notice.fadeOut(800)
+                , 3000)
+
+
 window.random_color = (text)->
   v = 0
   for k in text

@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
   end
 
   def show
-
+    @room_id = params[:id]
   end
 
   def map
