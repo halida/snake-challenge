@@ -8,11 +8,11 @@
     #map_author
     #map_status      
     #map_round
-  %canvas#canvas
+  %canvas#room-canvas
   #canvas_images{:style => "display:none;"}
     = image_tag("icons/egg.gif", :id => "icon_egg")
     = image_tag("icons/gem.gif", :id => "icon_gem")
-  .clear
+
   - if controller_name == 'rooms'
     #chat
       %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}

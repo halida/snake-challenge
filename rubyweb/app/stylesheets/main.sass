@@ -18,6 +18,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-family: 'electronica Nine'
   src: url('/assets/electronica_nine.ttf')
 
+html
+  min-width: 300px
+
 body
   line-height: 1
   color: #0A667D
@@ -56,9 +59,7 @@ body
   font-family: Arial, Helvetica, sans-serif
   text-align: center
 
-/*header
-
-#header
+header
   background: url(/assets/header_bg.png) repeat-x center
   height: 156px
   width: 100%
@@ -79,14 +80,14 @@ body
   text-align: left
 
 #user_bar
-  width: 1104px
   margin: 0 auto 10px auto
   text-align: center
 
 #content
   margin: 0 auto
-  width: 1104px
+  width: 1068px
   padding-bottom: 20px
+  display: table
 
 h1
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif
@@ -146,7 +147,8 @@ h1
     border-bottom-width: 1px
     width: 692px
   .right_nav
-    width: 232px
+    width: 100%
+    max-width: 230px
     float: right
     border-style: solid
     border-left: thick solid #07243A
@@ -234,12 +236,6 @@ h1
   margin: 18px 0px 0px 25px
   float: left
 
-.right-block
-  width: 306px
-  margin-bottom: 11px
-  background: #fff
-  display: table
-
 #member_icon
   margin: 10px auto 10px auto
   width: 60px
@@ -306,8 +302,7 @@ ul#maps
       color: #A5C9E7
       text-align: right
 
-#chat
-  margin: 10px 0px
-  #msgs
-    height: 150px
-    overflow: auto
+#logo-img
+  width: 100%
+  max-width: 413px
+  

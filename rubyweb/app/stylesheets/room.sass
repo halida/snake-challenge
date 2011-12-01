@@ -1,11 +1,17 @@
 #left
   float: left
-  width: 750px
+  width: 100%
+  max-width: 740px
 
 #right
+  width: 100%
+  max-width: 320px
   float: right
 
-canvas
+#left, #right
+  margin-bottom: 10px
+
+#room-canvas
   background: white
   width: 100%
 
@@ -150,3 +156,16 @@ canvas
 
 #map_round, #map_status
   padding-left: 30px
+
+#chat
+  #msgs
+    height: 150px
+    overflow: auto
+
+
+.right-block
+  width: 100%
+  margin-bottom: 10px
+  background: #fff
+  display: table
+

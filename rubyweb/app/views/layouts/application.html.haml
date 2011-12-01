@@ -7,6 +7,9 @@
     = stylesheet_link_tag "main"
     = yield :styles
     = javascript_include_tag "jquery", "json", "application", "map_builder", "chatroom"
+    = stylesheet_link_tag "middle", media: "screen and (max-height: 700px)"
+    = stylesheet_link_tag "narrow", media: "screen and (max-width: 1066px)"
+
     = csrf_meta_tag
     = yield :javascripts
 
@@ -25,8 +28,10 @@
           $('#flash_notice').show()
           setTimeout((-> $('.flash').fadeOut(500)), 3000)
 
-    #header
-      %a{:href => "/", :title => "Go home"}= image_tag("logo.png")
+    %header
+      %a{:href => "/", :title => "Go home"}= image_tag("logo.png", id:"logo-img")
+      %br/
+      %a{:href => "/", :title => "Go home"}= image_tag("python_vs_ruby.png", id:"python-vs-ruby-img")
     #main
       #user_bar
         - if current_user.blank?
@@ -38,7 +43,6 @@
 
       #content
         = yield
-        .clear
 
     %footer
       #member_icon
