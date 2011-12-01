@@ -26,15 +26,21 @@
   .right-block#chat
     .title_bar CHATS
     .right_body  
-      %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
-        %input{:type => "submit", :value => "send"}/
-        %input#msg{:type => "text"}/
+      #send-msg
+        %input{:type => "submit", :value => "send", onclick: "chat_send();"}/
+        %input#msg{:type => "text", }/
       #msgs
       :javascript
         chat_init("ws://#{ServerConfig['chat_server']}/chatroom",
           "#{current_user ? current_user.name : request.remote_ip}", 
           "#{controller_name}-#{params[:id]}"
         );
+        $('#msg').keypress(function(e){
+          if (e.keyCode == 13) {
+            chat_send();
+            e.preventDefault();
+          };
+        });
 
 :javascript
   run_application("ws://#{ServerConfig['game_server']}/info", #{@room_id}, #{controller_name == 'replays'});

@@ -10,7 +10,9 @@
       - for i in 1..4
         %a.room_icon{:href => "/room/#{i-1}/", id:"room-#{i}"}
           .number= "%02d" % i
-          .room GAME ROOM
+          .room
+            %div GAME
+            %div ROOM
       #scoreboard-link= link_to "Score Board", "/home/scoreboard"
 
     - if !@replays.blank?

@@ -22,10 +22,10 @@ user_seq= -1
 window.run_application = (s, r, nows=false) ->
   $('.right-block .title_bar').live "click", ()->
     next = $(this).next()
-    if next.is(':hidden')
-      next.slideDown()
+    if next.hasClass('off')
+      next.removeClass('off')
     else
-      next.slideUp()
+      next.addClass('off')
 
   canvas = $("#room-canvas")
   ctx = canvas[0].getContext("2d")
