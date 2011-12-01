@@ -34,7 +34,7 @@ SPRINT_ROUND = 5
 SPRINT_STEP = 3 # sprint的时候, 每轮可以走的步数
 SPRINT_REST = 20 # sprint之后需要休息的时间
 
-DEFAULT_MAP = 'srcs/map/tron.yml'
+DEFAULT_MAP = 'srcs/map/flat.yml'
 
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):
@@ -360,7 +360,8 @@ class Game():
         
         if self.status == FINISHED:
             self.loop_count = 0
-            return self.start()
+            self.start()
+            return
 
         # 游戏开始的时候, 需要有2条以上的蛇加入.
         if self.status == WAITPLAYER:
@@ -375,7 +376,8 @@ class Game():
         if alives <= 1 or(self.MAX_ROUND != 0 and self.round > self.MAX_ROUND):
             self.status = FINISHED
             self.loop_count = 0
-            return self.check_score()
+            self.check_score()
+            return
 
         # 移动snake
         for i, d in enumerate(self.snake_op):
@@ -401,6 +403,7 @@ class Game():
         # next round
         self.round += 1
         self.snake_op = [None, ] * len(self.snakes)
+        return True
 
     def get_portal_next(self, p):
         seq = self.portals.index(p)

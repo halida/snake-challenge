@@ -31,7 +31,11 @@ def get_dirs(body):
     backward = -fx, -fy
 
     dirs = list(DIRECT)
-    dirs.remove(backward)
+    try:
+        dirs.remove(backward)
+    except:
+        # in portal or some case, dirs is wrong
+        pass
     return dirs
 
 
@@ -72,6 +76,9 @@ class WebController():
 
     def info(self):
         return self.get('info')
+    def sub_info(self):
+        time.sleep(0.3)
+        return self.info()
     
     def turn(self, id, d, round=-1):
         result = self.post(
@@ -99,6 +106,9 @@ class ZeroController():
         # 用来与服务器交互
         self.oper = context.socket(zmq.REQ)
         self.oper.connect('ipc:///tmp/game_oper.ipc')
+        # poller
+        self.poller = zmq.Poller()
+        self.poller.register(self.suber, zmq.POLLIN)
 
     def op(self, op, kw=None):
         if not kw: kw = dict()
@@ -116,15 +126,17 @@ class ZeroController():
                         type=type))
 
     def info(self):
-        info = self.suber.recv()
-        # try:
-        #     while True:
-        #         info = self.suber.recv(self.zmq.NOBLOCK)
-        # except self.zmq.ZMQError:
-        #     pass
-            
-        info = info[info.index(' '):]
-        return json.loads(info)
+        return self.op('info')
+
+    def sub_info(self):
+        socks = dict(self.poller.poll(timeout=5000))
+        if self.suber in socks and socks[self.suber] == self.zmq.POLLIN:
+            info = self.suber.recv()
+            info = info[info.index(' '):]
+            info = json.loads(info)
+        else:
+            info = self.info()
+        return info
     
     def turn(self, id, d, round=-1):
         return self.op(
@@ -140,10 +152,14 @@ def run_ai(ai, controller):
     c = controller
     # 初始化状态
     NEED_ADDING, RUNNING = range(2)
-    ai.status = NEED_ADDING 
+    ai.status = NEED_ADDING
+    
     while True:
         # 先获取场上的情况
-        info = c.info()
+        if ai.status == NEED_ADDING:
+            info = c.info()
+        else:
+            info = c.sub_info()
 
         # found me
         names = [s['name'] for s in info['snakes']]

@@ -87,13 +87,15 @@ class Server():
                     continue
     
                 # 游戏处理
-                g.step()
-                # logging.debug("room %d stepping: %s" % (i, g.status))
+                updated = g.step()
+
                 # 发送更新信息
-                info = self.controller.op(
-                    dict(room=i, op='info'))
-                info['op'] = 'info'
-                puber.send("room:%d "%i + json.dumps(info))
+                if updated:
+                    logging.debug("room %d updated: %s" % (i, g.status))
+                    info = self.controller.op(
+                        dict(room=i, op='info'))
+                    info['op'] = 'info'
+                    puber.send("room:%d "%i + json.dumps(info))
 
 usage = """\
     $ zmq_game_server.py [type]

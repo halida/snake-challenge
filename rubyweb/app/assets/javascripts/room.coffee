@@ -52,6 +52,7 @@ init_ws = ()->
   ws.onopen = ->
     ws.send JSON.stringify(op: 'setroom', room: room)
     ws.send JSON.stringify(op: 'map', room: room)
+    ws.send JSON.stringify(op: 'info', room: room)
 
 
 onmessage = (data)->
