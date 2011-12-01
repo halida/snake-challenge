@@ -3,8 +3,8 @@
   = javascript_include_tag "simple_snake", "room"
 
 #left
-  .title_bar
-    = image_tag("step.gif", :style => "vertical-align:middle;")
+  .title_bar 
+    ROUND:
     %span#round_counter{:style => "font-weight: bold;font-size:18px;"} 0
   %canvas#canvas
   #canvas_images{:style => "display:none;"}
@@ -23,7 +23,7 @@
 #right
   - if controller_name == 'replays'
     #user-control.right-block
-      .title_bar
+      .title_bar REPLAY
       #record-panel
         %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
         %span#record-count
@@ -33,7 +33,7 @@
 
   - if current_user and controller_name == 'rooms'
     #user-control.right-block
-      .title_bar
+      .title_bar CONTROL
       #add-user
         %input{:onclick => "javascript:add_user('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
         %select#snake-type
@@ -48,6 +48,7 @@
         %span#record-count
         %span#replay-count
         %input{type: "submit", onclick: "javascript:save_replay()", value: "save", id: 'save-record-button'}/ 
+
       #change-map
         %select#maps
           - for m in Map.all
@@ -69,13 +70,11 @@
         %input{type: "submit", onclick: "javascript:turn(2);", class: "turn", id: "turn-right", value: ">"}/
 
   #living_room.right-block
-    .title_bar
-      = image_tag("living_room.gif")
+    .title_bar MEMBERS
     %ul#score_board
 
   #tips.right-block
-    .title_bar
-      = image_tag("tips.gif")
+    .title_bar TIPS
     #teams
       #pythons_team
         = image_tag("pythons_team_title.gif")

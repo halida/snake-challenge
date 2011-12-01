@@ -6,6 +6,7 @@ class HomeController < ApplicationController
 
   def index
     @replays = Replay.recent.limit(5)
+    @event = params[:event] || 2
   end
 
   def scoreboard
