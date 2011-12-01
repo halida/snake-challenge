@@ -1,6 +1,8 @@
 development:
   game_server: localhost:9999
+  chat_server: localhost:9999
 
 production:
-  game_server: localhost:9999
+  game_server: server.snakechallenge.org
+  chat_server: server.snakechallenge.org
 

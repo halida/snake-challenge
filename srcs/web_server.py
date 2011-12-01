@@ -123,10 +123,9 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
             self.process_cmd(message)
 
     def process_cmd(self, message):
-        logging.debug(message)
+        # logging.debug(message)
         oper.send_unicode(message)
         result = oper.recv()
-        logging.debug(result)
         self.write_message(result)
 
     def on_close(self):
