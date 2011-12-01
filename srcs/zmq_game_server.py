@@ -67,6 +67,7 @@ class Server():
                     # logging.debug('process op %s ', rc)
                 # 为了防止错误命令搞挂服务器, 加上错误处理
                 except Exception as e:
+                    raise
                     error_msg = str(e)
                     result = dict(status=error_msg)
                     logging.debug(error_msg)

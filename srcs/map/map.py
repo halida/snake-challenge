@@ -8,14 +8,24 @@ from game import *
 
 class Map:
     walltoken = ['.','W','S']
-    # nydus tokens
-    portal_token = ['A','B','C','D','E']
+    # portal tokens
+    portal_token = ['A','B','C','D','E','F','G','H','I','J']
 
     def __init__(self):
         self.beangen = MapBeanGen(self)
         self.wallgen = MapWallGen(self)
-        self.meta = {}
+        # default meta
+        self.meta = dict(
+            name = 'unknown',
+            author = 'none',
+            version = 1.0,
+            round = 3000,
 
+            snake_init = 5,
+            snake_max = 30,
+            food_max = 3,
+            )
+        
     @staticmethod
     def loadfile(filename):
         data = yaml.load(open(filename).read())
@@ -28,23 +38,25 @@ class Map:
         return map
     
     def load(self, data):
-        self.meta = data
-        if self.meta.has_key('food'):
-            self.beangen.maxbean = self.meta['food']
+        print data, type(data)
+        print data['map']
+        for key in data:
+            self.meta[key] = data[key]
+        
+        self.beangen.maxbean = self.meta['food_max']
 
         self.walls = []
         self.snakes = []
         self.portals = []
-        
-        data = data['map'].strip().split('\n')
+
+        # extract map data
+        data = self.meta['map'].strip().split('\n')
 
         for y in range(self.meta['height']):
             for x in range(self.meta['width']):
                 v = data[y][x]
                 if v == 'W':
                     self.walls.append([x,y])
-                #elif v == 'X':
-                #    self.beans.append([x,y])
                 elif v == 'S':
                     self.snakes.append([x,y])
                     
@@ -57,7 +69,6 @@ class Map:
                         self.portals[2*idx+1] = [x,y]
                     else:
                         self.portals[2*idx] = [x,y]
-
 
 class MapWallGen:
     def __init__(self, map):

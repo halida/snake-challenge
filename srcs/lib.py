@@ -3,7 +3,8 @@
 """
 module: lib
 """
-import time, sys, logging, json, random, uuid, datetime
+import sys, os
+import time, logging, json, random, uuid, datetime
 from datetime import date
 
 logging.basicConfig(level=logging.DEBUG,

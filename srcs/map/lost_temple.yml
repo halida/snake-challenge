@@ -3,8 +3,7 @@ version: 1.0
 name: Lost Temple
 width: 50
 height: 25
-snake: 4
-snakelength: 1
+snake_max: 4
 map: |
   .WWW.WW...........WWWW...WW..........X...WWWWWW..W
   ..X....W..W......W......XX...WW...................

@@ -7,15 +7,19 @@ unittest:
 # run the game server
 game:
 	python srcs/zmq_game_server.py 4web
-# run the web server
-web:
+
+# run the website
+website:
 	cd rubyweb; bundle exec rails server -p 2000
-# run websocket server
-websocket:
-	cd srcs; python websocket_server.py
+
+# run http interface server
+http:
+	cd srcs; python web_server.py
+
 # run a test ai
 ai:
 	python srcs/ai_simple.py zero 0
+
 # run lots of test ai
 ais:
 	python srcs/ai_simple.py zero 0 2

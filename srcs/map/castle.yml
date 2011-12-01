@@ -1,11 +1,15 @@
-name: Sample            # map name
+name: castle            # map name
 author: Ray Ling        # map author
 version: 1.0            # map version
+
 width: 50
-height: 25             # map size
-snakelength: 2          # initial snake length
-food: 3                 # food number (gem/egg)
-maxfoodvalue: 5         # max food value (food value will be random value of maxfoodvalue)
+height: 25             
+
+snake_init: 2          # initial snake length
+snake_max: 5
+
+food_max: 3
+
 map: |
   ..................................................
   ........................C.......................S.

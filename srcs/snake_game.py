@@ -136,7 +136,7 @@ class Snake():
             self.body.pop(-1)
             self.body.pop(-1)
             # 足够短就被饿死了..
-            if self.length() <= 3:
+            if self.length() < 3:
                 self.alive = False
                 self.game.log('snake die because of eat wrong type of bean: '+ self.name)
         # 吃完豆子, 再到新的长度..
@@ -195,8 +195,9 @@ class Game():
             raise
         
     def set_map(self, map):
+        self.map = map
+        self.MAX_ROUND = map.meta['round']
         self.wallgen = map.wallgen
-        #self.wallgen = RandomWallGen() #SimpleWallGen()
         self.beangen = map.beangen
         self.portals = map.portals
         self.size = self.w, self.h = map.meta['width'], map.meta['height']
@@ -227,13 +228,13 @@ class Game():
                   type=PYTHON,
                   direction=DOWN,
                   head=None,
-                  length=10,
-                  name="AAA"):
+                  name="unknown"):
+        length = self.map.meta['snake_init']
         # 检查蛇类型
         if type not in (PYTHON, RUBY):
             return dict(status='snake type error: %s' % type)
         # 检查蛇数量
-        if len(self.snakes) >= 20:
+        if len(self.snakes) >= self.map.meta['snake_max']:
             return dict(status='no place for new snake.')
         
         # 随机生成蛇的位置
@@ -252,6 +253,7 @@ class Game():
                     head = [(next[0] - d[0]) % self.w,
                             (next[1] - d[1]) % self.h]
                     break
+
         # 生成蛇
         snake = Snake(self, type, direction, head, length, name)
         self.snakes.append(snake)
@@ -331,6 +333,7 @@ class Game():
                        body=s.body,
                        name=s.name,
                        type=s.type,
+                       sprint=s.sprint,
                        alive=s.alive)
                   for s in self.snakes
                   ]
@@ -366,7 +369,7 @@ class Game():
         # 并且只有一个人剩余
         # 或者时间到
         alives = sum([s.alive for s in self.snakes])
-        if alives <= 1 or self.round > 3000:
+        if alives <= 1 or(self.MAX_ROUND != 0 and self.round > self.MAX_ROUND):
             self.status = FINISHED
             self.loop_count = 0
             return self.check_score()
