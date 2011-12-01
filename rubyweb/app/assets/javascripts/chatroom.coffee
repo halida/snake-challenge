@@ -4,8 +4,8 @@ append = (msg) ->
   return unless msg
   mark = msg.substring(0, msg.indexOf(' '))
   color = random_color('p' + mark)
-  $("#msgs").prepend ('<span style="color: '+color+'">'+msg+"</span>")
   $("#msgs").prepend "<br/>"
+  $("#msgs").prepend ('<span style="color: '+color+'">'+msg+"</span>")
 
 window.chat_init = (server, name, room) ->
   chat_ws = new window.WS(server)
@@ -23,7 +23,6 @@ window.chat_init = (server, name, room) ->
     append "closed"
 
   $("#send-msg").show()
-  $("#msg").focus()
 
 window.chat_send = ->
   msg = $("#msg").val()

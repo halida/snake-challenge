@@ -1,0 +1,8 @@
+#user-control.right-block
+  .title_bar REPLAY
+  #record-panel
+    %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
+    %span#record-count
+    %span#replay-count
+:javascript
+  load_replay(#{@replay.id});

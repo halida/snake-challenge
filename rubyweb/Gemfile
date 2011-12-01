@@ -33,5 +33,7 @@ gem 'meta_search',    '>= 1.1.0.pre'
 
 gem "unicorn"
 
+gem "erb2haml"
+
 group :test, :development do
 end

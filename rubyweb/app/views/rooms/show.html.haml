@@ -13,86 +13,26 @@
     = image_tag("icons/egg.gif", :id => "icon_egg")
     = image_tag("icons/gem.gif", :id => "icon_gem")
 
-  - if controller_name == 'rooms'
-    #chat
-      %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
-        %input{:type => "submit", :value => "send"}/
-        %input#msg{:type => "text"}/
-      #msgs
-      :javascript
-        chat_init("ws://"+window.location.hostname+":9999/chatroom", "#{current_user ? current_user.name : request.remote_ip}", "room-#{@room_id}");
-
 #right
-  - if controller_name == 'replays'
-    #user-control.right-block
-      .title_bar REPLAY
-      #record-panel
-        %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
-        %span#record-count
-        %span#replay-count
-    :javascript
-      load_replay(#{@replay.id});
-
-  - if current_user and controller_name == 'rooms'
-    #user-control.right-block
-      .title_bar CONTROL
-      #add-user
-        %input{:onclick => "javascript:add_user('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
-        %select#snake-type
-          %option python
-          %option ruby
-
-      #record-panel
-        = form_for(Replay.new) do |f|
-          .form
-        %input{type: "submit", onclick: "javascript:toggle_record()", value: "record", id: 'record-button'}/ 
-        %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
-        %span#record-count
-        %span#replay-count
-        %input{type: "submit", onclick: "javascript:save_replay()", value: "save", id: 'save-record-button'}/ 
-
-      #change-map
-        %select#maps
-          - for m in Map.all
-            %option{value: m.id}= m.title
-        %input{type: "submit", onclick: "javascript:set_map($('select#maps').val())", value: "set map", id: 'set-map-button'}/        
-
-      #user-control-panel
-        #keyboard-shortcut-hint
-          %p keyboard shortcut?
-          %p left, right, up, down or AWSD to control snake
-
-        -# #ai-control
-        -#   %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
-
-        %input{type: "submit", onclick: "javascript:sprint()", value: "sprint"}/ 
-        %input{type: "submit", onclick: "javascript:turn(1);", class: "turn", id: "turn-up", value: "^"}/
-        %input{type: "submit", onclick: "javascript:turn(0);", class: "turn", id: "turn-left", value: "<"}/
-        %input{type: "submit", onclick: "javascript:turn(3);", class: "turn", id: "turn-down", value: "V"}/
-        %input{type: "submit", onclick: "javascript:turn(2);", class: "turn", id: "turn-right", value: ">"}/
 
   #living_room.right-block
     .title_bar MEMBERS
     %ul#score_board
+  = render partial: "replays" if controller_name == 'replays'
+  = render partial: "controls" if current_user and controller_name == 'rooms'
+  = render partial: "tips"
 
-  #tips.right-block
-    .title_bar TIPS
-    #teams
-      #pythons_team
-        = image_tag("pythons_team_title.gif")
-        .color.color_1
-        .color.color_2
-      #rubys_team
-        = image_tag("rubys_team_title.gif")
-        .color.color_1
-        .color.color_2
-    #team_food
-      = image_tag("rubys_food.gif")
-      = image_tag("pythons_food.gif")
-    #team_category
-      = image_tag("category_python.gif")
-      = image_tag("category_ruby.gif")
-      = image_tag("category_dead.gif")
+  #chat.right-block
+    .title_bar CHATS
+    %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
+      %input{:type => "submit", :value => "send"}/
+      %input#msg{:type => "text"}/
+    #msgs
+    :javascript
+      chat_init("ws://"+window.location.hostname+":9999/chatroom",
+        "#{current_user ? current_user.name : request.remote_ip}", 
+        "#{controller_name}-#{params[:id]}"
+      );
 
 :javascript
   run_application("ws://"+window.location.hostname+":9999/info", #{@room_id}, #{controller_name == 'replays'});

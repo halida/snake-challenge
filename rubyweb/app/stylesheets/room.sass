@@ -1,3 +1,5 @@
+@import "base"
+
 #left
   float: left
   width: 100%
@@ -68,8 +70,12 @@
   .no_border
     border: none
 
-#add-user
+#add-user, #record-panel, #change-map
   margin: 4px
+
+#record-panel
+  #save-record-button
+    float: right
 
 #user-control-panel
   display: none
@@ -140,16 +146,10 @@
 .clear
   clear: both
 
-/*chat
-
-#chat #msgs
-  color: #eeeeee
-  min-height: 100px
-
 #record-button.on
-  border-style: inset
+  +box-shadow(black 2px 2px 10px inset)
 #replay-button.on
-  border-style: inset
+  +box-shadow(black 2px 2px 10px inset)
 
 #map_name, #map_author, #map_round, #map_status
   display: inline-block
@@ -158,10 +158,16 @@
   padding-left: 30px
 
 #chat
+  #msg
+    width: 220px
   #msgs
+    margin: 4px
+    color: black
+    min-height: 100px
     height: 150px
     overflow: auto
-
+  #send-msg
+    margin: 4px
 
 .right-block
   width: 100%

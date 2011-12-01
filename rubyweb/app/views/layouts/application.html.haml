@@ -3,6 +3,7 @@
   %head
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %title Ruby VS Python Official Site
+    %link{:href => "/assets/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
     = stylesheet_link_tag "main"
     = yield :styles
@@ -20,7 +21,7 @@
         = flash[:error]
         :coffeescript
           $('#flash_error').show()
-          setTimeout((-> $('.flash').fadeOut(500)), 3000)
+          setTimeout((-> $('.flash').fadeOut(500)), 10000)
     #flash_notice.flash{style: "display: none"}
       - if flash[:notice]
         = flash[:notice]
@@ -50,7 +51,7 @@
           %tr
             %td= link_to image_tag("memeber_icon_linjunhalida.gif"), "http://blog.linjunhalida.com/", :title=> "linjunhalida", :target=>"_blank"
             %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
-            %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian", :target=>"_blank"
+            %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian"
       #footer-desc= image_tag("footer.png")
         
 

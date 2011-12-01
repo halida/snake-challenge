@@ -25,6 +25,9 @@ body
   line-height: 1
   color: #0A667D
 
+p
+  margin: 6px 0px
+
 a
   text-decoration: none
   color: #0A667D
@@ -51,6 +54,7 @@ q
 table
   border-collapse: collapse
   border-spacing: 0
+
 
 /*html
 
@@ -153,7 +157,7 @@ h1
     border-style: solid
     border-left: thick solid #07243A
     border-left-width: 1px
-    height: 920px
+    height: 100%
     .title_bar_r
       height: 42px
       border-style: solid
@@ -233,7 +237,7 @@ h1
     float: left
 
 #sponsor, #follow .img, #twitter
-  margin: 18px 0px 0px 25px
+  margin: 18px 0px 18px 25px
   float: left
 
 #member_icon
@@ -276,17 +280,36 @@ ul#maps
   clear: both
 
 #scoreboard-link
+  margin: 6px 0px
   a
-    font-size: 27px
-  padding: 5px 0px 5px 35px
-  width: 100%
+    margin-left: 23px
+    display: inline-block
+    cursor: pointer
+    background-color: #0F9FBC
+    color: white
+    padding: 6px
+    border: 0px
+    +border-radius(4px)
+    text-shadow: 0 -1px 0 #0F9FBC
+    min-width: 80px
+    text-align: center
+    width: 150px
+    &:active
+      +box-shadow(black 2px 2px 10px inset)
+    &:hover
+      color: black
+    font-size: 20px
+    font-weight: bold
 
 #scoreboard
   margin: 20px auto
-  width: 800px
+  display: table
   .daily, .weekly, .monthly
     display: inline-block
     min-width: 250px
+    float: left
+    vertical-align: top
+    margin-bottom: 10px
     th
       min-width: 100px
       height: 50px
@@ -306,3 +329,48 @@ ul#maps
   width: 100%
   max-width: 413px
   
+input[type=submit]
+  font-size: 12px
+  cursor: pointer
+  background-color: #0F9FBC
+  color: white
+  padding: 6px
+  border: 0px
+  +border-radius(4px)
+  text-shadow: 0 -1px 0 #0F9FBC
+  min-width: 80px
+  text-align: center
+  +opacity(0.8)
+  &:hover
+    +opacity(1.0)
+  &:active
+    +box-shadow(black 2px 2px 10px inset)
+
+select
+  font-size: 12px
+  cursor: pointer
+  background-color: #0F9FBC
+  color: white
+  padding: 6px
+  border: 0px
+  +border-radius(4px)
+  text-shadow: 0 -1px 0 #0F9FBC
+  min-width: 200px
+  text-align: left
+  +opacity(0.8)
+  &:hover
+    +opacity(1.0)
+  option
+    padding: 6px
+    background-color: #0F9FBC
+    
+
+select#maps, select#snake-type
+  min-width: 221px
+
+input[type=text], input[type=password], input[type=email]
+  height: 24px
+  min-width: 200px
+  border: 1px solid #0F9FBC
+  +border-radius(4px)
+  padding-left: 4px

@@ -11,6 +11,7 @@
         %a.room_icon{:href => "/room/#{i-1}/", id:"room-#{i}"}
           .number= "%02d" % i
           .room GAME ROOM
+      #scoreboard-link= link_to "Score Board", "/home/scoreboard"
 
     - if !@replays.blank?
       .title_bar_r
@@ -22,20 +23,20 @@
               %a{:href => replay_path(item.id)}= item.title
           %li.more
             %a{:href => replays_path} More...
-    .title_bar_r
-      #scoreboard-link= link_to "Scoreboard", "/home/scoreboard"
-    .title_bar_r
-      %h1 Sponsors
 
-    #sponsor_icon
-      %a{:href => "http://gurudigger.com", :target => "_blank"}
-        %img#sponsor{:src => image_path("gurudigger.png")}/
-      %a{:href => "http://douban.com", :target => "_blank"}
-        %img#sponsor{:src => image_path("douban.png")}/
-      %a{:href => "http://snda.com", :target => "_blank"}
-        %img#sponsor{:src => image_path("snda.png"), style:"margin-top:25px;"}/
-      %a{:href => "http://banner.alimama.com/", :target => "_blank"} 
-        %img#sponsor{:src => image_path("taobao.png"), style:"margin-top:25px;"}/
+    -# .title_bar_r
+    -#   %h1 Sponsors
+
+    -# #sponsor_icon
+    -#   %a{:href => "http://gurudigger.com", :target => "_blank"}
+    -#     %img#sponsor{:src => image_path("gurudigger.png")}/
+    -#   %a{:href => "http://douban.com", :target => "_blank"}
+    -#     %img#sponsor{:src => image_path("douban.png")}/
+    -#   %a{:href => "http://snda.com", :target => "_blank"}
+    -#     %img#sponsor{:src => image_path("snda.png"), style:"margin-top:25px;"}/
+    -#   %a{:href => "http://banner.alimama.com/", :target => "_blank"} 
+    -#     %img#sponsor{:src => image_path("taobao.png"), style:"margin-top:25px;"}/
+
     #follow
       %a{:href => "http://twitter.com/rubyvspython", :target => "_blank"}
         %img#twitter{:src => image_path("follow_us.png")}/
