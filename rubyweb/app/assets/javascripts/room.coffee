@@ -80,18 +80,18 @@ update_info = (info) ->
       $("#user-control-panel").hide()
 
 update = (info) ->
+  $('#map_round').html info.round
+  $("#map_status").html info.status
+
   ctx.fillStyle = '#ffffff'
   ctx.fillRect 0, 0, ctx.canvas.width, ctx.canvas.height
   draw_walls()
 
   score_board_html = ""
-  $("#round_counter").html info.round + " " + info.status
-
   $.each info.snakes.sort((a, b) ->
     b.body.length - a.body.length
   ), (index) ->
     draw_snake this, index % 4
-
   $("#score_board").html score_board_html
 
   if info.portals.length > 0
@@ -150,6 +150,10 @@ draw_walls = ->
 
 setup_map = (data)->
   map = data
+
+  $('#map_name').html map.name
+  $('#map_author').html 'by ' + map.author
+
   canvas.attr('width', data.size[0]*scale)
   canvas.attr('height', data.size[1]*scale)
   draw_walls()

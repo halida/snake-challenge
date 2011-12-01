@@ -4,8 +4,10 @@
 
 #left
   .title_bar 
-    ROUND:
-    %span#round_counter{:style => "font-weight: bold;font-size:18px;"} 0
+    #map_name
+    #map_author
+    #map_round
+    #map_status      
   %canvas#canvas
   #canvas_images{:style => "display:none;"}
     = image_tag("icons/egg.gif", :id => "icon_egg")

@@ -36,6 +36,7 @@ class Controller():
             return self.game.add_snake(type=data['type'], name=data['name'])
         
         elif op in ('turn', 'sprint'):
+            if not data.has_key(round): data['round'] = -1
             return dict(status=self.game.set_snake_op(data['id'], int(data['round']), data))
         
         elif op == 'map':

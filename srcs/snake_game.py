@@ -34,7 +34,7 @@ SPRINT_ROUND = 5
 SPRINT_STEP = 3 # sprint的时候, 每轮可以走的步数
 SPRINT_REST = 20 # sprint之后需要休息的时间
 
-DEFAULT_MAP = 'srcs/map/flat.yml'
+DEFAULT_MAP = 'srcs/map/tron.yml'
 
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):
@@ -324,7 +324,10 @@ class Game():
 
     def get_map(self):
         return dict(walls=self.walls,
-                    size=self.size)
+                    size=self.size,
+                    name=self.map.name,
+                    author=self.map.author,
+                    )
 
     def get_info(self):
         if self.info:

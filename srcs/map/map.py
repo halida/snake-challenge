@@ -36,10 +36,11 @@ class Map:
         map = Map()
         map.load(data)
         return map
+
+    def __getattr__(self, name):
+        return self.meta[name]
     
     def load(self, data):
-        print data, type(data)
-        print data['map']
         for key in data:
             self.meta[key] = data[key]
         
