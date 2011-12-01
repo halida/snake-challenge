@@ -1,8 +1,9 @@
 #place
-  .left_content
+  #replays
     %h1 Listing Replays
     %ul
       - @replays.each do |replay|
         %li
-          %a{:href => replay_path(replay.id)}= replay.title
+          = link_to replay.title, replay
+          = " by #{replay.user.name}" if replay.user
     = paginate @replays

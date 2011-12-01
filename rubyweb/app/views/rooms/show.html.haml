@@ -15,24 +15,26 @@
 
 #right
 
-  #living_room.right-block
+  = render partial: "rooms/replays" if controller_name == 'replays'
+  = render partial: "rooms/controls" if current_user and controller_name == 'rooms'
+  .right-block#living_room
     .title_bar MEMBERS
-    %ul#score_board
-  = render partial: "replays" if controller_name == 'replays'
-  = render partial: "controls" if current_user and controller_name == 'rooms'
-  = render partial: "tips"
+    .right_body  
+      %ul#score_board
+  = render partial: "rooms/tips"
 
-  #chat.right-block
+  .right-block#chat
     .title_bar CHATS
-    %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
-      %input{:type => "submit", :value => "send"}/
-      %input#msg{:type => "text"}/
-    #msgs
-    :javascript
-      chat_init("ws://"+window.location.hostname+":9999/chatroom",
-        "#{current_user ? current_user.name : request.remote_ip}", 
-        "#{controller_name}-#{params[:id]}"
-      );
+    .right_body  
+      %form#send-msg{:action => "javascript:chat_send();", :style => "display:none;"}
+        %input{:type => "submit", :value => "send"}/
+        %input#msg{:type => "text"}/
+      #msgs
+      :javascript
+        chat_init("ws://"+window.location.hostname+":9999/chatroom",
+          "#{current_user ? current_user.name : request.remote_ip}", 
+          "#{controller_name}-#{params[:id]}"
+        );
 
 :javascript
   run_application("ws://"+window.location.hostname+":9999/info", #{@room_id}, #{controller_name == 'replays'});

@@ -13,7 +13,8 @@
 
     = csrf_meta_tag
     = yield :javascripts
-
+    :javascript
+       init();
 
   %body
     #flash_error.flash{style: "display: none"}

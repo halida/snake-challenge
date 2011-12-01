@@ -20,6 +20,13 @@ user_snake_id=[]
 user_seq= -1
 
 window.run_application = (s, r, nows=false) ->
+  $('.right-block .title_bar').live "click", ()->
+    next = $(this).next()
+    if next.is(':hidden')
+      next.slideDown()
+    else
+      next.slideUp()
+
   canvas = $("#room-canvas")
   ctx = canvas[0].getContext("2d")
 
@@ -73,6 +80,7 @@ update_info = (info) ->
 
   if user_seq >= 0
     snake = info.snakes[user_seq]
+    console.log snake
     if snake and snake.alive
       $("#user-control-panel").show()
     else
@@ -87,11 +95,12 @@ update = (info) ->
   ctx.fillRect 0, 0, ctx.canvas.width, ctx.canvas.height
   draw_walls()
 
+
   score_board_html = ""
-  $.each info.snakes.sort((a, b) ->
-    b.body.length - a.body.length
-  ), (index) ->
-    draw_snake this, index % 4
+  snakes = (snake for snake in info.snakes)
+  snakes.sort (a, b) -> b.body.length - a.body.length
+  for snake in snakes
+    draw_snake snake
   $("#score_board").html score_board_html
 
   if info.portals.length > 0
@@ -116,12 +125,12 @@ choose_snake_color = (snake)->
   colors[snake.type][v % colors[snake.type].length]
 
 
-draw_snake = (snake, color_index) ->
+draw_snake = (snake) ->
 
   color_set = (if snake.alive then choose_snake_color(snake) else colors.dead)
   ctx.fillStyle = color_set[0]
-  $.each snake.body, ->
-    ctx.fillRect this[0] * scale, this[1] * scale, scale, scale
+  for body in snake.body
+    ctx.fillRect body[0] * scale, body[1] * scale, scale, scale
 
   head = snake.body[0]
   ctx.fillStyle = color_set[1]

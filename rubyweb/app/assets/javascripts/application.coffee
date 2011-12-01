@@ -5,11 +5,10 @@ else
 
 window.init = ()->
         flash = $('.flash')
-        return if flash.length <= 0
-        setTimeout(
-                ()->
-                        flash.fadeIn(800)
-                , 3000)
+        if flash.length > 0
+          setTimeout( ()->
+                flash.fadeIn(800)
+          , 3000)
 
 window.error = (msg)->
         error = $('#flash_error')

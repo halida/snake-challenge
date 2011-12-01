@@ -50,7 +50,7 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
         if data.has_key('name'):
             self.name = data['name']
             self.room = data['room']            
-            self.broadcast(self.room, self.name + ' enters.')
+            self.broadcast(self.room, self.name + ' enters the room: ' + self.room)
             # write some history chats
             for chat in self.chats.get(self.room, []):
                 self.write_message(chat)
@@ -126,6 +126,7 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
         logging.debug(message)
         oper.send_unicode(message)
         result = oper.recv()
+        logging.debug(result)
         self.write_message(result)
 
     def on_close(self):
