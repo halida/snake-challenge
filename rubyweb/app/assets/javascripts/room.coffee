@@ -154,8 +154,8 @@ setup_map = (data)->
   $('#map_name').html map.name
   $('#map_author').html 'by ' + map.author
 
-  # canvas.attr('width', data.size[0]*scale)
-  # canvas.attr('height', data.size[1]*scale)
+  canvas.attr('width', data.size[0]*scale)
+  canvas.attr('height', data.size[1]*scale)
   draw_walls()
 
 window.add_user = (name, type) ->
