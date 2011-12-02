@@ -33,8 +33,7 @@ window.run_application = (s, r, nows=false) ->
   room = r
   server = s
 
-  return if nows
-  init_ws()
+  init_ws() unless nows
 
 init_ws = ()->
   ws = new window.WS(server)
@@ -43,8 +42,9 @@ init_ws = ()->
     record_data(data) if onrecord
     onmessage(data)
 
-  ws.onerror = (error) ->
-    console.log error
+  ws.onerror = (e) ->
+    error(e)
+    console.log e
 
   ws.onclose = ->
     error "connection closed, refresh please.."
@@ -83,9 +83,11 @@ update_info = (info) ->
     # console.log snake
     if snake and snake.alive
       $("#user-control-panel").show()
+      $("#add-user-panel").hide()
     else
       user_seq = -1
       $("#user-control-panel").hide()
+      $("#add-user-panel").show()
 
 update = (info) ->
   $('#map_round').html info.round
@@ -207,20 +209,20 @@ add_user_result = (data)->
   user_seq = data.seq
   user_snake_id = data.id
   $("#user-control-panel").show()
+  $("#add-user-panel").hide()
 
   $(document).keyup (e)->
     dir = -1
-    if (e.keyCode == 38 or e.keyCode == 87) # up w
-      dir = 1
-    if (e.keyCode == 37 or e.keyCode == 65) # left a
-      dir = 0
-    if (e.keyCode == 40 or e.keyCode == 83) # down s
-      dir = 3
-    if (e.keyCode == 39 or e.keyCode == 68) # right d
-      dir = 2
-
-    return unless dir >= 0
-    e.preventDefault() if turn(dir)
+    if (e.keyCode == 38 or e.keyCode == 75) # up k
+      e.preventDefault() if turn(1)
+    if (e.keyCode == 37 or e.keyCode == 72) # left h
+      e.preventDefault() if turn(0)
+    if (e.keyCode == 40 or e.keyCode == 74) # down j
+      e.preventDefault() if turn(3)
+    if (e.keyCode == 39 or e.keyCode == 76) # right l
+      e.preventDefault() if turn(2)
+    if (e.keyCode == 83) # s for sprint
+      e.preventDefault() if sprint()
 
 # -------------------------------------------------
 # ai
@@ -245,7 +247,7 @@ window.set_ai = (ainame) ->
   ai = simple_snake
   ai.init(user_seq)
   ai.setmap map
-
+  $('#setai').addClass('on')
 
 # -------------------------------------------------
 # replay

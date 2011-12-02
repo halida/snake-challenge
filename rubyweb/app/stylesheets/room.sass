@@ -72,6 +72,27 @@
   .no_border
     border: none
 
+#user-control
+  #control-select
+    margin: 4px auto 10px
+    text-align: center
+  #control-select a
+    min-width: 100px
+    padding: 6px
+  #control-select a.curr
+    background-color: #0F9FBC
+    +border-radius(4px)
+    color: white
+
+  #control-body
+    width: 3 * 320px
+    position: relative
+    +single-transition(left, 0.5s)
+
+    .control-panel
+      width: 312px
+      float: left
+
 #add-user, #record-panel, #change-map
   margin: 4px
 
@@ -84,14 +105,12 @@
   position: relative
   margin: auto
   text-align: center
-  .turn
+  #keyboard-shortcut-hint
+    padding: 10px
+  .op
     width: 50px
     height: 30px
     margin: 2px 2px 4px
-  #turn-up
-    display: block
-    margin: auto
-  #turn-left, #turn-right, #turn-down
     display: inline-block
 
 #teams
@@ -148,10 +167,6 @@
 .clear
   clear: both
 
-#record-button.on
-  +box-shadow(black 2px 2px 10px inset)
-#replay-button.on
-  +box-shadow(black 2px 2px 10px inset)
 
 #map_name, #map_author, #map_round, #map_status
   display: inline-block
@@ -181,5 +196,8 @@
   .right_body
     /* +single-transition(height, 0.5s)
     overflow: hidden
+    max-width: 320px
   .right_body.off
     height: 0px
+
+

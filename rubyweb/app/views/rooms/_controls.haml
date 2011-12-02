@@ -1,37 +1,54 @@
 #user-control.right-block
   .title_bar CONTROL
   .right_body
-    #record-panel
-      = form_for(Replay.new) do |f|
-        .form
-      %input{type: "submit", onclick: "javascript:toggle_record()", value: "record", id: 'record-button'}/ 
-      %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
-      %span#replay-count 0
-      = "/"
-      %span#record-count 0
-      %input{type: "submit", onclick: "javascript:save_replay()", value: "save", id: 'save-record-button'}/ 
-  
-    #change-map
-      %input{type: "submit", onclick: "javascript:set_map($('select#maps').val())", value: "set map", id: 'set-map-button'}/        
-      %select#maps
-        - for m in Map.all
-          %option{value: m.id}= m.title
-  
-    #add-user
-      %input{:onclick => "javascript:add_user('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
-      %select#snake-type
-        %option python
-        %option ruby
-  
-    #user-control-panel
-      #keyboard-shortcut-hint
-        left, right, up, down or AWSD to control snake
-  
-      -# #ai-control
-      -#   %input{type: "submit", onclick: "javascript:set_ai('simple_ai')", value: "use ai"}/ 
-  
-      %input{type: "submit", onclick: "javascript:sprint()", value: "sprint"}/ 
-      %input{type: "submit", onclick: "javascript:turn(1);", class: "turn", id: "turn-up", value: "^"}/
-      %input{type: "submit", onclick: "javascript:turn(0);", class: "turn", id: "turn-left", value: "<"}/
-      %input{type: "submit", onclick: "javascript:turn(3);", class: "turn", id: "turn-down", value: "V"}/
-      %input{type: "submit", onclick: "javascript:turn(2);", class: "turn", id: "turn-right", value: ">"}/
+    #control-select
+      %a.curr user control
+      %a record
+      %a set map
+    :coffeescript
+      $('#control-select a').click ()->
+        i = $(this).index()
+        $('#control-select a.curr').removeClass('curr')
+        $(this).addClass('curr')
+        $('#control-body').css('left', -i*320 + 'px')
+
+    #control-body
+      .control-panel#add-user
+        #add-user-panel
+          %input{:onclick => "javascript:add_user('#{current_user.name}', $('#snake-type').val());", :type => "submit", :value => "add user"}/
+          %select#snake-type
+            %option python
+            %option ruby
+    
+        #user-control-panel
+          %p left, right, up, down or HLKJ to turn snake
+          %p and <em>S</em> for sprint 
+      
+          
+          %p      
+            %input{type: "submit", onclick: "sprint()", class: "op", value: "sprint", id:"sprint"}/
+            %input{type: "submit", onclick: "turn(1)", class: "op", id: "turn-up", value: "^"}/
+            %input{type: "submit", onclick: "set_ai('simple_ai')", class: "op", value: "use ai", id:"setai"}/ 
+          %p
+            %input{type: "submit", onclick: "turn(0)", class: "op", id: "turn-left", value: "<"}/
+            %input{type: "submit", onclick: "turn(3)", class: "op", id: "turn-down", value: "V"}/
+            %input{type: "submit", onclick: "turn(2)", class: "op", id: "turn-right", value: ">"}/
+
+
+      .control-panel#record-panel
+        = form_for(Replay.new) do |f|
+          .form
+        %input{type: "submit", onclick: "javascript:toggle_record()", value: "record", id: 'record-button'}/ 
+        %input{type: "submit", onclick: "javascript:toggle_replay()", value: "replay", id: 'replay-button'}/ 
+        %span#replay-count 0
+        = "/"
+        %span#record-count 0
+        %input{type: "submit", onclick: "javascript:save_replay()", value: "save", id: 'save-record-button'}/ 
+
+    
+      .control-panel#change-map
+        %input{type: "submit", onclick: "javascript:set_map($('select#maps').val())", value: "set map", id: 'set-map-button'}/        
+        %select#maps
+          - for m in Map.all
+            %option{value: m.id}= m.title
+    

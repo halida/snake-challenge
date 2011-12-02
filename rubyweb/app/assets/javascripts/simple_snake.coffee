@@ -18,12 +18,14 @@ simple_snake =
         head[0] + dir[0]*i,
         head[1] + dir[1]*i
         ] for i in [1..4])
+    blocks = this.map.walls.concat []
+    for snake in info.snakes
+      blocks.push.apply(blocks, snake.body)
 
     for n in nexts
-      for wall in this.map.walls
-        if wall[0] == n[0] and wall[1] == n[1]
+      for b in blocks
+        if b[0] == n[0] and b[1] == n[1]
           this.d = (this.d + 1) % 4
-          # console.log "turn"
           return this.d
 
     return this.d
