@@ -176,6 +176,7 @@ def run_ai(ai, controller):
             # 游戏结束的时候就不上场了.
             if info['status'] == 'finished':
                 logging.debug('finished, waiting for adding..')
+                time.sleep(1)
                 continue
 
             # add ai

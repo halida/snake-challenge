@@ -35,6 +35,12 @@ class Server():
             g.pre = now
             return True
         
+    def pub_info(self, i):
+        info = self.controller.op(dict(room=i, op='info'))
+        info['op'] = 'info'
+        self.puber.send("room:%d "%i + json.dumps(info))
+
+
     def run(self, max_waits=10.0, enable_no_resp_die=True):
         self.max_waits = max_waits
         self.games = [Game(enable_no_resp_die=enable_no_resp_die)
@@ -44,6 +50,7 @@ class Server():
         # 用来发布信息更新
         puber = context.socket(zmq.PUB)
         puber.bind('ipc:///tmp/game_puber.ipc')
+        self.puber = puber
 
         # 用来处理
         oper = context.socket(zmq.REP)
@@ -64,7 +71,14 @@ class Server():
                     rc = json.loads(rc)
                     result = self.controller.op(rc)
                     result['op'] = rc['op']
+                    #如果有新的蛇加进来, 也pub一下
+                    if rc['op'] == 'add' and result.has_key('seq'):
+                        self.pub_info(rc['room'])
+                    #如果地图变动也pub
+                    if rc['op'] == 'setmap' and result['status'] == 'ok':
+                        self.pub_info(rc['room'])
                     # logging.debug('process op %s ', rc)
+                    
                 # 为了防止错误命令搞挂服务器, 加上错误处理
                 except Exception as e:
                     error_msg = str(e)
@@ -92,10 +106,7 @@ class Server():
                 # 发送更新信息
                 if updated:
                     logging.debug("room %d updated: %s" % (i, g.status))
-                    info = self.controller.op(
-                        dict(room=i, op='info'))
-                    info['op'] = 'info'
-                    puber.send("room:%d "%i + json.dumps(info))
+                    self.pub_info(i)
 
 usage = """\
     $ zmq_game_server.py [type]

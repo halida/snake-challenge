@@ -65,11 +65,10 @@ onmessage = (data)->
     when  "map"
       setup_map(data)
       check_ai_map(data)
-    when "turn", "sprint"
-      undefined
     else
-      error data.status if data.status
-      console.log(data)
+      if data.status != 'ok'
+        error data.status
+        console.log(data)
 
 
 update_info = (info) ->
@@ -81,7 +80,7 @@ update_info = (info) ->
 
   if user_seq >= 0
     snake = info.snakes[user_seq]
-    console.log snake
+    # console.log snake
     if snake and snake.alive
       $("#user-control-panel").show()
     else
@@ -200,7 +199,7 @@ window.turn = (direction) ->
   return true
 
 add_user_result = (data)->
-  unless data.seq
+  unless data.id
     console.log data
     error data.status
     return
@@ -315,3 +314,4 @@ window.set_map = (id)->
 set_map_data = (data)->
   ws.send(JSON.stringify(op: 'setmap', data: data, room: room))
   ws.send(JSON.stringify(op: 'map', room: room))
+  ws.send(JSON.stringify(op: 'info', room: room))

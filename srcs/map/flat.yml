@@ -1,8 +1,9 @@
-name: Flat
+name: flat
 author: linjunhalida
 version: 1.0
 height: 60
 width: 100
+round: 10
 
 snake_init: 10
 snake_max: 30

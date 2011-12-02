@@ -188,11 +188,12 @@ class Game():
             m = Map.loaddata(data)
             self.set_map(m)
             self.start()
-        except:
+            return 'ok'
+        except Exception as e:
             # if error, fall back to default map
             self.set_map(Map.loadfile(DEFAULT_MAP))
             self.start()
-            raise
+            return 'setmap error: ', str(e)
         
     def set_map(self, map):
         self.map = map
@@ -258,6 +259,8 @@ class Game():
         snake = Snake(self, type, direction, head, length, name)
         self.snakes.append(snake)
         self.snake_op.append(dict(op='turn', direction=direction))
+        # 强制更新info
+        self.info = None
         # 返回蛇的顺序, 以及蛇的id(用来验证控制权限)
         return dict(seq=len(self.snakes) - 1, id=snake.id)
 
@@ -357,11 +360,11 @@ class Game():
         if self.loop_count <= 50 and self.status in [FINISHED, WAITPLAYER]:
             self.loop_count += 1
             return
-        
+
         if self.status == FINISHED:
             self.loop_count = 0
             self.start()
-            return
+            return True
 
         # 游戏开始的时候, 需要有2条以上的蛇加入.
         if self.status == WAITPLAYER:
@@ -377,7 +380,7 @@ class Game():
             self.status = FINISHED
             self.loop_count = 0
             self.check_score()
-            return
+            return True
 
         # 移动snake
         for i, d in enumerate(self.snake_op):
