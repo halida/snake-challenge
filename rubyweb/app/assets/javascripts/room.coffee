@@ -24,8 +24,10 @@ window.run_application = (s, r, nows=false) ->
     next = $(this).next()
     if next.hasClass('off')
       next.removeClass('off')
+      next.slideDown()
     else
       next.addClass('off')
+      next.slideUp()
 
   canvas = $("#room-canvas")
   ctx = canvas[0].getContext("2d")

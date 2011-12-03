@@ -23,10 +23,14 @@ html
 
 body
   line-height: 1
-  color: #0A667D
+  /* color: #0A667D
+  color: #99cccc
 
 p
   margin: 6px 0px
+
+em
+  font-weight: bold
 
 a
   text-decoration: none
@@ -81,8 +85,10 @@ header
   text-align: left
 
 #user_bar
+  max-width: 930px
   margin: 0 auto 10px auto
-  text-align: center
+  text-align: right
+  padding-right: 10px
 
 #content
   margin: 0 auto
@@ -93,7 +99,8 @@ header
 h1
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif
   font-size: 13px
-  color: #37D8F9
+  color: #99cccc
+  /* color: #37D8F9
   padding-bottom: 5px
 
 .info
@@ -136,10 +143,7 @@ h1
     padding-bottom: 10px
   .challenge_info
     padding-top: 10px
-    -webkit-font-smoothing: antialiased
-    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif
     font-size: 12px
-    color: #0a667d
     line-height: 1.5em
   .title_bar_l
     height: 42px
@@ -156,15 +160,13 @@ h1
     border-left-width: 1px
     height: 100%
     .title_bar_r
-      height: 42px
       border-style: solid
       border-bottom: thick solid #07243A
       border-bottom-width: 1px
       width: 232px
   .title_bar_r h1
-    margin: 0px 0px 0px 12px
-    padding-top: 10px
-
+    margin: 12px 0px 12px 12px
+ 
 #room_icons
   border-style: solid
   border-bottom: thick solid #07243A
@@ -294,7 +296,7 @@ ul#maps
       +box-shadow(black 2px 2px 10px inset)
     &:hover
       color: black
-    font-size: 20px
+    font-size: 12px
     font-weight: bold
 
 #replays
@@ -330,6 +332,7 @@ ul#maps
   
 input[type=submit]
   font-size: 12px
+  font-weight: bold
   cursor: pointer
   background-color: #0F9FBC
   color: white

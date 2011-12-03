@@ -50,13 +50,13 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
         if data.has_key('name'):
             self.name = data['name']
             self.room = data['room']            
-            self.broadcast(self.room, self.name + ' enters the room: ' + self.room)
+            self.broadcast(self.room, '<em>%s</em> enters the room: <em>%s</em>' % (self.name, self.room))
             # write some history chats
             for chat in self.chats.get(self.room, []):
                 self.write_message(chat)
             return
         else:
-            self.broadcast(self.room, self.name + ' says: ' + data['msg'])
+            self.broadcast(self.room, '<em>%s</em> says: %s' % (self.name, data['msg']) )
 
     def broadcast(self, room, msg):
         # save chat
