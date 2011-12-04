@@ -155,8 +155,9 @@ def run_ai(ai, controller):
     ai.status = NEED_ADDING
     
     while True:
+        time.sleep(0.01)
         # 先获取场上的情况
-        if ai.status == NEED_ADDING:
+        if False:#ai.status == NEED_ADDING:
             info = c.info()
         else:
             info = c.sub_info()
@@ -192,15 +193,18 @@ def run_ai(ai, controller):
             logging.debug("add ai: %d" % ai.seq)
             continue
 
-        if info['status'] == 'finished' or not me:
+        if info['status'] == 'finished':
             # 游戏结束的话, 或者发现没有蛇的信息, ai复位..
             ai.status = NEED_ADDING
+            # print "not me"
             continue
+        if not me: continue
 
         # 如果自己死掉了, 那就不发出操作
         if not me['alive']:
             logging.debug(ai.name+' is dead.')
             ai.status = NEED_ADDING            
+            # print "not alive"
             continue
 
         # 发出操作
