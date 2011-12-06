@@ -85,7 +85,7 @@ class ZmqClient():
                     print round,
                     return True
             else: return True
-        elif info['status'] == 'waitplayer':
+        elif info['status'] == 'waitforplayer':
             return True
         elif info['status'] == 'finished':
             return False

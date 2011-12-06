@@ -21,7 +21,7 @@ NULL, WALL, GEM, EGG, PORTAL = range(5)
 
 # 游戏状态
 INITIAL = 'initial'
-WAITPLAYER='waitplayer'
+WAITFORPLAYER='waitforplayer'
 RUNNING='running'
 FINISHED='finished'
 
@@ -181,8 +181,8 @@ class Game():
         self.logs.append(msg)
 
     def user_set_map(self, data):
-        if self.status != WAITPLAYER:
-            return "only can set map when the game state is waitplayer"
+        if self.status != WAITFORPLAYER:
+            return "only can set map when the game state is waitforplayer"
 
         try:
             m = Map.loaddata(data)
@@ -220,7 +220,7 @@ class Game():
         self.eggs = []
         self.gems = []
         self.loop_count = 0
-        self.status = WAITPLAYER
+        self.status = WAITFORPLAYER
         #if self.wallgen.can(self):
         if self.enable_wall:
             self.walls = self.wallgen.gen(self)
@@ -358,8 +358,8 @@ class Game():
         """游戏进行一步..."""
         self.logs = []
         self.info = None
-        # 如果游戏结束或者waitplayer, 等待一会继续开始
-        if self.loop_count <= 50 and self.status in [FINISHED, WAITPLAYER]:
+        # 如果游戏结束或者waitforplayer, 等待一会继续开始
+        if self.loop_count <= 50 and self.status in [FINISHED, WAITFORPLAYER]:
             self.loop_count += 1
             return
 
@@ -369,7 +369,7 @@ class Game():
             return True
 
         # 游戏开始的时候, 需要有2条以上的蛇加入.
-        if self.status == WAITPLAYER:
+        if self.status == WAITFORPLAYER:
             if len(self.snakes) < 2: return
             self.status = RUNNING
             self.log('game running.')

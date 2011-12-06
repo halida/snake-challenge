@@ -43,7 +43,7 @@ def show(room):
             info = info[info.index(' ') : ]
             info = json.loads(info)
             # 如果游戏结束了, 获取map
-            if info['status'] == 'waitplayer':
+            if info['status'] == 'waitforplayer':
                 shower.set_map(get_map())
             
         except zmq.ZMQError as e:

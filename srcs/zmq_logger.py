@@ -52,7 +52,7 @@ def logger(controller, filename="game.log", quit_on_finish=True):
             logging.debug(info)
             
             # get map again when start new game
-            if status == 'finished' and info['status'] == 'waitplayer':
+            if status == 'finished' and info['status'] == 'waitforplayer':
                 save_map()
 
             # save info

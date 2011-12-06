@@ -11,7 +11,7 @@ from snake_game import *
 
 context = zmq.Context()
 
-ROOMS = 5
+ROOMS = 10
 
 class Server():
     """
