@@ -16,7 +16,7 @@
 #right
 
   = render partial: "rooms/replays" if controller_name == 'replays'
-  = render partial: "rooms/controls" if current_user and controller_name == 'rooms'
+  = render partial: "rooms/controls" if controller_name == 'rooms'
   .right-block#living_room
     .title_bar MEMBERS
     .right_body  

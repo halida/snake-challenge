@@ -37,8 +37,9 @@
     #main
       #user_bar
         - if current_user.blank?
-          %a{:href => "/users/sign_up"} Register
-          %a{:href => "/users/sign_in"} Login
+          %a{:href => "/users/sign_up"} Sign Up
+          | 
+          %a{:href => "/users/sign_in"} Sign In
         - else
           Hello, #{current_user.name}
           %a{:href => "/users/sign_out"} Sign out
