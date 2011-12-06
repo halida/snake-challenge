@@ -97,7 +97,7 @@ update = (info) ->
 
   ctx.fillStyle = '#ffffff'
   ctx.fillRect 0, 0, ctx.canvas.width, ctx.canvas.height
-  draw_walls()
+  draw_map()
 
 
   score_board_html = ""
@@ -106,14 +106,6 @@ update = (info) ->
   for snake in snakes
     draw_snake snake
   $("#score_board").html score_board_html
-
-  if info.portals.length > 0
-    for i in [0..info.portals.length-1]
-      portal = info.portals[i]
-      ctx.fillStyle = colors.portal[i%2]
-      ctx.fillRect portal[0] * scale, portal[1] * scale, scale, scale
-      ctx.fillStyle = '#000000'
-      ctx.fillText(Math.floor(i/2), portal[0]*scale + 4, (portal[1]+1)*scale - 2)
 
   $.each info.eggs, ->
     draw_egg this
@@ -157,8 +149,17 @@ draw_egg = (egg) ->
 draw_gem = (gem) ->
   ctx.drawImage document.getElementById("icon_gem"), gem[0] * scale, gem[1] * scale
 
-draw_walls = ->
+draw_map = ->
   return unless map
+
+  if map.portals.length > 0
+    for i in [0..map.portals.length-1]
+      portal = map.portals[i]
+      ctx.fillStyle = colors.portal[i%2]
+      ctx.fillRect portal[0] * scale, portal[1] * scale, scale, scale
+      ctx.fillStyle = '#000000'
+      ctx.fillText(Math.floor(i/2), portal[0]*scale + 4, (portal[1]+1)*scale - 2)
+
   ctx.fillStyle = colors.wall
   for wall in map.walls
     ctx.fillRect wall[0] * scale, wall[1] * scale, scale, scale
@@ -171,7 +172,7 @@ setup_map = (data)->
 
   canvas.attr('width', data.size[0]*scale)
   canvas.attr('height', data.size[1]*scale)
-  draw_walls()
+  draw_map()
 
 window.add_user = (name, type) ->
   ws.send JSON.stringify(

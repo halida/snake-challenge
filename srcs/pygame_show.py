@@ -31,8 +31,9 @@ class Shower():
                 sys.exit()
         
         size = SIZE
-        gem_color = (100,0,100)
+        gem_color = (100,0,0)
         egg_color = (100,100,0)
+        portal_color = (100, 0, 100)
         def drawRect(c, x, y, w, h):
             pygame.draw.rect(self.screen, c,
                              pygame.Rect(x, y, w, h))
@@ -84,6 +85,13 @@ class Shower():
             drawRect((0,0,0),
                      wall[0] * size,
                      wall[1] * size,
+                     size, size)
+
+        # portals
+        for b in self.map['portals']:
+            drawRect(portal_color,
+                     b[0] * size,
+                     b[1] * size,
                      size, size)
 
         pygame.display.flip()

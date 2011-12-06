@@ -329,6 +329,7 @@ class Game():
 
     def get_map(self):
         return dict(walls=self.walls,
+                    portals=self.portals,
                     size=self.size,
                     name=self.map.name,
                     author=self.map.author,
@@ -349,7 +350,6 @@ class Game():
                          status=self.status,
                          eggs=self.eggs,
                          gems=self.gems,
-                         portals=self.portals,
                          round=self.round,
                          logs=self.logs)
         return self.info
