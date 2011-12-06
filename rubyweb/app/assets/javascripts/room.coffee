@@ -112,6 +112,8 @@ update = (info) ->
       portal = info.portals[i]
       ctx.fillStyle = colors.portal[i%2]
       ctx.fillRect portal[0] * scale, portal[1] * scale, scale, scale
+      ctx.fillStyle = '#000000'
+      ctx.fillText(Math.floor(i/2), portal[0]*scale + 4, (portal[1]+1)*scale - 2)
 
   $.each info.eggs, ->
     draw_egg this
