@@ -73,16 +73,16 @@ class Server():
                     result['op'] = rc['op']
                     #如果有新的蛇加进来, 也pub一下
                     if rc['op'] == 'add' and result.has_key('seq'):
-                        self.pub_info(rc['room'])
+                        self.pub_info(int(rc['room']))
                     #如果地图变动也pub
                     if rc['op'] == 'setmap' and result['status'] == 'ok':
-                        self.pub_info(rc['room'])
+                        self.pub_info(int(rc['room']))
                     # logging.debug('process op %s ', rc)
                     
                 # 为了防止错误命令搞挂服务器, 加上错误处理
                 except Exception as e:
                     error_msg = str(e)
-                    result = dict(status=error_msg)
+                    result = dict(status=error_msg, data=rc)
                     logging.debug(error_msg)
                     
                 oper.send(json.dumps(result))

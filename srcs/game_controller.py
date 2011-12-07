@@ -17,7 +17,14 @@ class RoomController():
         分配room
         """
         # 检查room
-        room = int(data['room'])
+        if not data.has_key('room'):
+            return dict(status = "data has no room param.")
+        
+        try:
+            room = int(data['room'])
+        except Exception as e:
+            return dict(status="room data (%s) error: %s" % (data['room'], str(e)))
+        
         if not 0 <= room < len(self.games):
             return dict(status='room number error: %d'%room)
         # 分配处理
