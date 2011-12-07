@@ -4,11 +4,18 @@
 module: ailib
 提供ai辅助的一些工具
 """
-from lib import *
+import sys, os
 import urllib, httplib 
+import time, logging, json, random, uuid, datetime
+from datetime import date
 
-from snake_game import Game, FINISHED, DIRECT
-from game_controller import Controller
+logging.basicConfig(level=logging.DEBUG,
+                    format="%(asctime)s - %(levelname)s - %(message)s")
+
+# 方向对应修改的坐标
+DIRECT = (
+    (-1, 0), (0, -1), (1, 0), (0, 1)
+    )
 
 class BaseAI():
     def setmap(self, map):
@@ -44,50 +51,43 @@ class WebController():
     提供给ai操作的web接口
     """
     def __init__(self, room):
-        self.addr = 'snakechallenge.org'#'127.0.0.1:8080'
+        self.addr = 'localhost:9999'
         self.room = room
         self.conn = httplib.HTTPConnection(self.addr)
 
-    def get(self, url):
-        self.conn.request("GET", '/room/%d/%s' % (self.room, url))
-        response = self.conn.getresponse()
-        result = response.read()
+    def cmd(self, cmd, data={}):
+        """
+        发送命令给服务器
+        """
+        data['op'] = cmd
+        data['room'] = self.room
+        # logging.debug('post: %s : %s', cmd, data)
+        self.conn.request("POST", '/cmd',
+                          urllib.urlencode(data),
+                          {'Content-Type': 'application/x-www-form-urlencoded'})
+        result = self.conn.getresponse().read()
         return json.loads(result)
-
-    def post(self, url, kw):
-        self.conn.request(
-            "POST",
-            '/room/%d/%s' % (self.room, url),
-            urllib.urlencode(kw))
-        response = self.conn.getresponse()
-        result = response.read()
-        return json.loads(result)
-
-    def map(self):
-        return self.get('map')
 
     def add(self, name, type):
-        result = self.post(
-            'add', dict(name=name,
-                        type=type))
-        # todo 唉. web api还是要改改?
-        result = result[0]
-        return result
+        self.me = self.cmd("add",
+                           dict(name = name,
+                                type = type))
+        return self.me
+    
+    def map(self):
+        return self.cmd("map")
 
     def info(self):
-        return self.get('info')
+        return self.cmd("info")
+
+    def turn(self, dir):
+        return self.cmd("turn",
+                        dict(id = self.me["id"],
+                             round = -1,
+                             direction = dir))
     def sub_info(self):
         time.sleep(0.3)
         return self.info()
-    
-    def turn(self, id, d, round=-1):
-        result = self.post(
-            'turn', dict(id=id,
-                         direction=d,
-                         round=round))
-        # todo 唉. web api还是要改改?
-        result = result[0]
-        return result
 
 
 class ZeroController():
@@ -121,9 +121,10 @@ class ZeroController():
         return self.op('map')
 
     def add(self, name, type):
-        return self.op(
+        self.me = self.op(
             'add', dict(name=name,
                         type=type))
+        return self.me
 
     def info(self):
         return self.op('info')
@@ -138,9 +139,9 @@ class ZeroController():
             info = self.info()
         return info
     
-    def turn(self, id, d, round=-1):
+    def turn(self, d, round=-1):
         return self.op(
-            'turn', dict(id=id,
+            'turn', dict(id=self.me['id'],
                          direction=d,
                          round=round))
 
@@ -214,7 +215,7 @@ def run_ai(ai, controller):
             logging.debug(str(e))
             ai.status == NEED_ADDING
             continue
-        result = c.turn(ai.id, d)
+        result = c.turn(d)
 
         # 操作失败显示下
         if result['status'] != 'ok':

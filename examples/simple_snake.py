@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 """
-module: random snake
+module: simple snake
 用来作为示例代码
 """
-import json, time, random
+import json, time
 import urllib, httplib, logging
 
 logging.basicConfig(level=logging.DEBUG,

@@ -143,6 +143,7 @@ settings = {
     # "login_url": "/login",
     # "xsrf_cookies": True,
     'debug' : True,
+    # 'gzip' : True,
 }
 
 application = tornado.web.Application([
