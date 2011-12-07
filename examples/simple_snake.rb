@@ -1,11 +1,13 @@
 require 'json'
 require 'net/http'
 
+SERVER = "game.snakechallenge.org"
+PORT = 9999
 DIRS = [[-1, 0], [0, -1], [1, 0], [0, 1]]
 
 class SimpleSnake
   def initialize
-    @conn = Net::HTTP.new("localhost", 9999)
+    @conn = Net::HTTP.new(SERVER, PORT)
     @room = 0
     @d = 0
   end

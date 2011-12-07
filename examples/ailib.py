@@ -51,7 +51,7 @@ class WebController():
     提供给ai操作的web接口
     """
     def __init__(self, room):
-        self.addr = 'localhost:9999'
+        self.addr = 'game.snakechallenge.org:9999'
         self.room = room
         self.conn = httplib.HTTPConnection(self.addr)
 

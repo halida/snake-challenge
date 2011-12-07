@@ -10,11 +10,13 @@ import urllib, httplib, logging
 logging.basicConfig(level=logging.DEBUG,
                     format="%(asctime)s - %(levelname)s - %(message)s")
 
+SERVER = "game.snakechallenge.org"
+PORT = 9999
 DIRS = [[-1, 0], [0, -1], [1, 0], [0, 1]]
 
 class SimpleSnake():
     def __init__(self):
-        self.conn = httplib.HTTPConnection("localhost", 9999)
+        self.conn = httplib.HTTPConnection(SERVER, PORT)
         self.room = 0
         self.d = 0
 
