@@ -107,8 +107,10 @@ class MapBeanGen(BeanGen):
     
     def canEgg(self, ctx):
         return len(ctx.eggs)<self.maxbean
+    
     def canGem(self, ctx):
         return len(ctx.gems)<self.maxbean
+    
     def randomGen(self, ctx, ban):
         beanx = range(0, self.map.meta['width'])
         random.shuffle(beanx)

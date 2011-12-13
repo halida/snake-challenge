@@ -18,11 +18,11 @@ http:
 
 # run a test ai
 ai:
-	python examples/ai_simple.py zero 0
+	python examples/ai_halida.py zero 0
 
 # run lots of test ai
 ais:
-	python examples/ai_simple.py zero 0 4
+	python examples/ai_halida.py zero 0 4
 
 # pygame show local game
 pygame:

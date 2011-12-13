@@ -8,7 +8,7 @@ height: 25
 snake_init: 2          # initial snake length
 snake_max: 5
 
-food_max: 3
+food_max: 1
 
 map: |
   ..................................................

@@ -34,7 +34,7 @@ SPRINT_ROUND = 5
 SPRINT_STEP = 3 # sprint的时候, 每轮可以走的步数
 SPRINT_REST = 20 # sprint之后需要休息的时间
 
-DEFAULT_MAP = 'srcs/map/test.yml'
+DEFAULT_MAP = 'srcs/map/empty.yml'
 
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):
@@ -199,7 +199,6 @@ class Game():
         self.map = map
         self.MAX_ROUND = map.meta['round']
         self.wallgen = map.wallgen
-        self.beangen = map.beangen
         self.portals = map.portals
         self.size = self.w, self.h = map.meta['width'], map.meta['height']
 
@@ -397,8 +396,8 @@ class Game():
             snake.move()
 
         # 生成豆子
-        if self.beangen.can(self):
-            beans = self.beangen.gen(self)
+        if self.map.beangen.can(self):
+            beans = self.map.beangen.gen(self)
             self.eggs += beans[0]
             self.gems += beans[1]
         
