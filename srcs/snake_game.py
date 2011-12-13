@@ -48,7 +48,7 @@ class Snake():
 
         self.alive = True
         self.direction = direction
-        self.sprint = None
+        self.sprint = 0
 
         # 计算身体
         dx, dy = DIRECT[direction]
@@ -78,7 +78,7 @@ class Snake():
         """移动蛇"""
         if not self.alive: return
 
-        if not self.sprint:
+        if self.sprint==0:
             return self.one_step()
         
         if self.sprint > 0:
@@ -90,8 +90,6 @@ class Snake():
 
         if self.sprint < 0:
             self.sprint += 1
-            if self.sprint == 0:
-                self.sprint = None
             return
 
     def one_step(self):
@@ -342,6 +340,7 @@ class Game():
                        name=s.name,
                        type=s.type,
                        sprint=s.sprint,
+                       length=len(s.body),
                        alive=s.alive)
                   for s in self.snakes
                   ]
