@@ -62,7 +62,7 @@ class Controller():
             return self.game.scores()
         
         else:
-            return dict(status='op error: '+op)
+            return dict(status='op error: %s' % op)
 
 def test():
     """

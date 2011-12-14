@@ -54,6 +54,19 @@ def near(a, b, size):
     if nearx and neary:
         return True
 
+def get_next(a, d, size):
+    return [(a[0] + d[0] + size[0])%size[0],
+            (a[1] + d[1] + size[1])%size[1]
+            ]
+
+def get_nexts(n, a, d, size):
+    result = []
+    while n > 0:
+        a = get_next(a, d, size)
+        result.append(a)
+        n -= 1
+    return result
+
 def get_distance(a, b, size):
     ax, ay = a
     bx, by = b
@@ -84,33 +97,37 @@ class WebController():
         self.room = room
         self.conn = httplib.HTTPConnection(self.addr)
 
-    def cmd(self, cmd, data={}):
+    def op(self, op, data={}):
         """
         发送命令给服务器
         """
-        data['op'] = cmd
+        data['op'] = op
         data['room'] = self.room
-        # logging.debug('post: %s : %s', cmd, data)
+        # logging.debug('post: %s : %s', op, data)
         self.conn.request("POST", '/cmd',
                           urllib.urlencode(data),
                           {'Content-Type': 'application/x-www-form-urlencoded'})
         result = self.conn.getresponse().read()
         return json.loads(result)
 
+    def snake_op(self, data):
+        data['id'] = self.me['id']
+        return self.op(data['op'], data)
+
     def add(self, name, type):
-        self.me = self.cmd("add",
+        self.me = self.op("add",
                            dict(name = name,
                                 type = type))
         return self.me
     
     def map(self):
-        return self.cmd("map")
+        return self.op("map")
 
     def info(self):
-        return self.cmd("info")
+        return self.op("info")
 
     def turn(self, dir):
-        return self.cmd("turn",
+        return self.op("turn",
                         dict(id = self.me["id"],
                              round = -1,
                              direction = dir))
@@ -145,6 +162,10 @@ class ZeroController():
         kw['room'] = self.room
         self.oper.send(json.dumps(kw))
         return json.loads(self.oper.recv())
+
+    def snake_op(self, data):
+        data['id'] = self.me['id']
+        return self.op(data['op'], data)
 
     def map(self):
         return self.op('map')
@@ -245,7 +266,7 @@ def run_ai(ai, controller):
             logging.debug(str(e))
             ai.status == NEED_ADDING
             continue
-        result = c.turn(d)
+        result = c.snake_op(d)
 
         # 操作失败显示下
         if result['status'] != 'ok':

@@ -6,7 +6,7 @@ module: server
 from lib import *
 import zmq, json, random
 
-import ai_simple, game_controller
+import game_controller
 from snake_game import *
 
 context = zmq.Context()

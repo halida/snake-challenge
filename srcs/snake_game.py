@@ -61,7 +61,11 @@ class Snake():
         if not d: return
         op = d['op']
         if op == 'turn':
-            self.direction = d['direction']
+            d = d['direction']
+            # no turn back
+            if (self.direction != d and self.direction % 2 == d % 2): return
+            self.direction = d
+            
         elif op == 'sprint':
             if self.sprint: return
             self.sprint = SPRINT_ROUND
@@ -290,10 +294,10 @@ class Game():
                 return "direction error: %d" % d
             # check turn back
             sd = self.snakes[n].direction
-            if (sd != d and sd % 2 == d % 2):
-                return "noturnback"
         
             self.snake_op[n] = kw
+            if (sd != d and sd % 2 == d % 2):
+                return "noturnback"
             return 'ok'
 
         elif kw['op'] == 'sprint':
@@ -483,7 +487,7 @@ class Game():
         snake.no_resp_time += 1
         snake.no_resp_round = round            
         # 判断是否没有响应时间过长
-        if snake.no_resp_time >= 3:
+        if snake.no_resp_time >= 5:
             snake.alive = False
             logging.debug('kill no response snake: %d' % \
                          self.snakes.index(snake))
