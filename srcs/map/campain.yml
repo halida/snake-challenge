@@ -6,7 +6,7 @@ width: 50
 height: 25
 
 snake_init: 2
-snake_max: 5
+snake_max: 15
 
 food_max: 1
 

@@ -45,6 +45,35 @@ def get_dirs(body):
         pass
     return dirs
 
+def near(a, b, size):
+    ax, ay = a
+    bx, by = b
+    sw, sh = size
+    nearx = (abs(ax-bx) <= 1) or (ax==0 and bx==sw-1) or (ax==sw-1 and bx==0)
+    neary = (abs(ay-by) <= 1) or (ay==0 and by==sh-1) or (ay==sh-1 and by==0)
+    if nearx and neary:
+        return True
+
+def get_distance(a, b, size):
+    ax, ay = a
+    bx, by = b
+    sw, sh = size
+
+    if ax == bx:
+        disx, dirx = 0, 0
+    else:
+        dxs = [[(bx-ax+sw)%sw, -1],
+               [(ax-bx+sw)%sw, +1]]
+        disx, dirx = min(dxs)
+
+    if ay == by:
+        disy, diry = 0, 0
+    else:
+        dys = [[(by-ay+sh)%sh, -1],
+               [(ay-by+sh)%sh, +1]]
+        disy, diry = min(dys)
+    
+    return (disx, disy), (dirx, diry)
 
 class WebController():
     """
@@ -211,7 +240,8 @@ def run_ai(ai, controller):
         # 发出操作
         try:
             d = ai.step(info)
-        except Exception as e: 
+        except Exception as e:
+            raise
             logging.debug(str(e))
             ai.status == NEED_ADDING
             continue

@@ -110,27 +110,23 @@ class Server():
 
 usage = """\
     $ zmq_game_server.py [type]
-    type == server:
-        default game server.
-    type == 4web:
+    type == web:
         server for snakechallenge.org, when game over, server start new round.
-    type == 4webai:
-        because it is slow on internet, set wait time to 10.0 seconds        
+        because it is slow on internet, set wait time to 5.0 seconds
+    type == local:
+        local max_waits set to 1.0s
 """
 
 def main():
     import sys
     if len(sys.argv) < 2: print usage
     cmd = sys.argv[1]
-    if cmd == 'server':
+    if cmd == 'web':
         s = Server()
-        s.run()
-    elif cmd == '4web':
+        s.run(max_waits=5.0, enable_no_resp_die=True)
+    elif cmd == 'local':
         s = Server()
-        s.run(max_waits=1.0, enable_no_resp_die=False)
-    elif cmd == '4webai':
-        s = Server()
-        s.run(max_waits=10.0)
+        s.run(max_waits=1.0, enable_no_resp_die=True)
     else:
         print usage
         

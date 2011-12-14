@@ -34,7 +34,7 @@ SPRINT_ROUND = 5
 SPRINT_STEP = 3 # sprint的时候, 每轮可以走的步数
 SPRINT_REST = 20 # sprint之后需要休息的时间
 
-DEFAULT_MAP = 'srcs/map/empty.yml'
+DEFAULT_MAP = 'srcs/map/campain.yml'#'srcs/map/campain.yml'
 
 class Snake():
     def __init__(self, game, type, direction, head, length, name=""):

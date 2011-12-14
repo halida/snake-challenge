@@ -6,7 +6,9 @@ unittest:
 
 # run the game server
 game:
-	python srcs/zmq_game_server.py 4web
+	python srcs/zmq_game_server.py local
+webgame:
+	python srcs/zmq_game_server.py web
 
 # run the website
 website:

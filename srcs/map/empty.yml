@@ -5,8 +5,8 @@ version: 1.0
 width: 50
 height: 25
 
-snakeinit: 5
-foodmax: 3
+snake_init: 5
+food_max: 1
 
 map: |
   ..................................................
