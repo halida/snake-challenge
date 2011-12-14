@@ -5,7 +5,7 @@
       %p
         = f.email_field :email, placeholder: 'email'
       -# %p= link_to "Forgot your password?", "/users/password/new"
-      -# %p= f.password_field :password, placeholder: 'password'
+      %p= f.password_field :password, placeholder: 'password'
       - if devise_mapping.rememberable?
         %p
           = f.check_box :remember_me
