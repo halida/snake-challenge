@@ -11,7 +11,7 @@ class AI(BaseAI):
         self.name = 'simple ai %d' % random.randint(1, 1000)
         types = ['python', 'ruby']
         self.type = types[random.randint(0, 1)]
-        self.SPRINT = random.rand() > 0.5
+        self.SPRINT = random.random() > 0.5
         self.count = 0
         self.round = -1
 
