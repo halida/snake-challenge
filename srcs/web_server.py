@@ -74,7 +74,10 @@ class ChatRoomWebSocket(tornado.websocket.WebSocketHandler):
                 c.write_message(msg)
             except Exception as e:
                 logging.debug(str(e))
-                self.connects.remove(c)
+                try:
+                    self.connects.remove(c)
+                except:
+                    pass
             
     def on_close(self):
         self.connects.remove(self)
@@ -108,9 +111,15 @@ class InfoWebSocket(tornado.websocket.WebSocketHandler):
 
     @classmethod
     def send_info(cls, room, info):
-        for c in cls.connects:
+        for c in cls.connects[:]:
             if c.room == room:
-                c.write_message(info)
+                try:
+                    c.write_message(info)
+                except:
+                    try:
+                        cls.remove(c)
+                    except:
+                        pass
             
     def open(self):
         self.connects.append(self)
