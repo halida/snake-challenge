@@ -1,6 +1,4 @@
 #place
-  .left_content
-    = render partial: "event#{@event}"
 
   .right_nav
     .title_bar_r
@@ -43,4 +41,6 @@
       %a{:href => "http://twitter.com/rubyvspython", :target => "_blank"}
         %img#twitter{:src => image_path("follow_us.png")}/
 
-  .clearfix
+  .left_content
+    = render partial: "event#{@event}"
+
