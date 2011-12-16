@@ -1,5 +1,7 @@
 #user-control.right-block
-  .title_bar REPLAY
+  .title_bar
+    = @replay.title
+    %span#record-by= "by #{@replay.user.name}" if @replay.user
   .right_body
     #record-panel
       %input{type: "submit", onclick: "javascript:toggle_replay()", value: "REPLAY", id: 'replay-button'}/ 
