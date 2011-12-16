@@ -31,7 +31,7 @@
         %input#msg{:type => "text", }/
       #msgs
       :javascript
-        chat_init("ws://#{ServerConfig['chat_server']}/chatroom",
+        chat_init("ws://#{@chat_server}/chatroom",
           "#{current_user ? current_user.name : request.remote_ip}", 
           "#{controller_name}-#{params[:id]}"
         );
@@ -43,4 +43,4 @@
         });
 
 :javascript
-  run_application("ws://#{ServerConfig['game_server']}/info", #{@room_id}, #{controller_name == 'replays'});
+  run_application("ws://#{@game_server}/info", #{@room_id}, #{controller_name == 'replays'});
