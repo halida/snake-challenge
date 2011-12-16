@@ -4,6 +4,6 @@
     %ul
       - @replays.each do |replay|
         %li
+          = "from #{replay.user.name}: " if replay.user
           = link_to replay.title, replay
-          = " by #{replay.user.name}" if replay.user
     = paginate @replays

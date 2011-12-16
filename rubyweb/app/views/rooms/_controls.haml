@@ -32,7 +32,6 @@
             %p left, right, up, down or HLKJ to turn snake
             %p and <em>S</em> for sprint 
         
-            
             %p      
               %input{type: "submit", onclick: "sprint()", class: "op", value: "sprint", id:"sprint"}/
               %input{type: "submit", onclick: "turn(1)", class: "op", id: "turn-up", value: "^"}/
@@ -46,14 +45,25 @@
         .control-panel#record-panel
           = form_for(Replay.new) do |f|
             .form
-          %input{type: "submit", onclick: "javascript:toggle_record()", value: "RECORD", id: 'record-button'}/ 
-          %input{type: "submit", onclick: "javascript:toggle_replay()", value: "REPLAY", id: 'replay-button'}/ 
-          %span#replay-count 0
-          = "/"
-          %span#record-count 0
-          %input{type: "submit", onclick: "javascript:save_replay()", value: "SAVE", id: 'save-record-button'}/ 
-  
-      
+
+          #record
+            %input{type: "submit", onclick: "javascript:toggle_record()", value: "RECORD", id: 'record-button'}/ 
+            %input{type: "submit", onclick: "javascript:toggle_replay()", value: "REPLAY", id: 'replay-button'}/ 
+            %span#replay-count 0
+            = "/"
+            %span#record-count 0
+            %input{type: "submit", onclick: "javascript:load_replay_locally()", value: "LOAD", id: "local-load"}/ 
+
+          #save-record{style: "display: none"}
+            %input{type: "submit", onclick: "javascript:save_replay()", value: "SAVE", id: 'save-record-button'}/ 
+            %input{type: "submit", onclick: "javascript:save_replay_locally()", value: "TO LOCAL"}/
+
+
+          #save-data{style: "display: none"}
+            %textarea{type: "textarea"}
+            %input{type: "submit", onclick: "javascript:$('#save-data').hide(300)", value: "OK"}
+       
+       
         .control-panel#change-map
           %input{type: "submit", onclick: "javascript:set_map($('select#maps').val())", value: "SET MAP", id: 'set-map-button'}/        
           %select#maps

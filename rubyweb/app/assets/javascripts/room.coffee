@@ -262,6 +262,8 @@ record = []
 replay_seq = 0
 
 window.toggle_record = ()->
+  if $('#save-record').css('display') == 'none'
+    $('#save-record').show(300)
   onrecord = not onrecord
   if onrecord
     $('#record-button').addClass('on')
@@ -289,8 +291,11 @@ record_data = (data)->
   $('#record-count').html(record.length)
   record.push data
 
+has_record = ()->
+  return record.length > 0
+
 replay = ()->
-  return unless record
+  return unless has_record()
   return unless onreplay
   $('#replay-count').html(replay_seq)
 
@@ -299,10 +304,29 @@ replay = ()->
   setTimeout(replay, 300)
 
 window.save_replay = ()->
-  return unless record
-  $.post('/replays', {replay: {json: JSON.stringify(record)}, authenticity_token: $('#new_replay input[name=authenticity_token]').attr('value')}, (data)->
+  return unless has_record()
+  title = prompt("Please enter replay's title:","Unknown")
+  console.log title
+  return if not title or title == ''
+  $.post('/replays', {replay: {title: title, json: JSON.stringify(record)}, authenticity_token: $('#new_replay input[name=authenticity_token]').attr('value')}, (data)->
         notice(data.status)
         )
+
+window.save_replay_locally = ()->
+  return unless has_record()
+  text = JSON.stringify(record)
+  $('#save-data textarea').html(text)
+  $('#save-data').show(300)
+
+window.load_replay_locally = ()->
+  data = window.prompt("Paste Record Data Here:")
+  return unless data
+  try
+    record = JSON.parse(data)
+    $('#record-count').html(record.length)
+    notice("replay loaded")
+  catch e
+    error("cannot parse data, the error is ... #{e}")
 
 window.load_replay = (id)->
   $.get('/replays/'+id, {json: true}, (data)->

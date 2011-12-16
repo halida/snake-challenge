@@ -14,6 +14,7 @@ window.error = (msg)->
         error = $('#flash_error')
         error.html(msg)
         error.fadeIn(800)
+        console.log(msg)
         setTimeout(
                 ()->
                         error.fadeOut(800)
@@ -23,6 +24,7 @@ window.notice = (msg)->
         notice = $('#flash_notice')
         notice.html(msg)
         notice.fadeIn(800)
+        console.log(msg)
         setTimeout(
                 ()->
                         notice.fadeOut(800)
