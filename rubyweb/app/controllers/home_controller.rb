@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
   def scoreboard
     params = {op: 'scores', room: 0}
-    @data = JSON.load Net::HTTP.post_form(URI.parse("http://#{ServerConfig['game_server']}/cmd"), params).body
+    @data = JSON.load Net::HTTP.post_form(URI.parse("http://#{Room::GAME_SERVER}/cmd"), params).body
     puts @data
   end
 

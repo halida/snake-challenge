@@ -1,9 +1,6 @@
 require "json"
 require 'zmq'
 
-CHAT_SERVER = 'localhost:9999'
-GAME_SERVER = 'localhost:9999'
-
 class RoomsController < ApplicationController
 
   def index
@@ -18,8 +15,8 @@ class RoomsController < ApplicationController
 
   def show
     @room_id = params[:id]
-    @game_server = GAME_SERVER
-    @chat_server = CHAT_SERVER
+    @game_server = Room::GAME_SERVER
+    @chat_server = Room::CHAT_SERVER
   end
 
   def map
