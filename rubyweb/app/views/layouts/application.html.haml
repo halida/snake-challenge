@@ -30,9 +30,9 @@
           setTimeout((-> $('.flash').fadeOut(500)), 3000)
 
     %header
-      %a{:href => "/", :title => "Go home"}= image_tag("logo.png", id:"logo-img")
-      %br/
-      %a{:href => "/", :title => "Go home"}= image_tag("python_vs_ruby.png", id:"python-vs-ruby-img")
+      -# %a{:href => "/", :title => "Go home"}= image_tag("logo.png", id:"logo-img")
+      -# %br/
+      %a{:href => "/", :title => "Go home"}= image_tag("rubyvspythonlogo.png", id:"python-vs-ruby-img", style:"width: 220px")
     #main
       #user_bar
         - if current_user.blank?
@@ -47,13 +47,13 @@
         = yield
 
     %footer
-      #member_icon
-        %table
-          %tr
-            %td= link_to image_tag("memeber_icon_linjunhalida.gif"), "http://blog.linjunhalida.com/", :title=> "linjunhalida", :target=>"_blank"
-            %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
-            %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian"
-      #footer-desc= image_tag("footer.png")
+      -# #member_icon
+      -#   %table
+      -#     %tr
+      -#       %td= link_to image_tag("memeber_icon_linjunhalida.gif"), "http://blog.linjunhalida.com/", :title=> "linjunhalida", :target=>"_blank"
+      -#       %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
+      -#       %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian"
+      -# #footer-desc= image_tag("footer.png")
         
 
     :javascript

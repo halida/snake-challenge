@@ -1,28 +1,28 @@
 #place
 
   .right_nav
-    .title_bar_r
-      %h1 Play Online
+    -# .title_bar_r
+    -#   %h1 Play Online
 
-    #room_icons
-      - for i in 1..4
-        %a.room_icon{:href => "/room/#{i-1}/", id:"room-#{i}"}
-          .number= "%02d" % i
-          .room
-            %div GAME
-            %div ROOM
-      #scoreboard-link= link_to "SCORE BOARD", "/home/scoreboard"
+    -# #room_icons
+    -#   - for i in 1..4
+    -#     %a.room_icon{:href => "/room/#{i-1}/", id:"room-#{i}"}
+    -#       .number= "%02d" % i
+    -#       .room
+    -#         %div GAME
+    -#         %div ROOM
+    -#   #scoreboard-link= link_to "SCORE BOARD", "/home/scoreboard"
 
-    - if !@replays.blank?
-      .title_bar_r
-        %h1 Game Replay
-      #game_replay
-        %ul
-          - @replays.each do |item|
-            %li
-              %a{:href => replay_path(item.id)}= item.title
-          %li.more
-            %a{:href => replays_path} More...
+    -# - if !@replays.blank?
+    -#   .title_bar_r
+    -#     %h1 Game Replay
+    -#   #game_replay
+    -#     %ul
+    -#       - @replays.each do |item|
+    -#         %li
+    -#           %a{:href => replay_path(item.id)}= item.title
+    -#       %li.more
+    -#         %a{:href => replays_path} More...
 
     .title_bar_r
       %h1 Sponsors
