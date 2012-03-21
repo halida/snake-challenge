@@ -24,14 +24,43 @@
   %p
     We are on the way of developing the contest platform for 2012 and we need more volunteers. If you are interested in that, please contact mike[at]gurudigger[dot]com.
 
-  %h1 Review of 2011
-  %p
-    Contest Platform: <a href="https://github.com/halida/snake-challenge">Snake Challenge</a>
-    <br/>
-    Winner: <a href="http://gurudigger.com/users/37038">Lu Jun</a>
+  %h1 platform
 
-  %p
-    If you want to join our brainstorming for the Snake Challenge platform, please click
-    = succeed "." do
-      %a{:href => "http://gurudigger.com/ideas/20888"} here
-  %br/
+  .platform{platform_id: 1}
+    = image_tag "Planet_Conquer_thumbnail.jpg", class: "platform-img"
+    .platform-desc
+      %p Planet Conquer
+      %p Year: 2012
+      %p Launch Date: Mar 28th, 2012
+    .platform-img-dialog
+      = image_tag "Planet_Conquer_Big.jpg", class: "platform-img-big"      
+
+  .platform{platform_id: 2}
+    = image_tag "Snake_Challenge_thumbnail.jpg", class: "platform-img"
+    .platform-desc
+      %p= link_to "Snake Challege", "https://github.com/halida/snake-challenge/wiki", target: "_blank"
+      %p Year: 2011
+      %p Winner: Lu Jun
+    .platform-img-dialog{platform_id: 2}
+      = image_tag "Snake_Challenge_Big.jpg", class: "platform-img-big"      
+
+  .clearfix  
+
+:coffeescript
+  # $('.platform-img').hover(
+  #   ()-> $($(this).parent()).find('.platform-img-dialog').toggleClass('on')
+  # )
+
+  $('.platform-img').click ()->
+    parent = $($(this).parent())
+    parent.find('.platform-img-dialog').toggleClass('on')
+    $('.hide-all').toggleClass('on')
+
+  $('.platform-img-dialog').click ()->
+    $(this).toggleClass('on')
+    $('.hide-all').toggleClass('on')
+
+  $('.hide-all').click ()->
+    $('.platform-img-dialog').removeClass('on')
+    $('.hide-all').removeClass('on')
+

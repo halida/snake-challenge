@@ -46,24 +46,6 @@ ActiveRecord::Schema.define(:version => 20111130040507) do
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
-  create_table "favourite_maps", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "map_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "game_results", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "type"
-    t.integer  "wins"
-    t.integer  "fails"
-    t.integer  "losts"
-    t.float    "ratio"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "maps", :force => true do |t|
     t.integer  "user"
     t.string   "title"
@@ -74,49 +56,17 @@ ActiveRecord::Schema.define(:version => 20111130040507) do
     t.datetime "updated_at"
   end
 
-  create_table "rails_admin_histories", :force => true do |t|
-    t.string   "message"
-    t.string   "username"
-    t.integer  "item"
-    t.string   "table"
-    t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
-
   create_table "replays", :force => true do |t|
     t.string   "title",      :null => false
     t.text     "json",       :null => false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "map"
   end
 
   create_table "rooms", :force => true do |t|
     t.string   "name",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "scores", :force => true do |t|
-    t.integer  "snake_id"
-    t.integer  "user_id"
-    t.string   "type"
-    t.integer  "wins"
-    t.integer  "fails"
-    t.integer  "offline"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "snakes", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "sid"
-    t.string   "type"
-    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -138,27 +88,9 @@ ActiveRecord::Schema.define(:version => 20111130040507) do
     t.string   "blog"
     t.string   "twitter"
     t.string   "bio"
-    t.string   "username"
-    t.integer  "up_votes",                              :default => 0,  :null => false
-    t.integer  "down_votes",                            :default => 0,  :null => false
-    t.integer  "last_mid",                              :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "votings", :force => true do |t|
-    t.string   "voteable_type"
-    t.integer  "voteable_id"
-    t.string   "voter_type"
-    t.integer  "voter_id"
-    t.boolean  "up_vote",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "votings", ["voteable_type", "voteable_id", "voter_type", "voter_id"], :name => "unique_voters", :unique => true
-  add_index "votings", ["voteable_type", "voteable_id"], :name => "index_votings_on_voteable_type_and_voteable_id"
-  add_index "votings", ["voter_type", "voter_id"], :name => "index_votings_on_voter_type_and_voter_id"
 
 end

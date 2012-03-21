@@ -11,11 +11,11 @@
     = stylesheet_link_tag "narrow", media: "screen and (max-width: 768px)"
 
     = csrf_meta_tag
-    = yield :javascripts
     :javascript
        init();
 
   %body
+    .hide-all
     #flash_error.flash{style: "display: none"}
       - if flash[:error]
         = flash[:error]
@@ -34,14 +34,14 @@
       -# %br/
       %a{:href => "/", :title => "Go home"}= image_tag("rubyvspythonlogo.png", id:"python-vs-ruby-img", style:"width: 220px")
     #main
-      #user_bar
-        - if current_user.blank?
-          %a{:href => "/users/sign_up"} Sign Up
-          | 
-          %a{:href => "/users/sign_in"} Sign In
-        - else
-          Hello, #{current_user.name}
-          %a{:href => "/users/sign_out"} Sign out
+      -# #user_bar
+      -#   - if current_user.blank?
+      -#     %a{:href => "/users/sign_up"} Sign Up
+      -#     | 
+      -#     %a{:href => "/users/sign_in"} Sign In
+      -#   - else
+      -#     Hello, #{current_user.name}
+      -#     %a{:href => "/users/sign_out"} Sign out
 
       #content
         = yield
@@ -54,7 +54,8 @@
       -#       %td= link_to image_tag("memeber_icon_quake.gif"), "http://quake.javaeye.com/", :title=> "quake", :target=>"_blank"
       -#       %td= link_to image_tag("memeber_icon_dorian.gif"), "#", :title=> "dorian"
       -# #footer-desc= image_tag("footer.png")
-        
+
+    = yield :javascripts
 
     :javascript
       var _gaq = _gaq || [];
