@@ -426,8 +426,16 @@ textarea
     display: block
     z-index: 500
   .platform-img-big
-    padding: 5px
+    padding: 0px
     width: 600px
+
+.dlg-close
+  position: absolute
+  right: 0px
+  margin: 10px
+  cursor: pointer
+  width: 9px
+  height: 9px
 
 .hide-all
   position: fixed
@@ -440,5 +448,15 @@ textarea
   z-index: -3
   &.on
     z-index: 100 
-    +opacity(0.0)
+    +opacity(0.5)
     display: block
+
+
+.left_content
+  overflow: hidden
+  position: relative
+.brainstorming
+  width: 132px
+  position: absolute
+  right: -22px
+  top: -22px

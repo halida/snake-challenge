@@ -23,7 +23,6 @@
     -#           %a{:href => replay_path(item.id)}= item.title
     -#       %li.more
     -#         %a{:href => replays_path} More...
-
     .title_bar_r
       %h1 Sponsors
 
@@ -42,6 +41,7 @@
         %img#twitter{:src => image_path("follow_us.png")}/
 
   .left_content
+    = link_to image_tag("brainstorming.png", class: "brainstorming"), "http://gurudigger.com/products/20888"
     = render partial: "event#{@event}"
     .clearfix
 

@@ -24,7 +24,7 @@
   %p
     We are on the way of developing the contest platform for 2012 and we need more volunteers. If you are interested in that, please contact mike[at]gurudigger[dot]com.
 
-  %h1 platform
+  %h1 Contest Platform
 
   .platform{platform_id: 1}
     = image_tag "Planet_Conquer_thumbnail.jpg", class: "platform-img"
@@ -32,8 +32,6 @@
       %p Planet Conquer
       %p Year: 2012
       %p Launch Date: Mar 28th, 2012
-    .platform-img-dialog
-      = image_tag "Planet_Conquer_Big.jpg", class: "platform-img-big"      
 
   .platform{platform_id: 2}
     = image_tag "Snake_Challenge_thumbnail.jpg", class: "platform-img"
@@ -41,26 +39,32 @@
       %p= link_to "Snake Challege", "https://github.com/halida/snake-challenge/wiki", target: "_blank"
       %p Year: 2011
       %p Winner: Lu Jun
-    .platform-img-dialog{platform_id: 2}
-      = image_tag "Snake_Challenge_Big.jpg", class: "platform-img-big"      
 
   .clearfix  
 
-:coffeescript
-  # $('.platform-img').hover(
-  #   ()-> $($(this).parent()).find('.platform-img-dialog').toggleClass('on')
-  # )
+- content_for :javascripts do
+  .platform-img-dialog{platform_id: 1}
+    = image_tag "close.png", class: "dlg-close"
+    = image_tag "Planet_Conquer_Big.jpg", class: "platform-img-big"      
+  .platform-img-dialog{platform_id: 2}
+    = image_tag "close.png", class: "dlg-close"
+    = image_tag "Snake_Challenge_Big.jpg", class: "platform-img-big"      
 
-  $('.platform-img').click ()->
-    parent = $($(this).parent())
-    parent.find('.platform-img-dialog').toggleClass('on')
-    $('.hide-all').toggleClass('on')
+  :coffeescript
+    $('.platform-img').click ()->
+      parent = $($(this).parent())
+      platform_id = parent.attr('platform_id')
+      $(".platform-img-dialog[platform_id="+platform_id+"]").toggleClass('on')
+      $('.hide-all').toggleClass('on')
+  
+    $('.platform-img-dialog').click ()->
+      $(this).toggleClass('on')
+      $('.hide-all').toggleClass('on')
+  
+    close_all = (e)->
+      $('.hide-all').removeClass('on')
+      $('.platform-img-dialog').removeClass('on')
+      e.preventDefault()
 
-  $('.platform-img-dialog').click ()->
-    $(this).toggleClass('on')
-    $('.hide-all').toggleClass('on')
-
-  $('.hide-all').click ()->
-    $('.platform-img-dialog').removeClass('on')
-    $('.hide-all').removeClass('on')
-
+    $('.hide-all').click close_all
+  
